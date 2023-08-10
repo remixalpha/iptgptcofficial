@@ -8,8 +8,8 @@ import { CiUser, CiLogout } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
+  name: "",
+  email: "",
   imageUrl: User,
 };
 
