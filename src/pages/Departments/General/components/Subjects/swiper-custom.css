@@ -1,0 +1,7 @@
+/* Add distance between the two arrow buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  margin-right: -40px; /* Adjust the value as per your requirement */
+  margin-left: -40px;
+  z-index: 50; /* Adjust the value as per your requirement */
+}
