@@ -156,6 +156,9 @@ export const theme = {
     Fourth: "#97CADB",
     LightWhite: "#D6E8EE",
 
+    First: "#468B97",
+    Second: "#FFF6DC",
+
     gray: {
       50: "#f8f9fa",
       100: "#edf2f7",

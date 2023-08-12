@@ -1,15 +1,15 @@
 import { Fragment, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../../../../../../assets/images/logos/ipt.png";
-import User from "../../../../../../assets/images/section/Departments/computer/Saani.jpg";
+import Logo from "../../../../assets/images/logos/ipt.png";
+import User from "../../../../assets/images/section/Departments/computer/Saani.jpg";
 
 import { CiUser, CiLogout } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
+  name: "",
+  email: "",
   imageUrl: User,
 };
 
@@ -91,28 +91,31 @@ function classNames(...classes) {
 
 export default function Sidebar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState("AICTE Certificate");
+  const [activeItem, setActiveItem] = useState();
 
   const handleItemClick = (name) => {
     setActiveItem(name);
   };
 
   return (
-    <header className=" bg-indigo-400 ">
+    <header className="bg-First">
       <nav
-        className="xl:mx-auto sm:mx-2 mx-2 flex max-w-7xl items-center justify-between p-8 lg:px-8 bg-indigo-400 rounded-primary "
+        className="xl:mx-auto sm:mx-2 mx-2 flex max-w-7xl items-center justify-between p-8 lg:px-8  rounded-primary "
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="/adminhome" className="-m-5 p-1.5">
-            <span className="sr-only">IPT & GPTC Shoranur</span>
-            <img
-              className="h-9 w-auto scale-150 relative right-[10rem] "
-              src={Logo}
-              alt=""
-            />
-          </a>
+          <div className=" rounded-xl p-6 h-[4rem] w-[15rem] flex items-center relative right-[15rem] ">
+            <a href="/adminhome" className="-m-5 p-1.5">
+              <span className="sr-only">IPT & GPTC Shoranur</span>
+              <img
+                className="h-9 w-auto scale-150 relative left-7"
+                src={Logo}
+                alt=""
+              />
+            </a>
+          </div>
         </div>
+
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -124,24 +127,32 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <Popover.Group className="hidden lg:flex lg:gap-x-10  ">
+        <Popover.Group className="hidden lg:flex lg:gap-x-10">
           {navigation.categories.map((categories) => (
-            <a
-              key={categories.name}
-              href={categories.href}
-              onClick={() => handleItemClick(categories.name)}
-              className={classNames(
-                activeItem === categories.name
-                  ? "text-Primary bg-white  text-md  font-bold   transition-all duration-300 ease-in-out "
-                  : "text-white text-md  font-bold hover:text-Primary hover:bg-white  hover:text-md  hover:font-bold ",
-                "rounded-full font-bold   px-3 py-2 text-sm  transition-all duration-300 ease-in-out "
-              )}
-              aria-current={categories.current ? "page" : undefined}
-            >
-              {categories.name}
-            </a>
+            <div key={categories.name} className="relative group">
+              <a
+                href={categories.href}
+                onClick={() => handleItemClick(categories.name)}
+                className={classNames(
+                  activeItem === categories.name
+                    ? "text-gray-900  text-lg  font-bold   transition-all duration-300 ease-in-out "
+                    : "text-white   text-lg  font-bold   hover:text-md  ",
+                  "rounded-full font-bold   px-3 py-2 text-sm  transition-all duration-300 ease-in-out "
+                )}
+                aria-current={categories.current ? "page" : undefined}
+              >
+                {categories.name}
+              </a>
+              <span
+                className={classNames(
+                  "absolute bottom-0 top-6 left-3  h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
+                  "group-hover:w-10"
+                )}
+              />
+            </div>
           ))}
         </Popover.Group>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">

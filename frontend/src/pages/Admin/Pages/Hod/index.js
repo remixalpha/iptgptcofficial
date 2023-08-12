@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { IoIosArrowUp } from "react-icons/io";
 
-import Header from "./components/sidebar";
+import Header from "../../components/sidebar";
 import Form from "./components/Form";
 
 export default function Hod() {
@@ -28,12 +28,12 @@ export default function Hod() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden ">
+    <div className="relative min-h-screen overflow-hidden  bg-First">
       <div className="mx-auto">
         <Header />
       </div>
 
-      <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300  ">
+      <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300 bg-lightPrimary ">
         {showScrollToTop && (
           <div
             className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
@@ -42,8 +42,9 @@ export default function Hod() {
             <IoIosArrowUp />
           </div>
         )}
+        {/* Circles with opacity */}
 
-        <div className="mb-[5rem] scale-125 ">
+        <div className=" mb-[15rem] scale-105 ">
           <Form />
         </div>
       </div>

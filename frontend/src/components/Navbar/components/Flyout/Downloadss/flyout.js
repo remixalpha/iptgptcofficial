@@ -54,7 +54,7 @@ export default function Flyout() {
       onMouseLeave={handleMouseLeave}
     >
       <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-bold leading-6 xl:text-white text-Primary ">
-        <span>Departments</span>
+        <span>Downloads</span>
         {isPanelOpen ? (
           <ChevronUpIcon className="h-5 w-5 " aria-hidden="true" />
         ) : (
@@ -73,16 +73,16 @@ export default function Flyout() {
         leaveTo="opacity-0 translate-y-1"
       >
         <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-[25rem] max-w-max -translate-x-1/2 px-4">
-          <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg  ring-gray-900/5">
+          <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white opacity-90 text-sm leading-6 shadow-lg  ring-gray-900/5">
             <div className="p-4">
               {solutions.map((item) => (
                 <div
                   key={item.name}
-                  className="group relative flex gap-x-5 rounded-lg p-4 hover:bg-gray-50  "
+                  className="group relative flex gap-x-5 rounded-xl p-4 hover:bg-orange-100  "
                 >
-                  <div className=" flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                  <div className=" flex h-11 w-11 flex-none items-center justify-center  rounded-full bg-white">
                     <item.icon
-                      className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                      className="h-6 w-6 text-gray-600 group-hover:text-orange-500"
                       aria-hidden="true"
                     />
                   </div>

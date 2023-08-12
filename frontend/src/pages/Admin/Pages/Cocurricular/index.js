@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { IoIosArrowUp } from "react-icons/io";
 
-import Header from "./components/sidebar";
+import Header from "../../components/sidebar";
 import Form from "./components/Form";
 
 export default function Cocurricular() {
