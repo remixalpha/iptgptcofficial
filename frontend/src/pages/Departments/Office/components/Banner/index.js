@@ -25,7 +25,7 @@ export default function Banners() {
           className="flex justify-center text-center items-center text-[2rem] sm:text-[3rem] md:text-[4rem] lg:text-[4rem] xl:text-[7rem] text-gray-50 font-bold tracking-wider opacity-40 p-4 rounded-lg"
           style={{ transform: `translateY(-${animationDistance}px)` }}
         >
-          ELECTRONICS
+          OFFICE
         </h1>
       </div>
     </div>

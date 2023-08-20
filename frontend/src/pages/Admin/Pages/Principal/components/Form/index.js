@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from "react";
 import { LuEdit2 } from "react-icons/lu";
+import { IoImageOutline } from "react-icons/io5";
 
 import {
   PiUploadSimpleThin,
-  PiXCircleLight,
+  PiXLight,
   PiTrashSimpleLight,
 } from "react-icons/pi";
 
@@ -36,12 +37,15 @@ export default function Form() {
 
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       setImage(reader.result);
+      setIsImageUploaded(true);
     };
   };
 
@@ -57,11 +61,37 @@ export default function Form() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 xl:grid-cols-2">
               <div className="col-2 flex justify-center  ">
                 <div className="relative inline-block  ">
-                  <img
-                    className="rounded-xl w-96 h-96 object-cover shadow-lg "
-                    alt="Profile"
-                    src={image}
+                  <input
+                    id="fileInput"
+                    type="file"
+                    key={fileInputKey}
+                    className="sr-only"
+                    onChange={(e) => {
+                      setFileInputKey((prev) => prev + 1);
+                      handleFileChange(e);
+                    }}
                   />
+                  <label
+                    htmlFor="fileInput"
+                    className="relative w-96 h-96 rounded-xl border-dashed border-2 border-navy-300 flex justify-center items-center cursor-pointer"
+                  >
+                    {isImageUploaded ? (
+                      <img
+                        className="w-full h-full object-cover rounded-xl"
+                        alt="Uploaded"
+                        src={image}
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center">
+                        <IoImageOutline
+                          className="h-1/2 w-1/2 mb-2 text-gray-300 "
+                          src=""
+                          alt="Placeholder"
+                        />
+                        <span className="text-gray-500">Upload an image</span>
+                      </div>
+                    )}
+                  </label>
                   <label
                     htmlFor="fileInput"
                     className="absolute top-80 -right-8 bg-white p-2 rounded-xl shadow-lg cursor-pointer"
@@ -73,16 +103,6 @@ export default function Form() {
                       />
                     </div>
                   </label>
-                  <input
-                    id="fileInput"
-                    type="file"
-                    key={fileInputKey}
-                    className="sr-only"
-                    onChange={(e) => {
-                      setFileInputKey((prev) => prev + 1);
-                      handleFileChange(e);
-                    }}
-                  />
                 </div>
               </div>
               <div className="space-y-10">
@@ -190,7 +210,7 @@ export default function Form() {
           <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
             <div className="group flex flex-col justify-end cursor-pointer">
               <div className="relative">
-                <PiXCircleLight
+                <PiXLight
                   type="submit"
                   className="h-10 w-10 p-1 text-navy-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
                   aria-hidden="true"

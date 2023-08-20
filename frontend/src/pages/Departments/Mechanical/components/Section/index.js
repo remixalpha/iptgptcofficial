@@ -94,7 +94,7 @@ export default function Section() {
                           {items.name}
                         </a>
                       </h3>
-                      <p className="mt-1 text-sm text-gray-500">{items.Des}</p>
+                      <p className="mt-1 text-sm text-gray-700">{items.Des}</p>
                     </div>
                   </div>
                 </div>

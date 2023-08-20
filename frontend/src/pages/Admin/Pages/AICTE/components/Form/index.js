@@ -1,43 +1,72 @@
+import React, { useState } from "react";
+
 import { PhotoIcon } from "@heroicons/react/24/solid";
+import { IoImageOutline } from "react-icons/io5";
+import { LuEdit2 } from "react-icons/lu";
 
 export default function Form() {
+  const [image, setImage] = useState("https://via.placeholder.com/150");
+  const [fileInputKey, setFileInputKey] = useState(0);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImage(reader.result);
+      setIsImageUploaded(true);
+    };
+  };
   return (
     <form>
       <div className="space-y-12">
-        <div className="mt-10 grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1  ">
+        <div className="mt-10 grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 shadow-lg rounded-xl bg-white  ">
           <div className="mt-10 grid xl:grid-cols-1 grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-1 py-8 px-2 mx-12">
-            <div className="">
-              <label
-                htmlFor="cover-photo"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Profile Photo
-              </label>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <div className="text-center">
-                  <PhotoIcon
-                    className="mx-auto h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                    >
-                      <span>Upload a Photo</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        className="sr-only"
+            <div className="col-2 flex justify-center  ">
+              <div className="relative inline-block  ">
+                <input
+                  id="fileInput"
+                  type="file"
+                  key={fileInputKey}
+                  className="sr-only"
+                  onChange={(e) => {
+                    setFileInputKey((prev) => prev + 1);
+                    handleFileChange(e);
+                  }}
+                />
+                <label
+                  htmlFor="fileInput"
+                  className="relative w-60 h-60 rounded-xl border-dashed border-2 border-navy-300 flex justify-center items-center cursor-pointer"
+                >
+                  {isImageUploaded ? (
+                    <img
+                      className="w-full h-full object-cover rounded-xl"
+                      alt="Uploaded"
+                      src={image}
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center">
+                      <IoImageOutline
+                        className="h-1/2 w-1/2 mb-2 text-gray-300 "
+                        src=""
+                        alt="Placeholder"
                       />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
+                      <span className="text-gray-500">Upload an image</span>
+                    </div>
+                  )}
+                </label>
+                <label
+                  htmlFor="fileInput"
+                  className="absolute top-44 -right-8 bg-white p-2 rounded-xl shadow-lg cursor-pointer"
+                >
+                  <div className="flex flex-col justify-end ">
+                    <LuEdit2
+                      className="h-8 w-8 p-1 text-navy-900 "
+                      aria-hidden="true"
+                    />
                   </div>
-                  <p className="text-xs leading-5 text-gray-600">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
+                </label>
               </div>
             </div>
 

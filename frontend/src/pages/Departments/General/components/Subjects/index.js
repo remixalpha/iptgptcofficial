@@ -61,7 +61,7 @@ const subjects = [
 ];
 export default function Subject() {
   return (
-    <div className=" bg-white w-[90rem] mx-auto my-10  lg:px-20 scale-100 sm:py-2">
+    <div className=" bg-white w-[90rem] mx-auto mb-28  lg:px-20 scale-110 sm:py-2">
       <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
         Subjects
       </h1>
@@ -102,7 +102,7 @@ export default function Subject() {
                           {items.name}
                         </a>
                       </h3>
-                      <p className="mt-1 text-sm text-gray-500">{items.Des}</p>
+                      <p className="mt-1 text-sm text-gray-700">{items.Des}</p>
                     </div>
                   </div>
                 </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
 import Navbar from "../../../components/Navbar/navbar";
-import Banner from "./components/Banner/index";
+import Banners from "./components/Banner";
 import Hod from "./components/hod/index";
 import MissionVision from "./components/MissionVision";
 import Lab from "./components/Lab";
@@ -40,7 +40,7 @@ const Gallery = () => {
         <Navbar />
       </div>
       <div>
-        <Banner />
+        <Banners />
       </div>
 
       <div className="relative bottom-[8rem]">

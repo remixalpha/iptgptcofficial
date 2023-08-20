@@ -11,6 +11,7 @@ import PrincipalM from "./components/PrincipalM/index";
 import Reference from "./components/Reference";
 import Departments from "./components/Departments/index";
 import ContactUS from "./components/ContactUs/index";
+
 import Footer from "../../components/Footer/index";
 import Card from "../../components/Card/index";
 
@@ -104,6 +105,7 @@ export default function Home() {
         <div>
           <ContactUS />
         </div>
+
         <div>
           <Footer />
         </div>

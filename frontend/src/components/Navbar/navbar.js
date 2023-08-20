@@ -50,8 +50,8 @@ export default function Navbar() {
     <Disclosure as="nav">
       {({ open }) => (
         <>
-          <div className=" flex items-center justify-center relative top-5  transition-all duration-300">
-            <div className="h-[6rem] max-w-[125rem] mx-5 left-0 right-0 absolute bg-navy-700 opacity-40 rounded-xl z-20 transition-all duration-300" />
+          <div className=" flex items-center justify-center relative top-5  transition-all duration-300 ">
+            <div className="h-[6rem] max-w-[125rem] mx-5 left-0 right-0 absolute bg-black opacity-30 rounded-xl z-20 transition-all duration-300" />
 
             <div className="flex h-[6rem]  items-center justify-between ml-10   z-40   ">
               <div className="absolute inset-y-0 left-12  flex items-center sm:hidden">

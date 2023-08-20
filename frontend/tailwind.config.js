@@ -148,7 +148,8 @@ export const theme = {
     "4xl-max": { max: "1850px" },
   },
   colors: () => ({
-    white: "#ffffff",
+    white: "#ffff",
+    black: "#111",
     lightPrimary: "#F4F7FE",
     Primary: "#001B48",
     Secondary: "#02457A",

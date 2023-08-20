@@ -46,10 +46,9 @@ function About() {
           src={Banner}
           alt=""
         />
-        <div className="absolute inset-3 bg-black opacity-50" />
         <div className="absolute inset-0 flex items-center justify-center -top-[5rem] ">
           <h1
-            className="text-[15rem] text-gray-50 font-bold tracking-wider opacity-30 bg-black p-4 rounded-lg animated-heading"
+            className="text-[15rem] text-gray-50 font-bold tracking-wider opacity-30  animated-heading"
             style={{ transform: `translateY(-${animationDistance}px)` }}
           >
             ABOUT US
