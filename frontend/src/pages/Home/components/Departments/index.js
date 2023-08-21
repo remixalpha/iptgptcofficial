@@ -29,23 +29,36 @@ const Department = [
     imageAlt: "Printing Technology",
     Des: "The program was started in the year 1967 and successfully completed 50 years its existence as a Centre of excellence in Printing Technology",
   },
+  {
+    id: 4,
+    name: "General Department",
+    href: "/general",
+    imageSrc: PRINTING,
+    imageAlt: "General Department",
+    Des: "The program was started in the year 1967 and successfully completed 50 years its existence as a Centre of excellence in Printing Technology",
+  },
+  {
+    id: 5,
+    name: "Mechanical Engineering Workshop",
+    href: "/mechanical",
+    imageSrc: PRINTING,
+    imageAlt: "Mechanical Engineering Workshop",
+    Des: "The program was started in the year 1967 and successfully completed 50 years its existence as a Centre of excellence in Printing Technology",
+  },
 ];
 export default function Reference() {
   return (
     <div className="relative -top-10 scale-110 sm:py-32 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
+        <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Departments
         </h1>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 cursor-pointer">
           {Department.map((item) => (
-            <Card>
-              <div
-                key={Department.id}
-                className="group relative border border-gray-800 rounded-primary"
-              >
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden  rounded-primary group-hover:rounded-none  bg-white lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
+            <Card extra={` border border-gray-800 rounded-primary`}>
+              <div key={Department.id} className="group relative">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden  rounded-primary   bg-white lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                   <img
                     src={item.imageSrc}
                     alt={item.imageAlt}
@@ -55,7 +68,7 @@ export default function Reference() {
 
                 <div className="mt-4 flex justify-between p-8 ">
                   <div>
-                    <h3 className="text-xl font-bold text-navy-700">
+                    <h3 className="text-xl  text-gray-800 antialiased tracking-normal font-sans text-md font-semibold">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {item.name}
                     </h3>
@@ -69,10 +82,10 @@ export default function Reference() {
                   <div className="flex flex-row relative -left-4 mb-9 -mt-6 scale-75 ">
                     <button
                       type="submit"
-                      className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className=" flex w-[10rem] items-center justify-center rounded-md   bg-red-400 px-8 py-3 text-base font-medium text-white hover:bg-gray-800  transition delay-150 duration-300 ease-in-out"
                     >
                       Read More
-                    </button>{" "}
+                    </button>
                     <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
                       <FiChevronRight />
                     </div>

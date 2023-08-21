@@ -5,7 +5,7 @@ const currentYear = new Date().getFullYear();
 
 export default function Example() {
   return (
-    <footer className="relative w-full  bg-Primary ">
+    <footer className="relative w-full  bg-gray-800 ">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <div className="flex flex-shrink-0 items-start mt-10 ">

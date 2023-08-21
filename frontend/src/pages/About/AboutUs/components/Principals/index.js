@@ -5,7 +5,7 @@ const Principals = [
   {
     id: 1,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -13,7 +13,7 @@ const Principals = [
   {
     id: 2,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -21,7 +21,7 @@ const Principals = [
   {
     id: 3,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -29,7 +29,7 @@ const Principals = [
   {
     id: 4,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -37,7 +37,7 @@ const Principals = [
   {
     id: 5,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -45,7 +45,7 @@ const Principals = [
   {
     id: 6,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -53,7 +53,7 @@ const Principals = [
   {
     id: 7,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -61,7 +61,7 @@ const Principals = [
   {
     id: 8,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -69,7 +69,7 @@ const Principals = [
   {
     id: 9,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -77,7 +77,7 @@ const Principals = [
   {
     id: 10,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -85,7 +85,7 @@ const Principals = [
   {
     id: 11,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -93,7 +93,7 @@ const Principals = [
   {
     id: 12,
     name: "Ram kumar shin",
-    href: "#",
+
     imageSrc: Principal1,
     imageAlt: "Principal",
     year: "1972 - 2000",
@@ -102,7 +102,7 @@ const Principals = [
 export default function Principal() {
   return (
     <div className="mx-auto max-w-[100rem] px-20  relative -top-10 bg-white scale-125 sm:py-32    ">
-      <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
+      <h1 className="text-center pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
         List Of Principals
       </h1>
 
@@ -119,13 +119,15 @@ export default function Principal() {
               </div>
 
               <div className="mt-2 flex flex-col gap-y-2  items-center justify-center p-4 ">
-                <h3 className="text-xl text-center font-bold text-navy-700">
+                <h3 className="text-center  text-gray-900 antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                   <a href={item.href}>
                     <span aria-hidden="true" className="absolute inset-0 " />
                     {item.name}
                   </a>
                 </h3>
-                <p className="mt-1 text-sm  text-gray-500">{item.year}</p>
+                <p className="block antialiased font-sans text-lg font-normal  text-gray-700">
+                  {item.year}
+                </p>
               </div>
             </div>
           </Card>

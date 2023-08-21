@@ -80,7 +80,7 @@ export default function Facilities() {
       {Library.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
@@ -90,18 +90,18 @@ export default function Facilities() {
               <img src={item.Image} alt="" className="" />
             </div>
 
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className=" group flex flex-row gap-2">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600  py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -113,24 +113,24 @@ export default function Facilities() {
       {Computing.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125 ">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
 
           <div className="mx-auto grid max-w-2xl grid-cols-1 -space-y-11 items-center gap-x-40 px-4  bg-white sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function Facilities() {
       {language.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
@@ -154,18 +154,18 @@ export default function Facilities() {
               <img src={item.Image} alt="" className="" />
             </div>
 
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -177,24 +177,24 @@ export default function Facilities() {
       {Seminar.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125 ">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
 
           <div className="mx-auto grid max-w-2xl grid-cols-1 space-y-10 items-center gap-x-40 px-4  bg-white sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600  py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function Facilities() {
       {Auditorium.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
@@ -218,18 +218,18 @@ export default function Facilities() {
               <img src={item.Image} alt="" className="" />
             </div>
 
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600  py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -241,24 +241,24 @@ export default function Facilities() {
       {Boys.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125 ">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
 
           <div className="mx-auto grid max-w-2xl grid-cols-1 space-y-10 items-center gap-x-40 px-4  bg-white sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -272,28 +272,28 @@ export default function Facilities() {
       {Girls.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
 
           <div className="  mx-auto grid max-w-2xl grid-cols-1 -space-y-11 items-center gap-x-40 px-4  bg-white sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-            <div className=" relative left-10 sm:gap-6 lg:gap-8">
+            <div className=" relative left-10 sm:gap-6 lg:gap-8 ">
               <img src={item.Image} alt="" className="" />
             </div>
 
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600  py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -305,24 +305,24 @@ export default function Facilities() {
       {Canteen.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center items-center scale-125 ">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h1 className=" text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
               {item.Title}
             </h1>
           </div>
 
           <div className="mx-auto grid max-w-2xl grid-cols-1 space-y-10 items-center gap-x-40 px-4  bg-white sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-            <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+            <div className="space-y-10 border rounded-primary p-8 ">
+              <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+                {item.Des}
               </p>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 group">
                 <button
                   type="submit"
-                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600  py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400  py-3 text-base font-medium text-white hover:bg-gray-800 transition delay-150 duration-300 ease-in-out "
                 >
                   Go To Gallery
-                </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                </button>
+                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
                   <FiChevronRight />
                 </div>
               </div>

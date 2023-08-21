@@ -15,12 +15,12 @@ export default function Principal() {
   return (
     <div className=" bg-white ">
       {" "}
-      <h1 className=" relative flex items-center justify-center -top-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+      <h1 className=" relative flex items-center justify-center -top-10 text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3 ">
         Principal's Message
       </h1>
       <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-20 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-        <p className=" relative -top-[8rem] text-justify text-gray-900 leading-8 text-xl ">
-          <span className="font-bold">"</span> Education is the most powerful
+        <p className=" relative -top-[8rem] text-justify   block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
+          <span className="font-bold ">"</span> Education is the most powerful
           weapon which you can use to change the world{" "}
           <span className="font-bold">"</span>
           <br></br>
@@ -61,7 +61,7 @@ export default function Principal() {
                 />
               </div>
               <h1
-                className="mt-5 text-4xl font-semibold text-gray-900"
+                className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
                 style={{ textAlign: "center" }}
               >
                 <a href={principal.href}>
@@ -70,13 +70,13 @@ export default function Principal() {
                 </a>
               </h1>
               <p
-                className="mt-1 text-xl text-gray-500"
+                className=" block antialiased font-sans text-2xl font-normal  text-gray-800"
                 style={{ textAlign: "center" }}
               >
                 {principal.Post}
               </p>
               <p
-                className="mt-1 text-sm text-gray-500"
+                className="block antialiased font-sans text-lg font-normal  text-gray-700"
                 style={{ textAlign: "center" }}
               >
                 {principal.Qualification}

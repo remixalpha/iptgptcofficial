@@ -6,9 +6,9 @@ import Navbar from "../../../components/Navbar/navbar";
 import Banner from "../../../assets/images/Banner/iptimage1.jpg";
 import Count from "./components/Count";
 import AboutD from "./components/AboutD";
-import Principals from "./components/Principals/index";
-import CollegeMap from "./components/CollegeMap/index";
-import Footer from "../../../components/Footer/index";
+import Principals from "./components/Principals";
+import CollegeMap from "./components/CollegeMap";
+import Footer from "../../../components/Footer";
 
 function About() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -63,7 +63,7 @@ function About() {
       >
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-red-400 p-2 rounded-full text-white z-50 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />

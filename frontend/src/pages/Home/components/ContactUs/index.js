@@ -22,14 +22,14 @@ const Calls = [
   {
     title: "Call Us",
     IconAlt: "Calls",
-    email: "0466 222 0450",
+    PhoneNO: "0466 222 0450",
   },
 ];
 export default function ContactUs() {
   return (
     <div className="relative  bg-gray-100  sm:py-32  ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
+        <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Contact Us
         </h1>
 
@@ -45,11 +45,11 @@ export default function ContactUs() {
                 </div>
 
                 <div className="p-8  ">
-                  <h3 className=" mb-4 text-center text-xl font-bold text-navy-700">
+                  <h3 className=" text-center   text-gray-900  antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                     <span aria-hidden="true" className="absolute inset-0" />
                     {Contact.Title}
                   </h3>
-                  <p className="mt-1 text-center text-sm text-gray-500">
+                  <p className="mt-1 text-center text-md  block antialiased font-sans font-normal leading-relaxed text-gray-700">
                     {Contact.Address}
                   </p>
                 </div>
@@ -68,11 +68,11 @@ export default function ContactUs() {
                   </div>
 
                   <div className="p-8  ">
-                    <h3 className=" mb-4 text-center text-xl font-bold text-navy-700">
+                    <h3 className=" text-center   text-gray-900  antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {Email.title}
                     </h3>
-                    <p className="mt-1 text-center text-sm text-gray-500">
+                    <p className="mt-1 text-center text-md  block antialiased font-sans font-normal leading-relaxed text-gray-700">
                       {Email.email}
                     </p>
                   </div>
@@ -90,12 +90,12 @@ export default function ContactUs() {
                   </div>
 
                   <div className="p-8  ">
-                    <h3 className=" mb-4 text-center text-xl font-bold text-navy-700">
+                    <h3 className="text-center   text-gray-900  antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {Call.title}
                     </h3>
-                    <p className="mt-1 text-center text-sm text-gray-500">
-                      {Call.email}
+                    <p className="mt-1 text-center text-md  block antialiased font-sans font-normal leading-relaxed text-gray-700">
+                      {Call.PhoneNO}
                     </p>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function ContactUs() {
                     <div className="flex flex-col">
                       <label
                         htmlFor="full_name"
-                        className="text-gray-800 text-sm font-semibold leading-tight tracking-normal mb-2"
+                        className=" block text-sm font-medium leading-6 text-gray-900 mb-2 "
                       >
                         Full Name
                       </label>
@@ -140,7 +140,7 @@ export default function ContactUs() {
                     <div className="flex flex-col">
                       <label
                         htmlFor="Last Name"
-                        className="text-gray-800 text-sm font-semibold leading-tight tracking-normal mb-2"
+                        className="block text-sm font-medium leading-6 text-gray-900 mb-2"
                       >
                         Last Name
                       </label>
@@ -160,7 +160,7 @@ export default function ContactUs() {
                     <div className="flex flex-col">
                       <label
                         htmlFor="Email"
-                        className="text-gray-800 text-sm font-semibold leading-tight tracking-normal mb-2"
+                        className="block text-sm font-medium leading-6 text-gray-900 mb-2"
                       >
                         Email
                       </label>
@@ -178,7 +178,7 @@ export default function ContactUs() {
                 <div className="w-full mt-6">
                   <div className="flex flex-col">
                     <label
-                      className="text-sm font-semibold text-gray-800 mb-2"
+                      className="block text-sm font-medium leading-6 text-gray-900 mb-2"
                       htmlFor="message"
                     >
                       Message
@@ -194,7 +194,7 @@ export default function ContactUs() {
                   </div>
                   <button
                     type="submit"
-                    className="focus:outline-none bg-red-400  transition duration-150 ease-in-out hover:bg-orange-300 rounded text-white px-8 py-3 text-sm leading-6"
+                    className="focus:outline-none bg-red-400  transition duration-150 ease-in-out hover:bg-gray-800 rounded text-white px-8 py-3 text-sm leading-6"
                   >
                     Submit
                   </button>

@@ -216,7 +216,7 @@ const Gallery = () => {
       >
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-red-400 p-2 rounded-full text-white z-50 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />
@@ -229,8 +229,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "All"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("All")}
               >
@@ -239,8 +239,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "IPT"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("IPT")}
               >
@@ -249,8 +249,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "NCC"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("NCC")}
               >
@@ -259,8 +259,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "NSS"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("NSS")}
               >
@@ -269,8 +269,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "HOSTEL"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("HOSTEL")}
               >
@@ -279,8 +279,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "AUDITORIUM"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("AUDITORIUM")}
               >
@@ -289,8 +289,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "CANTEEN"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("CANTEEN")}
               >
@@ -299,8 +299,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "WORKSHOP"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("WORKSHOP")}
               >
@@ -309,8 +309,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "ASAP"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("ASAP")}
               >
@@ -319,8 +319,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition ${
                   selectedCategory === "LIBRARY"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("LIBRARY")}
               >
@@ -329,8 +329,8 @@ const Gallery = () => {
               <button
                 className={`gallery-button transition  ${
                   selectedCategory === "SEMINAR HALL"
-                    ? "bg-navy-900 text-sm font-extrabold text-white rounded-full px-5 py-2 "
-                    : "bg-transparent rounded-full text-sm font-extrabold scale-125 text-navy-900 px-5 py-2 "
+                    ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
+                    : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
                 onClick={() => handleCategorySelect("SEMINAR HALL")}
               >
@@ -349,19 +349,22 @@ const Gallery = () => {
               />
             ))}
           </div>
+
           {selectedImage && (
-            <div class="fixed top-0 left-0 w-full h-full mt-[5rem] scale-75 flex justify-center items-center">
-              <img
-                src={selectedImage}
-                alt="Selected"
-                className="relative max-w-6xl max-h-6xl object-contain  "
-              />
-              <button
-                onClick={handleCloseModal}
-                className=" relative -right-[4rem] -top-[24rem] text-white cursor-pointer bg-transparent scale-150 h-8 w-8 p-2 bg-Third rounded-full "
-              >
-                <IoClose />
-              </button>
+            <div className="fixed -top-[5rem]  left-0 w-full h-full mt-[5rem] scale-75 flex justify-center items-center z-50 0 ">
+              <div className="max-w-4xl max-h-4xl relative  ">
+                <img
+                  src={selectedImage}
+                  alt="Selected"
+                  className="w-full h-full object-contain"
+                />
+                <button
+                  onClick={handleCloseModal}
+                  className="absolute top-5 right-5 text-gray-800 cursor-pointer bg-transparent scale-150 h-8 w-8 p-2 bg-white shadow-lg rounded-primary  "
+                >
+                  <IoClose />
+                </button>
+              </div>
             </div>
           )}
         </div>

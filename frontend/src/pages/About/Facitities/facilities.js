@@ -61,7 +61,7 @@ function Facilities() {
       >
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className=" group fixed scale-150 bottom-10 right-10 cursor-pointer bg-red-400 p-2 rounded-full text-white z-50 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />

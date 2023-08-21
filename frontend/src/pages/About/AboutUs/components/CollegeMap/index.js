@@ -12,9 +12,7 @@ const CollegeMap = () => {
   const [lastClickTime, setLastClickTime] = useState(0);
 
   const handleZoom = (event) => {
-    // Calculate the new zoom level based on the mouse wheel delta
     const newZoom = zoomLevel - event.deltaY * 0.001;
-    // Limit the zoom level between 0.1 and 3
     const clampedZoom = Math.min(Math.max(newZoom, 0.1), 3);
     setZoomLevel(clampedZoom);
   };
@@ -47,7 +45,6 @@ const CollegeMap = () => {
   };
 
   useEffect(() => {
-    // Apply CSS transformations to scale and translate the image based on zoomLevel and offset
     if (mapRef.current) {
       mapRef.current.style.transform = `scale(${zoomLevel}) translate(${offset.x}px, ${offset.y}px)`;
     }
@@ -55,7 +52,7 @@ const CollegeMap = () => {
 
   return (
     <div className="p-6 h-[50rem]">
-      <h1 className="text-center text-5xl font-bold leading-8 text-gray-900">
+      <h1 className="text-center  text-gray-900 antialiased tracking-normal font-sans text-5xl font-semibold leading-[1.3]  mb-3">
         College Layout
       </h1>
       <Card extra="-top-[10rem]">

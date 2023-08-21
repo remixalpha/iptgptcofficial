@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 
 import Illu1 from "../../../../../assets/images/section/AboutUs/explain.jpg";
 import Illu2 from "../../../../../assets/images/section/AboutUs/tech1.jpg";
@@ -12,7 +12,7 @@ export default function About() {
         <img src={Illu1} alt="" className="" />
       </div>
 
-      <p className="mt-4 text-gray-900 leading-8  text-justify text-xl ">
+      <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
         Nestled within a luscious green forest cover stretching over kilometres,
         Institute of Printing Technology and Government Polytechnic College was
         established in 1967 by the Govt. of Kerala under the department of
@@ -20,7 +20,7 @@ export default function About() {
         and affiliated to SBTE (Affiliation No.: SBTE101901).
       </p>
 
-      <p className="mt-4 text-gray-900 leading-8 text-justify text-xl ">
+      <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
         What started as an Institute of Printing Technology, developed and
         evolved to be one of the major centres of excellence in Technical
         Education with the incorporation of the Department of Electronics
@@ -37,7 +37,7 @@ export default function About() {
         <img src={Illu3} alt="" className="" />
       </div>
 
-      <p className="mt-4 text-gray-900 leading-8  text-justify text-xl ">
+      <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
         Surrounded on all sides by historic centres and icons of culture and
         education such as the Kerala Kalamandalam at Cheruthuruthi, deemed to be
         University of Art and Culture, the Regional Agricultural Research
@@ -48,7 +48,7 @@ export default function About() {
         a landmark in the academic and technical progress of the region.
       </p>
 
-      <p className="mt-4 text-gray-900 leading-8 text-justify text-xl ">
+      <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
         Needless to say, the college is particularly proud of its Alumni
         Association that comprises of many distinguished personalities including
         Vice-chancellors of Universities and Engineers at leading companies like
@@ -69,7 +69,7 @@ export default function About() {
         <img src={Illu5} alt="" className="" />
       </div>
 
-      <p className="mt-4 text-gray-900 leading-8  text-justify text-xl ">
+      <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
         The campus is well connected by air, railway and road transport and can
         boast of the Shoranur Railway Station, one of the major railway
         junctions in the state and the Pattambi Railway Station nearby.
