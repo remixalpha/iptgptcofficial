@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "./Card/index";
-import COMPUTER from "../../../../../assets/images/section/Facilities/computer.jpg";
-import ELECTRONICS from "../../../../../assets/images/section/Departments/ele.jpg";
-import PRINTING from "../../../../../assets/images/section/Departments/print.jpg";
+import COMPUTER from "../../../../../assets/images/section/Departments/Computer.jpg";
+import ELECTRONICS from "../../../../../assets/images/section/Departments/Electronics.jpg";
+import PRINTING from "../../../../../assets/images/section/Departments/Printing.jpg";
 
 // import Swiper core and required modules
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -21,7 +21,6 @@ const subjects = [
   {
     id: 1,
     name: "CARPENTRY",
-    href: "#",
     imageSrc: COMPUTER,
     imageAlt: "CARPENTRY",
     Des: "  Carpentry is a skilled trade and a craft in which the primary work performed is the cutting, shaping and installation of building materials during the construction of buildings, ships,timber bridges, concrete formwork, etc.",
@@ -29,15 +28,13 @@ const subjects = [
   {
     id: 2,
     name: "FITTING",
-    href: "#",
     imageSrc: ELECTRONICS,
     imageAlt: "FITTING",
-    Des: " in engineering bench work and fitting have an important role to play to complete and finish a job in a desired accuracy. fitting is the assembling together of arts and removing metals to secure the necessary fit and may or may not be carried out at bench ot out at the bench.",
+    Des: " In engineering bench work and fitting have an important role to play to complete and finish a job in a desired accuracy. fitting is the assembling together of arts and removing metals to secure the necessary fit and may or may not be carried out at bench ot out at the bench.",
   },
   {
     id: 3,
     name: "SHEET METAL",
-    href: "#",
     imageSrc: PRINTING,
     imageAlt: "SHEET METAL",
     Des: "Sheet metal work is generally regards as the working of sheet from 16 gauge down to 30 gauge with hand tools and simple machines by cutting and forming into shape the joining them by soldering riveting etc.",
@@ -45,13 +42,22 @@ const subjects = [
   {
     id: 4,
     name: "Graphics",
-    href: "#",
     imageSrc: PRINTING,
     imageAlt: "Graphics",
     Des: "  The subject of 'Engineering Graphics' has become an indispensable tool for Engineers, Technocrats, Architects, Draftsmen, Surveyors, Designers and many other professionals in the recent times.",
   },
 ];
 export default function Section() {
+  const [expandedSubjects, setExpandedSubjects] = useState([]);
+
+  const toggleDescription = (id) => {
+    if (expandedSubjects.includes(id)) {
+      setExpandedSubjects(expandedSubjects.filter((item) => item !== id));
+    } else {
+      setExpandedSubjects([...expandedSubjects, id]);
+    }
+  };
+
   return (
     <div className=" bg-white w-[90rem] mx-auto my-10  lg:px-20 scale-100 sm:py-2">
       <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
@@ -74,7 +80,7 @@ export default function Section() {
           {subjects.map((items) => (
             <SwiperSlide key={items.id} className="py-8 px-5 ">
               <Card>
-                <div className="group relative">
+                <div className="group relative border border-gray-800 rounded-primary">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-primary group-hover:rounded-none bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                     <img
                       src={items.imageSrc}
@@ -83,10 +89,10 @@ export default function Section() {
                     />
                   </div>
 
-                  <div className="mt-4 flex justify-between p-6">
+                  <div className="mt-4 flex flex-col p-8">
                     <div>
-                      <h3 className="text-xl font-bold text-navy-700">
-                        <a href={items.href}>
+                      <h3 className="text-xl font-bold text-navy-900">
+                        <a>
                           <span
                             aria-hidden="true"
                             className="absolute inset-0"
@@ -94,8 +100,20 @@ export default function Section() {
                           {items.name}
                         </a>
                       </h3>
-                      <p className="mt-1 text-sm text-gray-700">{items.Des}</p>
+                      <p className="block antialiased font-sans text-sm leading-relaxed text-justify font-normal text-gray-800">
+                        {expandedSubjects.includes(items.id)
+                          ? items.Des
+                          : `${items.Des.substring(0, 200)} ...`}
+                      </p>
                     </div>
+                    {items.Des.length > 100 && (
+                      <button
+                        onClick={() => toggleDescription(items.id)}
+                        className="self-end text-navy-900 font-bold  focus:outline-none mt-2 z-50"
+                      >
+                        {expandedSubjects.includes(items.id) ? "Less" : "More"}
+                      </button>
+                    )}
                   </div>
                 </div>
               </Card>

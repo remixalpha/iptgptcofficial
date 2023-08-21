@@ -5,7 +5,7 @@ import Illu2 from "../../../../../assets/images/section/AboutUs/tech1.jpg";
 
 export default function MotoAim() {
   return (
-    <div className=" relative  grid grid-cols-1 max-w-2xl  items-center gap-x-40 gap-y-20 mx-8 bg-white mb-4  sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+    <div className=" relative  grid grid-cols-1 max-w-2xl  items-center gap-x-40 gap-y-[5rem] mx-8 bg-white mb-4  sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
       <div className=" sm:gap-6 lg:gap-8">
         <img src={Illu1} alt="" className="" />
       </div>

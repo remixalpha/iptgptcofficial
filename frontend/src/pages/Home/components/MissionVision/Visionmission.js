@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Mission from "../../../../assets/images/section/mission3.jpg";
-import About from "../../../../assets/images/section/vision.jpg";
+import Mission from "../../../../assets/images/section/Home/mission.jpg";
+import About from "../../../../assets/images/section/Home/vision.jpg";
 
 export default function MissionVision() {
   return (
-    <div className=" relative -top-10 mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-40 px-4   sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+    <div className=" relative -top-10 mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-40  gap-y-[5rem] px-4   sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
       <div className=" sm:gap-6 lg:gap-8">
         <img src={About} alt="" className="" />
       </div>

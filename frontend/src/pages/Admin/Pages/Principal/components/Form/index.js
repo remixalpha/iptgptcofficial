@@ -11,7 +11,7 @@ import {
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import Principal1 from "../../../../../../assets/images/section/asamis.jpeg";
+import Principal1 from "../../../../../../assets/images/section/Home/Principal.jpeg";
 
 const products = [
   {

@@ -11,7 +11,7 @@ export default function Content() {
           className="h-full w-full object-cover object-center"
         />
       </div>
-      <p className="relative scale-95  text-justify text-gray-800 leading-8 text-xl min-h-[200px] flex-grow">
+      <p className="relative scale-95  text-justify text-gray-900  min-h-[200px] flex-grow  block antialiased font-sans text-xl font-normal leading-relaxed  ">
         The General Department began to function as a fully fledged unit with
         the incorporation of the department of Electronics Engineering and
         Computer Engineering to the already existing Department of Printing

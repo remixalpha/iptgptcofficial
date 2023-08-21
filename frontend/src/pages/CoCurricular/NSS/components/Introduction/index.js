@@ -1,6 +1,6 @@
 import React from "react";
 import Librarys from "../../../../../assets/images/language-removebg-preview.png";
-import InstructorImage from "../../../../../assets/images/section/Departments/Printing/Praveen.jpg";
+import InstructorImage from "../../../../../assets/images/section/Departments/Printing/Staff/Praveen.jpg";
 import { FiChevronRight } from "react-icons/fi";
 
 const Intro = [

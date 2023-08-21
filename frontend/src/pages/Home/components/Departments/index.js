@@ -1,7 +1,7 @@
 import Card from "./Card/index";
-import COMPUTER from "../../../../assets/images/section/Departments/computercard.jpg";
-import ELECTRONICS from "../../../../assets/images/section/Departments/ele.jpg";
-import PRINTING from "../../../../assets/images/section/Departments/print.jpg";
+import COMPUTER from "../../../../assets/images/section/Departments/Computer.jpg";
+import ELECTRONICS from "../../../../assets/images/section/Departments/Electronics.jpg";
+import PRINTING from "../../../../assets/images/section/Departments/Printing.jpg";
 import { FiChevronRight } from "react-icons/fi";
 
 const Department = [
@@ -32,7 +32,7 @@ const Department = [
 ];
 export default function Reference() {
   return (
-    <div className="relative -top-10 bg-white scale-110 sm:py-32 ">
+    <div className="relative -top-10 scale-110 sm:py-32 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
           Departments
@@ -41,12 +41,15 @@ export default function Reference() {
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           {Department.map((item) => (
             <Card>
-              <div key={Department.id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden  rounded-primary group-hover:rounded-none  bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
+              <div
+                key={Department.id}
+                className="group relative border border-gray-800 rounded-primary"
+              >
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden  rounded-primary group-hover:rounded-none  bg-white lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                   <img
                     src={item.imageSrc}
                     alt={item.imageAlt}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    className="h-full w-full object-contain lg:h-full lg:w-full rounded-primary mt-4"
                   />
                 </div>
 
@@ -61,11 +64,12 @@ export default function Reference() {
                     </p>
                   </div>
                 </div>
+
                 <a href={item.href}>
                   <div className="flex flex-row relative -left-4 mb-9 -mt-6 scale-75 ">
                     <button
                       type="submit"
-                      className=" flex w-[10rem] items-center justify-center rounded-md  bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       Read More
                     </button>{" "}

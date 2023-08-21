@@ -1,5 +1,5 @@
 import Card from "../Card";
-import Principal from "../../../../../assets/images/section/asamis.jpeg";
+import Principal from "../../../../../assets/images/section/Home/Principal.jpeg";
 import Member from "../../../../../assets/images/section/Departments/Office/Kamarunnisa.jpg";
 import { UserIcon } from "@heroicons/react/24/outline";
 const Governers = [

@@ -1,5 +1,5 @@
 import React from "react";
-import principalImage from "../../../../assets/images/section/asamis.jpeg";
+import principalImage from "../../../../assets/images/section/Home/Principal.jpeg";
 
 const principal = [
   {

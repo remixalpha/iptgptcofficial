@@ -194,7 +194,7 @@ export default function ContactUs() {
                   </div>
                   <button
                     type="submit"
-                    className="focus:outline-none bg-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 rounded text-white px-8 py-3 text-sm leading-6"
+                    className="focus:outline-none bg-red-400  transition duration-150 ease-in-out hover:bg-orange-300 rounded text-white px-8 py-3 text-sm leading-6"
                   >
                     Submit
                   </button>

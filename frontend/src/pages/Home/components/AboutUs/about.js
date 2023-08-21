@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import About from "../../../../assets/images/section/about1.svg";
+import About from "../../../../assets/images/section/Home/aboutus.jpg";
 import { FiChevronRight } from "react-icons/fi";
 
 export default function AboutUS() {

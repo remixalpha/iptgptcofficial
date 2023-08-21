@@ -1,5 +1,5 @@
 import React from "react";
-import HODImage from "../../../../../assets/images/section/Departments/Printing/Anoop.jpg";
+import HODImage from "../../../../../assets/images/section/Departments/Printing/Staff/Anoop.jpg";
 
 const HOD = [
   {
@@ -7,7 +7,7 @@ const HOD = [
     Post: "HOD",
     Qualification: "M Tech,FIE",
     imageSrc: HODImage,
-    imageAlt: "Electronics HOD of IPT & GPTC Shoranur",
+    imageAlt: "Printing Department HOD of IPT & GPTC Shoranur",
     href: "#",
   },
 ];

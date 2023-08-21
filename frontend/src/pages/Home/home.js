@@ -13,7 +13,6 @@ import Departments from "./components/Departments/index";
 import ContactUS from "./components/ContactUs/index";
 
 import Footer from "../../components/Footer/index";
-import Card from "../../components/Card/index";
 
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -36,17 +35,6 @@ export default function Home() {
     };
   }, []);
 
-  function isOpeningTime() {
-    const currentTime = new Date();
-    const openingTime = new Date();
-    const closingTime = new Date();
-
-    openingTime.setHours(8, 30, 0);
-    closingTime.setHours(17, 0, 0);
-
-    return currentTime >= openingTime && currentTime <= closingTime;
-  }
-
   return (
     <div className="relative min-h-screen overflow-hidden ">
       <div className="mx-auto">
@@ -56,21 +44,6 @@ export default function Home() {
         <div>
           <BannerSlider />
         </div>
-
-        {/* Display the opening status */}
-        <Card extra="  -top-[20rem] z-50 ">
-          <div className="absolute inset-0 flex items-center justify-center text-white ">
-            {" "}
-            <div
-              className={`opening-status ${
-                isOpeningTime() ? "open" : "closed"
-              }`}
-            >
-              {isOpeningTime() ? "Open" : "Closed"}
-            </div>
-          </div>
-        </Card>
-        {/* <div className="water-droplets" /> */}
       </div>
 
       <div
@@ -99,7 +72,7 @@ export default function Home() {
         <div>
           <Reference />
         </div>
-        <div>
+        <div className="">
           <Departments />
         </div>
         <div>

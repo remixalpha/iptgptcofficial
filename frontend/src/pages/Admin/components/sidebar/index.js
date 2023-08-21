@@ -2,9 +2,9 @@ import { Fragment, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../assets/images/logos/ipt.png";
-import User from "../../../../assets/images/section/Departments/computer/Saani.jpg";
+import User from "../../../../assets/images/section/Departments/computer/Staff/Saani.jpg";
 
-import { CiUser, CiLogout } from "react-icons/ci";
+import { CiUser, CiLogout, CiHome } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const user = {
@@ -36,7 +36,7 @@ const navigation = {
     {
       id: "home",
       name: "Home",
-      icon: CiUser,
+      icon: CiHome,
       href: "/adminhome",
       current: true,
     },
@@ -129,26 +129,38 @@ export default function Sidebar() {
 
         <Popover.Group className="hidden lg:flex lg:gap-x-10">
           {navigation.categories.map((categories) => (
-            <div key={categories.name} className="relative group">
-              <a
-                href={categories.href}
-                onClick={() => handleItemClick(categories.name)}
-                className={classNames(
-                  activeItem === categories.name
-                    ? "text-gray-900  text-lg  font-bold   transition-all duration-300 ease-in-out "
-                    : "text-white   text-lg  font-bold   hover:text-md  ",
-                  "rounded-full font-bold   px-3 py-2 text-sm  transition-all duration-300 ease-in-out "
-                )}
-                aria-current={categories.current ? "page" : undefined}
-              >
-                {categories.name}
-              </a>
-              <span
-                className={classNames(
-                  "absolute bottom-0 top-6 left-3  h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
-                  "group-hover:w-10"
-                )}
-              />
+            <div
+              key={categories.name}
+              className="relative group flex flex-row  "
+            >
+              <div className="relative -left-3">
+                <categories.icon
+                  className="h-6 w-6  text-gray-600 "
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="">
+                <a
+                  href={categories.href}
+                  onClick={() => handleItemClick(categories.name)}
+                  className={classNames(
+                    activeItem === categories.name
+                      ? "text-gray-900  text-lg  font-bold   transition-all duration-300 ease-in-out "
+                      : "text-white   text-lg  font-bold   hover:text-md  ",
+                    "rounded-full font-bold    py-2 text-sm  transition-all duration-300 ease-in-out "
+                  )}
+                  aria-current={categories.current ? "page" : undefined}
+                >
+                  {categories.name}
+                </a>
+
+                <span
+                  className={classNames(
+                    "absolute bottom-0 top-6 left-3  h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
+                    "group-hover:w-10"
+                  )}
+                />
+              </div>
             </div>
           ))}
         </Popover.Group>
@@ -159,7 +171,7 @@ export default function Sidebar() {
               {/* Profile dropdown */}
 
               <Popover className="relative">
-                <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+                <Popover.Button className="inline-flex items-center relative -right-[5rem] text-sm font-semibold leading-6 text-gray-900">
                   <div>
                     <div
                       className="relative flex max-w-xs items-center rounded-full
