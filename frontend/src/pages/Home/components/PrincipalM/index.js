@@ -1,5 +1,6 @@
 import React from "react";
 import principalImage from "../../../../assets/images/section/Home/Principal.jpeg";
+import "./style.css";
 
 const principal = [
   {
@@ -49,6 +50,8 @@ export default function Principal() {
             alignItems: "center",
           }}
         >
+          <div className="pattern" />
+
           {principal.map((principal) => (
             <div key={principal.name} className="group relative -top-20 ">
               <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">

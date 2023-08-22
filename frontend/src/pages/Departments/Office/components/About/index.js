@@ -1,7 +1,7 @@
 import React from "react";
 
-import Illu1 from "../../../../../assets/images/section/AboutUs/explain.jpg";
-import Illu2 from "../../../../../assets/images/section/AboutUs/tech1.jpg";
+import Illu1 from "../../../../../assets/images/section/Departments/Office/whatarewe.jpg";
+import Illu2 from "../../../../../assets/images/section/Departments/Office/whatweserve.jpg";
 
 export default function About() {
   return (
@@ -9,11 +9,11 @@ export default function About() {
       <div className=" sm:gap-6 lg:gap-8">
         <img src={Illu1} alt="" className="" />
       </div>
-      <div>
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+      <div className="space-y-9 group  border  rounded-primary p-8 ">
+        <h2 className=" text-gray-900 sm:text-4xl  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           WHAT ARE WE ?
-        </h1>
-        <p className="mt-4 text-gray-900 leading-8  text-justify text-xl ">
+        </h2>
+        <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
           A Team of highly professional and hardworking employees who cordially
           perform their respected duties under the supervision of a
           Superintendent and the authority of the honourable Principal of this
@@ -22,11 +22,11 @@ export default function About() {
           most professionalism.
         </p>
       </div>
-      <div>
-        <h1 className="text-4xl  font-bold tracking-tight text-gray-900 sm:text-4xl">
+      <div className="space-y-9 group  border  rounded-primary p-8 ">
+        <h2 className=" text-gray-900 sm:text-4xl  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           WHAT WE SERVE ?
-        </h1>
-        <p className="mt-4 text-gray-900 leading-8 text-justify text-xl ">
+        </h2>
+        <p className="mt-4  text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800 ">
           Service is a part of Duty, Not an offering this remains the undeniable
           motto of this office and each staff taking responsibility one after
           the other holds the spirit of making the work at office as a team

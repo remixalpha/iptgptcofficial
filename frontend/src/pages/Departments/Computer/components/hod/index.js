@@ -1,5 +1,7 @@
 import { useState } from "react";
 import HODImage from "../../../../../assets/images/section/Departments/computer/Staff/kadharsir.jpeg";
+import "./style.css";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 const HOD = [
   {
@@ -12,73 +14,90 @@ const HOD = [
   },
 ];
 
-export default function Hod() {
-  return (
-    <div className="relative grid grid-cols-1 mx-auto space-y-10  max-w-2xl  items-center mb-20   gap-x-2 px-4 sm:mb-20   md:max-w-7xl md:grid-cols-1    lg:max-w-7xl lg:grid-cols-2 xl:max-w-7xl xl:grid-cols-2">
-      <p className=" relative scale-95  text-justify text-gray-900 leading-8 text-xl ">
-        Computer Engineering Department was established in 1989. We have an
-        annual intake of 60 with additional 10% for lateral entry students. Our
-        laboratories are well equipped with new generation Computers and
-        softwares to endure students with rapidly changing technologies. The
-        Department guides and molds the students to become eminent computer
-        engineers who have sound technical and management skills. Students are
-        given opportunities to develop their personality along with technical
-        skills. Department highly promote and provides support to student's
-        innovative ideas. Department organises Industrial visits at various
-        Companies that have high turnover. The students are also provided with
-        various training to develop soft skill, communication skill, teamwork
-        and lifelong learning skill as part of ASAP. As the learning method is
-        being outcome based which makes the transition effortless from
-        institution to industry. The Computer Engineering Association conducts
-        and co-ordinates various programs like seminars, exhibitions etc. In
-        order to gather ideas from the industry. the association conducts
-        various industry interaction programmes. It also demands students to
-        present papers on various topics during association meetings to make
-        sure that they are actively participating. Majority of students from
-        this department are getting placements in good IT companies after
-        completing their course of study. We are maintaining a good relation
-        with alumni which helps the students for better prospects and
-        improvement of quality
-      </p>
+const Content = [
+  {
+    id: 1,
+    Des: "Electronics Department established in the year 1988. The annual intake is 60 with an additional 10% lateral entry students at second year onwards. We are following Outcome Based Education. The teaching methodology combines the standard methods of education lecturers, tutorials, practical using various soft wares, written assignments, tests, project work and students presentations. The students undergo in plant training at various industries, like BSNL KELTRON Doordharsan, All India Radio etc. Programs are conducted for students under finishing school and visiting faculty schemes to cope with present industrial requirements. Also there are classes under scholor support programs to train accademically weaker students. Entrepreneurship development activities are conducting under IEDC. The Electronics Association of the department is one of the most vibrant association in college. The complete planning and execution of the activities of the association is carried out by the students in consultation with the faculty members. The main motivation is to inculate a sense of responsibility, leadership qualities, team management and practical experience of an event management for the overall personality development of the students. The end result of any program is the placement and majority of our students are placed in reputed organisations. Creating an engaged, supportive alumni network is crucial to every department's success. Our Alumni play an active role in voluntary programs like mentoring students in their areas of expertise and best practices in a given field.",
+  },
+];
 
+export default function Hod() {
+  const [expandedSubjects, setExpandedSubjects] = useState([]);
+
+  const toggleDescription = (id) => {
+    if (expandedSubjects.includes(id)) {
+      setExpandedSubjects(expandedSubjects.filter((item) => item !== id));
+    } else {
+      setExpandedSubjects([...expandedSubjects, id]);
+    }
+  };
+
+  return (
+    <div className="relative flex flex-col-reverse  mb-20 lg:mb-auto mx-auto  max-w-2xl  items-center  gap-x-2 px-4  sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
+      {Content.map((items) => (
+        <div key={items.id}>
+          <p className="mt-4 text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800  border  rounded-primary p-8  ">
+            {expandedSubjects.includes(items.id)
+              ? items.Des
+              : `${items.Des.substring(0, 1100)} ...`}
+          </p>
+
+          {items.Des.length > 100 && (
+            <button
+              onClick={() => toggleDescription(items.id)}
+              className="self-end text-navy-900 font-bold  focus:outline-none relative -top-5 -right-[35rem] z-50 hover:-top-7 transition-all ease-in-out duration-300 "
+            >
+              {expandedSubjects.includes(items.id) ? (
+                <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                  <IoIosArrowUp />
+                </div>
+              ) : (
+                <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                  <IoIosArrowDown />
+                </div>
+              )}
+            </button>
+          )}
+        </div>
+      ))}
       <div
-        className=" lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0"
+        className=" lg:grid lg:grid-cols-3 lg:gap-x-4 lg:space-y-0 bg-gray-100 rounded-primary relative h-[40rem] scale-75  sm:scale-90 lg:scale-100  "
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        {HOD.map((item) => (
-          <div key={item.name} className="group relative ">
-            <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-[3rem] bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300">
-              {" "}
+        <div className="pattern" />
+        {HOD.map((items) => (
+          <div key={items.name} className="group relative -top-20 ">
+            <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
               <img
-                src={item.imageSrc}
-                alt={item.imageAlt}
+                src={items.imageSrc}
+                alt={items.imageAlt}
                 className="h-full w-full object-cover object-center"
               />
             </div>
             <h1
-              className="mt-5 text-4xl font-semibold text-gray-900"
+              className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
               style={{ textAlign: "center" }}
             >
-              <a href={item.href}>
+              <a href={items.href}>
                 <span className="absolute inset-0" />
-                {item.name}
+                {items.name}
               </a>
             </h1>
             <p
-              className="mt-1 text-xl text-gray-500"
+              className=" block antialiased font-sans text-2xl font-normal  text-gray-800"
               style={{ textAlign: "center" }}
             >
-              {item.Post}
+              {items.Post}
             </p>
             <p
-              className="mt-1 text-sm text-gray-500"
+              className="block antialiased font-sans text-lg font-normal  text-gray-700"
               style={{ textAlign: "center" }}
             >
-              {item.Qualification}
+              {items.Qualification}
             </p>
           </div>
         ))}

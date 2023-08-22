@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Card from "./Card/index";
 import ENGLISH from "../../../../../assets/images/section/Departments/General department/Subjects/English.jpg";
 import PHYSICS from "../../../../../assets/images/section/Departments/General department/Subjects/physics.jpg";
-import ELECTRONICS from "../../../../../assets/images/section/Departments/Electronics.jpg";
-import PRINTING from "../../../../../assets/images/section/Departments/Printing.jpg";
+import CHEMISTRY from "../../../../../assets/images/section/Departments/General department/Subjects/chemistry.jpg";
+import MATHS from "../../../../../assets/images/section/Departments/General department/Subjects/maths.jpg";
+import HPE from "../../../../../assets/images/section/Departments/General department/Subjects/ph.jpg";
 
 // import Swiper core and required modules
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -39,7 +40,7 @@ const subjects = [
     id: 3,
     name: "Chemistry",
     href: "#",
-    imageSrc: PRINTING,
+    imageSrc: CHEMISTRY,
     imageAlt: "Chemistry",
     Des: "In the scope of its subject, chemistry occupies an intermediate position between physics and biology.It is sometimes called the central science because it provides a foundation for understanding both basic and applied scientific disciplines at a fundamental level.",
   },
@@ -47,7 +48,7 @@ const subjects = [
     id: 4,
     name: "Maths",
     href: "#",
-    imageSrc: PRINTING,
+    imageSrc: MATHS,
     imageAlt: "Maths",
     Des: " Mathematics is the science that deals with the logic of shape, quantity and arrangement. Math is all around us, in everything we do. ... The needs of math arose based on the wants of society. The more complex a society, the more complex the mathematical needs.",
   },
@@ -55,7 +56,7 @@ const subjects = [
     id: 5,
     name: "H & PE",
     href: "#",
-    imageSrc: PRINTING,
+    imageSrc: HPE,
     imageAlt: "H & PE",
     Des: "Physical Education (PE) develops students' competence and confidence to take part in a range of physical activities that become a central part of their lives, both in and out of school. A high-quality PE curriculum enables all students to enjoy and succeed in many kinds of physical activity.",
   },
@@ -93,15 +94,15 @@ export default function Subject() {
             <SwiperSlide key={items.id} className="py-8 px-5 ">
               <Card>
                 <div className="group relative border border-gray-800 rounded-primary ">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-primary group-hover:rounded-none bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
+                  <div className="aspect-h-1 aspect-w-1 mt-4 w-full overflow-hidden rounded-primary group-hover:rounded-none bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                     <img
                       src={items.imageSrc}
                       alt={items.imageAlt}
-                      className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                      className="h-full w-full object-cover object-center  lg:h-full lg:w-full"
                     />
                   </div>
 
-                  <div className="mt-4 flex flex-col p-8">
+                  <div className="mt-2 flex flex-col p-8">
                     <div>
                       <h3 className="text-xl font-bold text-navy-900">
                         <a>
