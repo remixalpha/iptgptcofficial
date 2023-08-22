@@ -66,7 +66,7 @@ export default function Home() {
         <div>
           <VisionMission />
         </div>
-        <div className=" mt-16">
+        <div className=" mt-16 ">
           <PrincipalM />
         </div>
         <div>

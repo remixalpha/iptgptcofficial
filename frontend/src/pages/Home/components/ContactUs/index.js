@@ -27,7 +27,7 @@ const Calls = [
 ];
 export default function ContactUs() {
   return (
-    <div className="relative  bg-gray-100  sm:py-32  ">
+    <div className="relative  bg-gray-50  sm:py-32  rounded-t-[10rem]  ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Contact Us

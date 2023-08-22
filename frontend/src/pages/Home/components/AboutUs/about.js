@@ -36,11 +36,11 @@ export default function AboutUS() {
         <Link to="/about" className="flex flex-row ">
           <button
             type="submit"
-            className=" flex w-[10rem] items-center justify-center rounded-md  bg-red-400 px-8 py-3 text-base font-medium text-white hover:bg-gray-800  transition delay-150 duration-300 ease-in-out "
+            className="group flex w-[10rem] items-center justify-center rounded-md  bg-red-400 px-8 py-3 text-base font-medium text-white hover:bg-gray-800  transition delay-150 duration-300 ease-in-out "
           >
             Read More
           </button>
-          <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+          <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
             <FiChevronRight />
           </div>
         </Link>
