@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import General from "../../../../../assets/images/section/Facilities/canteen.jpg";
+import General from "../../../../../assets/images/section/Departments/General.jpg";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 const Content = [

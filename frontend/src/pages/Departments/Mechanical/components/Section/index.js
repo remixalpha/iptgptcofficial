@@ -4,12 +4,12 @@ import COMPUTER from "../../../../../assets/images/section/Departments/Computer.
 import ELECTRONICS from "../../../../../assets/images/section/Departments/Electronics.jpg";
 import PRINTING from "../../../../../assets/images/section/Departments/Printing.jpg";
 
-// import Swiper core and required modules
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -60,7 +60,7 @@ export default function Section() {
 
   return (
     <div className=" bg-white w-[90rem] mx-auto my-10  lg:px-20 scale-100 sm:py-2">
-      <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
+      <h1 className=" text-gray-900 sm:text-4xl text-center  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
         Sections
       </h1>
       <Swiper
@@ -81,7 +81,7 @@ export default function Section() {
             <SwiperSlide key={items.id} className="py-8 px-5 ">
               <Card>
                 <div className="group relative border border-gray-800 rounded-primary">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-primary group-hover:rounded-none bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-primary  bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                     <img
                       src={items.imageSrc}
                       alt={items.imageAlt}
@@ -111,7 +111,15 @@ export default function Section() {
                         onClick={() => toggleDescription(items.id)}
                         className="self-end text-navy-900 font-bold  focus:outline-none mt-2 z-50"
                       >
-                        {expandedSubjects.includes(items.id) ? "Less" : "More"}
+                        {expandedSubjects.includes(items.id) ? (
+                          <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                            <IoIosArrowUp />
+                          </div>
+                        ) : (
+                          <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                            <IoIosArrowDown />
+                          </div>
+                        )}
                       </button>
                     )}
                   </div>

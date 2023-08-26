@@ -6,12 +6,12 @@ import CHEMISTRY from "../../../../../assets/images/section/Departments/General 
 import MATHS from "../../../../../assets/images/section/Departments/General department/Subjects/maths.jpg";
 import HPE from "../../../../../assets/images/section/Departments/General department/Subjects/ph.jpg";
 
-// import Swiper core and required modules
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -73,9 +73,9 @@ export default function Subject() {
   };
   return (
     <div className=" bg-white w-[90rem] mx-auto mb-28  lg:px-20 scale-110 sm:py-2 ">
-      <h1 className="text-center text-4xl pb-10 font-bold leading-8 text-gray-900">
+      <h2 className=" text-gray-900 sm:text-4xl text-center  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
         Subjects
-      </h1>
+      </h2>
       <Swiper
         modules={[Navigation, Pagination, A11y, Autoplay]}
         spaceBetween={20}
@@ -124,7 +124,15 @@ export default function Subject() {
                         onClick={() => toggleDescription(items.id)}
                         className="self-end text-navy-900  focus:outline-none mt-2 z-50 font-bold "
                       >
-                        {expandedSubjects.includes(items.id) ? "Less" : "More"}
+                        {expandedSubjects.includes(items.id) ? (
+                          <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                            <IoIosArrowUp />
+                          </div>
+                        ) : (
+                          <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                            <IoIosArrowDown />
+                          </div>
+                        )}
                       </button>
                     )}
                   </div>
