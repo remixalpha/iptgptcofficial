@@ -58,7 +58,7 @@ function App() {
         <Route path="/bog" element={<BOG />} />
         <Route path="/contactus" element={<ContactUs />} />
 
-        <Route path="/adminhome" element={<AdminHome />} />
+        <Route path="/adminhome" element={<AdminHome />} />f
         <Route path="/admindepartments" element={<AdminDepartments />} />
         <Route path="/adminprincipal" element={<AdminPrincipal />} />
         <Route path="/adminhod" element={<AdminHOD />} />
