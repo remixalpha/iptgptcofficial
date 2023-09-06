@@ -4,10 +4,23 @@ import { IoIosArrowUp } from "react-icons/io";
 
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
+import { getRequest } from "../../../../utils/agent";
 
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  function fetchNotification() {
+    getRequest("/notification/")
+      .then(async (res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -22,6 +35,7 @@ export default function Home() {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
+    fetchNotification();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -36,7 +50,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300  ">
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed z-50 p-2 text-white scale-150 bg-blue-500 rounded-full cursor-pointer bottom-10 right-10 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />

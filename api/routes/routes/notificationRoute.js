@@ -5,7 +5,7 @@ import * as notificationController from "../controller/notificationController";
 import singleImageUploader from "../controller/imageController";
 // requests
 
-// router.post("/", demoController.getData);
+router.post("/", notificationController.getData);
 router.post(
   "/create",
   singleImageUploader,

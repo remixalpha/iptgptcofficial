@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home/home";
@@ -35,41 +35,55 @@ import AdminAICTE from "./pages/Admin/Pages/AICTE";
 import AdminGallery from "./pages/Admin/Pages/Gallery";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  useEffect(() => {
+    // Check if there's a token in local storage
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+  if (isLoggedIn === null) {
+    return <div>Loading...</div>;
+  }
   return (
     <BrowserRouter>
-      {token ? (
-        <Routes>
-          <Route path="/" exact element={<AdminHome />} />f
-          <Route path="/admindepartments" element={<AdminDepartments />} />
-          <Route path="/adminprincipal" element={<AdminPrincipal />} />
-          <Route path="/adminhod" element={<AdminHOD />} />
-          <Route path="/admincocurricular" element={<AdminCocurricular />} />
-          <Route path="/adminaicte" element={<AdminAICTE />} />
-          <Route path="/admingalery" element={<AdminGallery />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/admin" element={<Login />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/facility" element={<Facility />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/electronics" element={<Electronics />} />
-          <Route path="/computer" element={<Computer />} />
-          <Route path="/printing" element={<Printing />} />
-          <Route path="/general" element={<General />} />
-          <Route path="/mechanical" element={<Mechanical />} />
-          <Route path="/office" element={<Office />} />
-          <Route path="/ncc" element={<NCC />} />
-          <Route path="/nss" element={<NSS />} />
-          <Route path="/iedc" element={<IEDC />} />
-          <Route path="/asap" element={<ASAP />} />
-          <Route path="/scst" element={<SCST />} />
-          <Route path="/approvel" element={<Approvel />} />
-          <Route path="/bog" element={<BOG />} />
-          <Route path="/contactus" element={<ContactUs />} />
-        </Routes>
-      )}
+      <Routes>
+        {token ? (
+          <>
+            <Route path="/admin" exact index element={<AdminHome />} />
+            <Route path="/admindepartments" element={<AdminDepartments />} />
+            <Route path="/adminprincipal" element={<AdminPrincipal />} />
+            <Route path="/adminhod" element={<AdminHOD />} />
+            <Route path="/admincocurricular" element={<AdminCocurricular />} />
+            <Route path="/adminaicte" element={<AdminAICTE />} />
+            <Route path="/admingalery" element={<AdminGallery />} />
+          </>
+        ) : (
+          <>
+            <Route exact path="/" index element={<Home />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/facility" element={<Facility />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/electronics" element={<Electronics />} />
+            <Route path="/computer" element={<Computer />} />
+            <Route path="/printing" element={<Printing />} />
+            <Route path="/general" element={<General />} />
+            <Route path="/mechanical" element={<Mechanical />} />
+            <Route path="/office" element={<Office />} />
+            <Route path="/ncc" element={<NCC />} />
+            <Route path="/nss" element={<NSS />} />
+            <Route path="/iedc" element={<IEDC />} />
+            <Route path="/asap" element={<ASAP />} />
+            <Route path="/scst" element={<SCST />} />
+            <Route path="/approvel" element={<Approvel />} />
+            <Route path="/bog" element={<BOG />} />
+            <Route path="/contactus" element={<ContactUs />} />
+          </>
+        )}
+      </Routes>
     </BrowserRouter>
   );
 }

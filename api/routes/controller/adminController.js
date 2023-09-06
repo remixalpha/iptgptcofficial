@@ -141,3 +141,13 @@ export const createDept = async (req, res, next) => {
     next(err);
   }
 };
+export const getDept = async (req, res, next) => {
+  try {
+    let requests = await req.body;
+    console.log({ req: requests });
+    let doc = await departmentModel.find(req.body);
+    res.status(201).json({ status: true, doNotTrack: doc });
+  } catch (err) {
+    next(err);
+  }
+};

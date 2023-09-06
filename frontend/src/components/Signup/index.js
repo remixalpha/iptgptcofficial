@@ -59,7 +59,8 @@ export default function SignUp() {
                   if (res.statusText === "OK") {
                     localStorage.setItem("token", res.data.token);
                     console.log(res.data);
-                    navigate("/");
+                    navigate("/admin");
+                    window.location.reload();
                   } else {
                     console.log("not get response");
                   }

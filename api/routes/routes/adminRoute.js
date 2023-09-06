@@ -9,5 +9,5 @@ router.post("/", verify, adminController.getUsers);
 router.post("/create", adminController.createUser);
 router.post("/login", adminController.login);
 router.post("/dept", adminController.createDept);
-
+router.post("/getdept", adminController.getDept);
 export default router;
