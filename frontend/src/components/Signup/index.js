@@ -2,11 +2,13 @@ import Logo from "../../assets/images/logos/ipt.png";
 import { postLogin } from "../../utils/agent";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().required("Required").min(3, "Too Short!"),
 });
 export default function SignUp() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col items-center justify-center flex-1 min-h-screen px-6 py-12 bg-white lg:px-8 isolate ">
@@ -54,8 +56,10 @@ export default function SignUp() {
             onSubmit={(values) => {
               postLogin("/admin/login", values)
                 .then(async (res) => {
-                  if (res.statusText == "OK") {
+                  if (res.statusText === "OK") {
+                    localStorage.setItem("token", res.data.token);
                     console.log(res.data);
+                    navigate("/");
                   } else {
                     console.log("not get response");
                   }

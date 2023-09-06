@@ -4,6 +4,7 @@ import axios from "axios";
 const base_url = "http://localhost:7001/api";
 
 // backend
+export const token = localStorage.getItem("token");
 
 export const postLogin = async (url, body) => {
   try {

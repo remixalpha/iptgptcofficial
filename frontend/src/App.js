@@ -23,7 +23,7 @@ import ASAP from "./pages/CoCurricular/ASAP";
 import SCST from "./pages/Disclosure/SCST";
 import Approvel from "./pages/AICTE Related/Approvel";
 import BOG from "./pages/AICTE Related/Bog";
-
+import { token } from "./utils/agent";
 import ContactUs from "./pages/ContactUs";
 
 import AdminHome from "./pages/Admin/Pages/Home";
@@ -37,35 +37,39 @@ import AdminGallery from "./pages/Admin/Pages/Gallery";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/admin" element={<Login />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/facility" element={<Facility />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/electronics" element={<Electronics />} />
-        <Route path="/computer" element={<Computer />} />
-        <Route path="/printing" element={<Printing />} />
-        <Route path="/general" element={<General />} />
-        <Route path="/mechanical" element={<Mechanical />} />
-        <Route path="/office" element={<Office />} />
-        <Route path="/ncc" element={<NCC />} />
-        <Route path="/nss" element={<NSS />} />
-        <Route path="/iedc" element={<IEDC />} />
-        <Route path="/asap" element={<ASAP />} />
-        <Route path="/scst" element={<SCST />} />
-        <Route path="/approvel" element={<Approvel />} />
-        <Route path="/bog" element={<BOG />} />
-        <Route path="/contactus" element={<ContactUs />} />
-
-        <Route path="/adminhome" element={<AdminHome />} />f
-        <Route path="/admindepartments" element={<AdminDepartments />} />
-        <Route path="/adminprincipal" element={<AdminPrincipal />} />
-        <Route path="/adminhod" element={<AdminHOD />} />
-        <Route path="/admincocurricular" element={<AdminCocurricular />} />
-        <Route path="/adminaicte" element={<AdminAICTE />} />
-        <Route path="/admingalery" element={<AdminGallery />} />
-      </Routes>
+      {token ? (
+        <Routes>
+          <Route path="/" exact element={<AdminHome />} />f
+          <Route path="/admindepartments" element={<AdminDepartments />} />
+          <Route path="/adminprincipal" element={<AdminPrincipal />} />
+          <Route path="/adminhod" element={<AdminHOD />} />
+          <Route path="/admincocurricular" element={<AdminCocurricular />} />
+          <Route path="/adminaicte" element={<AdminAICTE />} />
+          <Route path="/admingalery" element={<AdminGallery />} />
+        </Routes>
+      ) : (
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/admin" element={<Login />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/facility" element={<Facility />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/electronics" element={<Electronics />} />
+          <Route path="/computer" element={<Computer />} />
+          <Route path="/printing" element={<Printing />} />
+          <Route path="/general" element={<General />} />
+          <Route path="/mechanical" element={<Mechanical />} />
+          <Route path="/office" element={<Office />} />
+          <Route path="/ncc" element={<NCC />} />
+          <Route path="/nss" element={<NSS />} />
+          <Route path="/iedc" element={<IEDC />} />
+          <Route path="/asap" element={<ASAP />} />
+          <Route path="/scst" element={<SCST />} />
+          <Route path="/approvel" element={<Approvel />} />
+          <Route path="/bog" element={<BOG />} />
+          <Route path="/contactus" element={<ContactUs />} />
+        </Routes>
+      )}
     </BrowserRouter>
   );
 }
