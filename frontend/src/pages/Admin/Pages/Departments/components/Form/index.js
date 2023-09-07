@@ -48,10 +48,12 @@ export default function Form({ departments }) {
   };
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
+    console.log({ selectedDepartment: selectedDepartment });
   };
   const handleSortOption = (e) => {
     setSortOption(e.target.value);
     console.log(setSortOption);
+    console.log({ sortOption: sortOption });
   };
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
@@ -249,7 +251,7 @@ export default function Form({ departments }) {
                       <Menu.Item key={option.name}>
                         {({ active }) => (
                           <a
-                            href={option.href}
+                            href={option}
                             className={classNames(
                               option.current
                                 ? "font-medium text-gray-900"
@@ -270,7 +272,7 @@ export default function Form({ departments }) {
               </Transition>
             </Menu>
             <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
-              <ul class=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
+              <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
                 {items.map((item) => (
                   <li
                     key={item.id}
