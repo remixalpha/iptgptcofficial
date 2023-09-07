@@ -13,7 +13,7 @@ export default function Home() {
     getRequest("/notification/")
       .then(async (res) => {
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          console.log(res.data.doNotTrack);
         } else {
           console.error("response not found");
         }
