@@ -104,7 +104,7 @@ export default function Form() {
   return (
     <form>
       {isEdit ? (
-        <div className=" xl:w-[55rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white">
+        <div className=" xl:w-[55rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
           <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 xl:grid-cols-2 ">
             <div className="col-2 flex justify-center  ">
               <div className="relative inline-block  ">
@@ -155,7 +155,7 @@ export default function Form() {
             <div className="sm:col-span-1">
               <label
                 htmlFor="departments"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
               >
                 Departments
               </label>
@@ -249,7 +249,7 @@ export default function Form() {
                     <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-9 shadow-xl">
                       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-lg font-medium text-gray-900">
+                          <Dialog.Title className="text-xl text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]">
                             Images
                           </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
@@ -298,7 +298,7 @@ export default function Form() {
                                       leaveFrom="transform opacity-100 scale-100"
                                       leaveTo="transform opacity-0 scale-95"
                                     >
-                                      <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-xl  bg-white shadow-lg ">
+                                      <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-xl  bg-white shadow-lg border ">
                                         <div className="py-1">
                                           {sortOptions.map((option) => (
                                             <Menu.Item key={option.name}>

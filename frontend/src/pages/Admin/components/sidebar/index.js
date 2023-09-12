@@ -4,7 +4,12 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../assets/images/logos/ipt.png";
 import User from "../../../../assets/images/section/Departments/computer/Staff/Saani.jpg";
 
-import { CiUser, CiLogout, CiHome } from "react-icons/ci";
+import { CiUser, CiLogout } from "react-icons/ci";
+import { IoIosToday } from "react-icons/io";
+import { BsPersonAdd } from "react-icons/bs";
+import { PiCertificate } from "react-icons/pi";
+import { TbPhotoEdit } from "react-icons/tb";
+import { GoHome } from "react-icons/go";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const user = {
@@ -36,49 +41,49 @@ const navigation = {
     {
       id: "home",
       name: "Home",
-      icon: CiHome,
+      icon: GoHome,
       href: "/adminhome",
       current: true,
     },
     {
       id: "departments",
       name: "Departments",
-      icon: CiUser,
+      icon: BsPersonAdd,
       href: "admindepartments",
       current: true,
     },
     {
       id: "principal",
       name: "Principal",
-      icon: CiUser,
+      icon: BsPersonAdd,
       href: "/adminprincipal",
       current: true,
     },
     {
       id: "hod",
       name: "HOD",
-      icon: CiUser,
+      icon: BsPersonAdd,
       href: "/adminhod",
       current: true,
     },
     {
       id: "co-curricular",
       name: "Co-Curricular",
-      icon: CiUser,
+      icon: BsPersonAdd,
       href: "/admincocurricular",
       current: true,
     },
     {
       id: "aicte certificate",
       name: "AICTE Certificate",
-      icon: CiUser,
+      icon: PiCertificate,
       href: "/adminaicte",
       current: true,
     },
     {
       id: "gallery",
       name: "Gallery",
-      icon: CiUser,
+      icon: TbPhotoEdit,
       href: "/admingalery",
       current: true,
     },
@@ -98,7 +103,7 @@ export default function Sidebar() {
   };
 
   return (
-    <header className="bg-First">
+    <header className="bg-black">
       <nav
         className="xl:mx-auto sm:mx-2 mx-2 flex max-w-7xl items-center justify-between p-8 lg:px-8  rounded-primary "
         aria-label="Global"
@@ -135,7 +140,11 @@ export default function Sidebar() {
             >
               <div className="relative -left-3">
                 <categories.icon
-                  className="h-6 w-6  text-gray-600 "
+                  className={
+                    activeItem === categories.id
+                      ? "h-2 w-2 text-black"
+                      : "h-6 w-6 text-white"
+                  }
                   aria-hidden="true"
                 />
               </div>
@@ -156,7 +165,7 @@ export default function Sidebar() {
 
                 <span
                   className={classNames(
-                    "absolute bottom-0 top-6 left-3  h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
+                    " bottombar absolute bottom-0 top-6 left-6  h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
                     "group-hover:w-10"
                   )}
                 />
@@ -182,7 +191,7 @@ export default function Sidebar() {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-10 w-10 rounded-full"
+                        className="h-12 w-12 rounded-full  "
                         src={user.imageUrl}
                         alt=""
                       />

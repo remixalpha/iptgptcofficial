@@ -50,7 +50,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300  ">
         {showScrollToTop && (
           <div
-            className="fixed z-50 p-2 text-white scale-150 bg-blue-500 rounded-full cursor-pointer bottom-10 right-10 "
+            className="fixed z-50 p-2 text-white scale-150 bg-black rounded-full cursor-pointer bottom-10 right-10 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />

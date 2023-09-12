@@ -28,12 +28,12 @@ export default function Aicte() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-First ">
+    <div className="relative min-h-screen overflow-hidden bg-black ">
       <div className="mx-auto">
         <Header />
       </div>
 
-      <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300 bg-lightPrimary ">
+      <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300 bg-white ">
         {showScrollToTop && (
           <div
             className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "

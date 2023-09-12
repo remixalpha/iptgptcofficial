@@ -21,7 +21,7 @@ export default function Form() {
   return (
     <form>
       <div className="space-y-12">
-        <div className="mt-10 grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 shadow-lg rounded-xl bg-white  ">
+        <div className="mt-10 grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
           <div className="mt-10 grid xl:grid-cols-1 grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-1 py-8 px-2 mx-12">
             <div className="col-2 flex justify-center  ">
               <div className="relative inline-block  ">

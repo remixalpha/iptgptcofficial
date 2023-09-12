@@ -35,6 +35,10 @@ export default function Form() {
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [items, setItems] = useState(initialItems);
+  const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+  const filteredItems = items.filter(
+    (item) => item.department === selectedSortOption.name
+  );
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -60,7 +64,7 @@ export default function Form() {
 
   return (
     <form>
-      <div className="xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white">
+      <div className="xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
         <div className="grid grid-cols-2  gap-x-[8rem] items-center  gap-y-8 ">
           {/* photo and name and department */}
           {isEdit ? (
@@ -115,7 +119,7 @@ export default function Form() {
                 <div className="m:col-span-1">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Name
                   </label>
@@ -133,7 +137,7 @@ export default function Form() {
                 <div className="sm:col-span-1">
                   <label
                     htmlFor="departments"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Departments
                   </label>
@@ -211,7 +215,7 @@ export default function Form() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl ">
+                <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl cursor-pointer  ">
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
@@ -221,12 +225,13 @@ export default function Form() {
                             className={classNames(
                               option.current
                                 ? "font-medium text-gray-900"
-                                : "text-gray-500",
+                                : "text-gray-800",
                               active
                                 ? "bg-gray-100 rounded-xl m-1 transition-all duration-300 "
                                 : "m-2",
                               "block px-4 py-2 text-sm"
                             )}
+                            onClick={() => setSelectedSortOption(option)}
                           >
                             {option.name}
                           </a>
@@ -239,7 +244,7 @@ export default function Form() {
             </Menu>
             <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
               <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                {items.map((item) => (
+                {filteredItems.map((item) => (
                   <li
                     key={item.id}
                     className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400  rounded-xl hover:shadow-md sm:pb-4"

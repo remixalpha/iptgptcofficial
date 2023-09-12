@@ -44,7 +44,11 @@ export default function Opening() {
         {isLoading ? (
           <div className="w-full h-full rounded-full bg-gray-300 animate-bounce transition-all duration-300 "></div>
         ) : (
-          <div className={`opening-status ${isOpen ? "open" : "closed"}`}>
+          <div
+            className={`opening-status antialiased tracking-normal font-sans  font-semibold leading-[1.3] ${
+              isOpen ? "open" : "closed"
+            }`}
+          >
             {isOpen ? "Open" : "Closed"}
           </div>
         )}

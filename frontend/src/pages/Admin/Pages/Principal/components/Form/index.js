@@ -56,7 +56,7 @@ export default function Form() {
   return (
     <form>
       {isEdit ? (
-        <div className=" xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white">
+        <div className=" xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
           <div className="grid grid-cols-2  gap-x-[8rem] gap-y-8 ">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 xl:grid-cols-2">
               <div className="col-2 flex justify-center  ">
@@ -109,7 +109,7 @@ export default function Form() {
                 <div className="m:col-span-1">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Name
                   </label>
@@ -127,7 +127,7 @@ export default function Form() {
                 <div className="m:col-span-1">
                   <label
                     htmlFor="qualification"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Qualification
                   </label>
@@ -143,12 +143,12 @@ export default function Form() {
                 </div>
               </div>
             </div>
-            <div>
-              <div className="">
+            <div className="space-y-10 ">
+              <div className=" ">
                 <div className="col-span-full">
                   <label
                     htmlFor="quote"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Quote
                   </label>
@@ -168,7 +168,7 @@ export default function Form() {
                 <div className="col-span-full">
                   <label
                     htmlFor="writer"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Writer
                   </label>
@@ -188,7 +188,7 @@ export default function Form() {
                 <div className="col-span-full">
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Message
                   </label>
