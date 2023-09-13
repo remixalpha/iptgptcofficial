@@ -6,6 +6,7 @@ export const createData = async (req, res, next) => {
       res.status(400).json({ status: false, doNotTrack: "file not found" });
     }
     req.body.fileUrl = req.file?.path;
+    console.log({req:req.body})
     let doc = await new staffModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });
   } catch (err) {

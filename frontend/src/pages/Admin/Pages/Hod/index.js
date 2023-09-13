@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+//icons
 import { IoIosArrowUp } from "react-icons/io";
-
+//components
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
+
+//backend
+import { getRequest } from "../../../../utils/agent";
 
 export default function Hod() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -22,10 +25,28 @@ export default function Hod() {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
+    fetchApi();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  //backend
+  const [hod, setHod] = useState([]);
+
+  function fetchApi() {
+    getRequest("/admin/getdept")
+      .then(async (res) => {
+        if (res) {
+          console.log(res.data.doNotTrack);
+          setHod(res.data.doNotTrack);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden  bg-black">
@@ -45,7 +66,7 @@ export default function Hod() {
         {/* Circles with opacity */}
 
         <div className=" mb-[15rem] scale-105 ">
-          <Form />
+          <Form hod={hod} />
         </div>
       </div>
     </div>

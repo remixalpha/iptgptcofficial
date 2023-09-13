@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import {
   PiUploadSimpleThin,
@@ -7,6 +8,9 @@ import {
 } from "react-icons/pi";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiOutlineLink } from "react-icons/ai";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import Logo from "../../../../../../assets/images/logos/iptlogomin.png";
+// backend
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -16,13 +20,32 @@ const notificationSchema = Yup.object().shape({
   notification: Yup.string().required("Required"),
 });
 
+// data
+
+const uploadedNotifications = [
+  {
+    id: 1,
+    content: "uploaded content",
+  },
+  {
+    id: 2,
+    content: "uploaded content",
+  },
+];
+
 export default function Form() {
+  const [open, setOpen] = useState(true);
   const [Myfile, setMyfile] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("file"); // Default selected option is "file"
+  const [selectedOption, setSelectedOption] = useState("file");
 
   const imgHandler = (event) => {
     setMyfile(event.target.files);
     console.log(event.target.files);
+  };
+
+  // Handle the sideFrame open
+  const handleToggleDeleteDialog = () => {
+    setOpen(!open);
   };
 
   return (
@@ -195,8 +218,23 @@ export default function Form() {
                 </div>
               </div>
             </div>
-
+            {/* buttons */}
             <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 transition-all duration-300 ">
+              {/* Delete button */}
+              <button className="group flex flex-col justify-end cursor-pointer">
+                <div className="relative">
+                  <PiTrashSimpleLight
+                    type="submit"
+                    className="h-10 w-10 p-1 text-navy-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
+                    aria-hidden="true"
+                    onClick={handleToggleDeleteDialog}
+                  />
+                  <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
+                    Delete
+                  </a>
+                </div>
+              </button>
+              {/* cancel button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -211,6 +249,7 @@ export default function Form() {
                   Cancel
                 </span>
               </button>
+              {/* Upload button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -227,6 +266,109 @@ export default function Form() {
               </button>
             </div>
           </div>
+
+          {/* sideForm */}
+
+          <Transition.Root show={open} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={setOpen}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-in-out duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in-out duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden">
+                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="transform transition ease-in-out duration-500 sm:duration-700"
+                      enterFrom="translate-x-full"
+                      enterTo="translate-x-0"
+                      leave="transform transition ease-in-out duration-500 sm:duration-700"
+                      leaveFrom="translate-x-0"
+                      leaveTo="translate-x-full"
+                    >
+                      <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
+                        <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-4 shadow-xl">
+                          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                            <div className="flex items-start justify-between">
+                              <Dialog.Title className="text-lg font-medium text-gray-900">
+                                Principals
+                              </Dialog.Title>
+                              <div className="ml-3 flex h-7 items-center">
+                                <button
+                                  type="button"
+                                  className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                                  onClick={() => setOpen(false)}
+                                >
+                                  <span className="absolute -inset-0.5" />
+                                  <span className="sr-only">Close panel</span>
+                                  <XMarkIcon
+                                    className="h-6 w-6"
+                                    aria-hidden="true"
+                                  />
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="mt-8">
+                              <div className="flow-root">
+                                <ul role="list" className="-my-6 space-y-4 ">
+                                  {uploadedNotifications.map((item) => (
+                                    <li
+                                      key={item.id}
+                                      className="flex py-6 px-4 bg-gray-50 rounded-xl hover:shadow-lg transition-all duration-300"
+                                    >
+                                      <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md ">
+                                        <img
+                                          src={Logo}
+                                          alt="IPT&GPTC LOGO"
+                                          className="h-full w-full object-cover object-center"
+                                        />
+                                      </div>
+
+                                      <div className="ml-4 flex flex-1 flex-col">
+                                        <div>
+                                          <div className="flex justify-between text-base font-medium text-gray-900">
+                                            <h3>
+                                              <a href={item.href}>
+                                                {item.name}
+                                              </a>
+                                            </h3>
+                                          </div>
+                                        </div>
+                                        <div className="flex flex-1 items-end justify-end text-sm">
+                                          <div className="">
+                                            <button
+                                              type="button"
+                                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                                            >
+                                              Remove
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
+                  </div>
+                </div>
+              </div>
+            </Dialog>
+          </Transition.Root>
         </form>
       )}
     </Formik>

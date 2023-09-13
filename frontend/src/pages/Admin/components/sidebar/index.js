@@ -42,7 +42,7 @@ const navigation = {
       id: "home",
       name: "Home",
       icon: GoHome,
-      href: "/adminhome",
+      href: "/admin",
       current: true,
     },
     {
