@@ -32,14 +32,14 @@ export default function Hod() {
   }, []);
 
   //backend
-  const [hod, setHod] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
   function fetchApi() {
     getRequest("/admin/getdept")
       .then(async (res) => {
         if (res) {
           console.log(res.data.doNotTrack);
-          setHod(res.data.doNotTrack);
+          setDepartments(res.data.doNotTrack);
         } else {
           console.error("response not found");
         }
@@ -66,7 +66,7 @@ export default function Hod() {
         {/* Circles with opacity */}
 
         <div className=" mb-[15rem] scale-105 ">
-          <Form hod={hod} />
+          <Form departments={departments} />
         </div>
       </div>
     </div>

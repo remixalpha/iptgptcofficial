@@ -19,6 +19,7 @@ import Principal1 from "../../../../../../assets/images/section/Home/Principal.j
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { postLogin } from "../../../../../../utils/agent";
+import { getRequest } from "../../../../../../utils/agent";
 
 // data
 const principal = [
@@ -44,13 +45,12 @@ export default function Form() {
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
+  // backend
+  const [Myfile, setMyfile] = useState([]);
 
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
-
-  // backend
-  const [Myfile, setMyfile] = useState([]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -62,6 +62,7 @@ export default function Form() {
     };
   };
 
+  //backend
   const imgHandler = (event) => {
     setMyfile(event.target.files);
     console.log(event.target.files);
@@ -69,7 +70,13 @@ export default function Form() {
 
   return (
     <Formik
-      initialValues={{ name: "", position: "" }}
+      initialValues={{
+        name: "",
+        Qualification: "",
+        quote: "",
+        writer: "",
+        message: "",
+      }}
       // validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
@@ -84,7 +91,7 @@ export default function Form() {
         });
 
         console.log({ formData: formData });
-        postLogin("/staff/create", formData)
+        postLogin("", formData)
           .then(async (res) => {
             if (res?.statusText === "OK") {
               console.log(res.data);
@@ -123,10 +130,11 @@ export default function Form() {
                         type="file"
                         key={fileInputKey}
                         className="sr-only"
-                        onChange={(e) => {
-                          setFileInputKey((prev) => prev + 1);
-                          handleFileChange(e);
-                        }}
+                        // onChange={(e) => {
+                        //   setFileInputKey((prev) => prev + 1);
+                        //   handleFileChange(e);
+                        // }}
+                        onChange={imgHandler}
                       />
                       <label
                         htmlFor="fileInput"
@@ -178,6 +186,9 @@ export default function Form() {
                           id="name"
                           name="name"
                           type="text"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.name}
                           autoComplete="name"
                           className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         />
@@ -196,7 +207,10 @@ export default function Form() {
                           id="qualification"
                           name="qualification"
                           type="text"
-                          autoComplete="qualification"
+                          autoComplete
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.Qualification}
                           className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -219,6 +233,9 @@ export default function Form() {
                           name="quote"
                           placeholder="Enter the Quote here"
                           rows={3}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.quote}
                           className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           defaultValue={""}
                         />
@@ -240,6 +257,9 @@ export default function Form() {
                           name="writer"
                           placeholder="Enter the Write here"
                           rows={3}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.writer}
                           className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           defaultValue={""}
                         />
@@ -261,6 +281,9 @@ export default function Form() {
                           name="message"
                           placeholder="Enter the message here"
                           rows={3}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.message}
                           className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           defaultValue={""}
                         />
@@ -269,53 +292,60 @@ export default function Form() {
                   </div>
                 </div>
               </div>
+
               {/* buttons */}
               <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
                 {/* Delete button */}
-                <div className="group flex flex-col justify-end cursor-pointer">
-                  <button className="relative">
-                    <PiTrashSimpleLight
-                      type="submit"
-                      className="h-10 w-10 p-1 text-navy-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
-                      aria-hidden="true"
-                      onClick={handleToggleDeleteDialog}
-                    />
-                    <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-                      Delete
-                    </a>
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  onClick={handleToggleDeleteDialog}
+                  className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer "
+                >
+                  <PiTrashSimpleLight
+                    type="submit"
+                    className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                    aria-hidden="true"
+                  />
+                  <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                    Delete
+                  </span>
+                </button>
                 {/* cancel button */}
-                <div className="group flex flex-col justify-end cursor-pointer">
-                  <button className="relative">
-                    <PiXLight
-                      type="submit"
-                      className="h-10 w-10 p-1 text-navy-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
-                      aria-hidden="true"
-                    />
-                    <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-                      Cancel
-                    </a>
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                >
+                  <PiXLight
+                    type="submit"
+                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                    aria-hidden="true"
+                  />
+                  <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                    Cancel
+                  </span>
+                </button>
                 {/* Upload button */}
-                <div className="group flex flex-col justify-end cursor-pointer">
-                  <button className="relative">
-                    <PiUploadSimpleThin
-                      type="submit"
-                      className="h-10 w-10 p-1 text-navy-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
-                      aria-hidden="true"
-                    />
-                    <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-                      Upload
-                    </a>
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                >
+                  <PiUploadSimpleThin
+                    type="submit"
+                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                    aria-hidden="true"
+                  />
+                  <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                    Update
+                  </span>
+                </button>
               </div>
             </div>
           ) : null}
 
-          {/* sideForm */}
+          {/* Uploaded Details*/}
           <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
               <Transition.Child

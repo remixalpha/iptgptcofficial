@@ -11,7 +11,9 @@ import { getRequest } from "../../../../utils/agent";
 export default function Departments() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-
+  //backend
+  const [departments, setDepartments] = useState([]);
+  //
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -31,8 +33,6 @@ export default function Departments() {
   }, []);
 
   //backend
-  const [departments, setDepartments] = useState([]);
-
   function fetchApi() {
     getRequest("/admin/getdept")
       .then(async (res) => {

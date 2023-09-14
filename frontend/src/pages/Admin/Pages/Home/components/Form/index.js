@@ -219,30 +219,32 @@ export default function Form() {
               </div>
             </div>
             {/* buttons */}
-            <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 transition-all duration-300 ">
+            <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
               {/* Delete button */}
-              <button className="group flex flex-col justify-end cursor-pointer">
-                <div className="relative">
-                  <PiTrashSimpleLight
-                    type="submit"
-                    className="h-10 w-10 p-1 text-navy-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
-                    aria-hidden="true"
-                    onClick={handleToggleDeleteDialog}
-                  />
-                  <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-                    Delete
-                  </a>
-                </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                onClick={handleToggleDeleteDialog}
+                className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+              >
+                <PiTrashSimpleLight
+                  type="submit"
+                  className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                  aria-hidden="true"
+                />
+                <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  Delete
+                </span>
               </button>
               {/* cancel button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 "
+                className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
               >
                 <PiXLight
                   type="submit"
-                  className="w-6 h-6 p-1 text-white  "
+                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                   aria-hidden="true"
                 />
                 <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
@@ -253,11 +255,11 @@ export default function Form() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 "
+                className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
               >
                 <PiUploadSimpleThin
                   type="submit"
-                  className="w-6 h-6 p-1 text-white  "
+                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                   aria-hidden="true"
                 />
                 <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Menu, Dialog, Transition } from "@headlessui/react";
 
 //icons
@@ -18,6 +18,7 @@ import person from "../../../../../../assets/images/section/Departments/Electron
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { postLogin } from "../../../../../../utils/agent";
+import { getRequest } from "../../../../../../utils/agent";
 
 //sortData
 const sortOptions = [
@@ -28,25 +29,23 @@ const sortOptions = [
   { name: "General Department", href: "#", current: false },
 ];
 
-//data
-const initialItems = [
-  { id: 1, name: "Ashiraf", department: "Electronics Department" },
-  { id: 2, name: "Ashiraf", department: "Electronics Department" },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Form({ hod }) {
+export default function Form({ departments }) {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [items, setItems] = useState(initialItems);
+  //fetched data added to items
+  const [items, setItems] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+  //backend
+  const [Myfile, setMyfile] = useState([]);
+  const [sortOption, setSortOption] = useState("64bad26c578e4a044eb886a1");
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -74,8 +73,6 @@ export default function Form({ hod }) {
   };
 
   //backend
-  const [Myfile, setMyfile] = useState([]);
-  const [sortOption, setSortOption] = useState("64bad26c578e4a044eb886a1");
 
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
@@ -91,6 +88,25 @@ export default function Form({ hod }) {
     setMyfile(event.target.files);
     console.log(event.target.files);
   };
+
+  //featching HOD data
+  function fetchHod() {
+    getRequest("/hod/")
+      .then(async (res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data.doNotTrack);
+          setItems(res.data.doNotTrack);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
+
+  useEffect(() => {
+    fetchHod();
+  }, []);
 
   return (
     <Formik
@@ -142,7 +158,7 @@ export default function Form({ hod }) {
               {isEdit ? (
                 <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2 ">
                   {/* imageUpload */}
-                  <div className="flex justify-center col-2 ">
+                  <div className="flex justify-center col-2 cursor-pointer">
                     <div className="relative inline-block ">
                       <input
                         id="fileInput"
@@ -201,7 +217,7 @@ export default function Form({ hod }) {
                       >
                         Name
                       </label>
-                      <div className="mt-2">
+                      <div className="mt-2 cursor-pointer ">
                         <input
                           id="name"
                           name="name"
@@ -209,6 +225,27 @@ export default function Form({ hod }) {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.name}
+                          autoComplete="name"
+                          className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                    {/* Qualification */}
+                    <div className="m:col-span-1">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                      >
+                        Qualification
+                      </label>
+                      <div className="mt-2 cursor-pointer">
+                        <input
+                          id="Qualification"
+                          name="Qualification"
+                          type="text"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.Qualification}
                           autoComplete="name"
                           className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         />
@@ -222,12 +259,14 @@ export default function Form({ hod }) {
                       >
                         Departments
                       </label>
-                      <div className="mt-2">
+                      <div className="mt-2 ">
                         <select
                           id="departments"
                           name="departments"
                           autoComplete="country-name"
-                          className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                          value={setSortOption}
+                          onChange={handleSortOption}
+                          className=" cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                           {/* <option>Electronics Department</option>
                           <option>Computer Department</option>
@@ -235,9 +274,8 @@ export default function Form({ hod }) {
                           <option>General Department</option>
                           <option>Mechanical Department</option>
                           <option>Office</option> */}
-                          {hod.map((item, i) => (
+                          {departments.map((item, i) => (
                             <option value={item._id} key={i * 10}>
-                              {" "}
                               {item.name}
                             </option>
                           ))}
@@ -245,37 +283,37 @@ export default function Form({ hod }) {
                       </div>
                     </div>
                     {/* buttons */}
-                    <div className=" flex items-center justify-end gap-x-6 relative top-[9rem] ">
+                    <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] ">
                       {/* cancel button */}
-                      <div className="flex justify-end cursor-pointer group flex-cols-1">
-                        <div className="relative ">
-                          <PiXLight
-                            type="submit"
-                            className="w-10 h-10 p-1 transition-transform duration-300 ease-in-out transform text-navy-900 group-hover:-translate-y-4"
-                            aria-hidden="true"
-                          />
-                          <a
-                            className="absolute bottom-0 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out transform -translate-x-1/2 opacity-0 left-1/2 group-hover:opacity-100"
-                            href="#"
-                          >
-                            Cancel
-                          </a>
-                        </div>
-                      </div>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 "
+                      >
+                        <PiXLight
+                          type="submit"
+                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                          aria-hidden="true"
+                        />
+                        <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                          Cancel
+                        </span>
+                      </button>
                       {/* Upload button */}
-                      <div className="flex flex-col justify-end cursor-pointer group">
-                        <button className="relative">
-                          <PiUploadSimpleThin
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="w-10 h-10 p-1 transition-transform duration-300 ease-in-out transform text-navy-900 group-hover:-translate-y-4"
-                            aria-hidden="true"
-                          />
-                          <a className="absolute bottom-0 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out transform -translate-x-1/2 opacity-0 left-1/2 group-hover:opacity-100">
-                            Upload
-                          </a>
-                        </button>
-                      </div>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 "
+                      >
+                        <PiUploadSimpleThin
+                          type="submit"
+                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                          aria-hidden="true"
+                        />
+                        <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                          Update
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -308,7 +346,7 @@ export default function Form({ hod }) {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl cursor-pointer  ">
                       <div className="py-1">
-                        {sortOptions.map((option) => (
+                        {departments.map((option) => (
                           <Menu.Item key={option.name}>
                             {({ active }) => (
                               <a
@@ -354,7 +392,10 @@ export default function Form({ hod }) {
                                 {item.name}
                               </p>
                               <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
-                                {item.department}
+                                {item.dept}
+                              </p>
+                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
+                                {item.Qualification}
                               </p>
                             </div>
                             <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
@@ -400,6 +441,7 @@ export default function Form({ hod }) {
             </div>
           </div>
 
+          {/* Update Form */}
           <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
               <Transition.Child
@@ -430,6 +472,7 @@ export default function Form({ hod }) {
                         <div className="fixed inset-0 z-50 flex items-center justify-center  top-8">
                           <div className="p-8 bg-white shadow-lg rounded-xl ">
                             <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2">
+                              {/* Update Image */}
                               <div className="flex justify-center col-2 ">
                                 <div className="relative inline-block ">
                                   <input
@@ -479,6 +522,7 @@ export default function Form({ hod }) {
                                 </div>
                               </div>
                               <div className="space-y-10">
+                                {/* Update Name */}
                                 <div className="m:col-span-1">
                                   <label
                                     htmlFor="name"
@@ -496,7 +540,25 @@ export default function Form({ hod }) {
                                     />
                                   </div>
                                 </div>
-
+                                {/* Update Qualification  */}
+                                <div className="m:col-span-1">
+                                  <label
+                                    htmlFor="name"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                  >
+                                    Qualification
+                                  </label>
+                                  <div className="mt-2">
+                                    <input
+                                      id="name"
+                                      name="name"
+                                      type="text"
+                                      autoComplete="name"
+                                      className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                                    />
+                                  </div>
+                                </div>
+                                {/* Update Departments */}
                                 <div className="sm:col-span-1">
                                   <label
                                     htmlFor="departments"
@@ -509,29 +571,39 @@ export default function Form({ hod }) {
                                       id="departments"
                                       name="departments"
                                       autoComplete="country-name"
+                                      value={selectedDepartment}
+                                      onChange={handleDepartmentChange}
                                       className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
-                                      <option>Electronics Department</option>
+                                      {/* <option>Electronics Department</option>
                                       <option>Computer Department</option>
                                       <option>Printing Department</option>
                                       <option>General Department</option>
                                       <option>Mechanical Department</option>
-                                      <option>Office</option>
+                                      <option>Office</option> */}
+                                      {departments.map((item, i) => (
+                                        <option value={item.id} key={i * 10}>
+                                          {item.name}
+                                        </option>
+                                      ))}
                                     </select>
                                   </div>
                                 </div>
-                                <div className="group flex flex-col justify-end items-end relative top-[9rem] cursor-pointer">
-                                  <div className="relative">
-                                    <PiUploadSimpleThin
-                                      type="submit"
-                                      className="w-10 h-10 p-1 transition-transform duration-300 ease-in-out transform text-navy-900 group-hover:-translate-y-4"
-                                      aria-hidden="true"
-                                    />
-                                    <a className="absolute bottom-0 text-sm font-bold text-orange-300 transition-opacity duration-300 ease-in-out transform -translate-x-1/2 opacity-0 left-1/2 group-hover:opacity-100">
-                                      Upload
-                                    </a>
-                                  </div>
-                                </div>
+                                {/* Upload button for update */}
+                                <button
+                                  type="submit"
+                                  disabled={isSubmitting}
+                                  className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 "
+                                >
+                                  <PiUploadSimpleThin
+                                    type="submit"
+                                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                                    aria-hidden="true"
+                                  />
+                                  <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                                    Update
+                                  </span>
+                                </button>
                               </div>
                             </div>
                             <div className="flex flex-1 items-center justify-end relative xl:bottom-[27rem] ">
