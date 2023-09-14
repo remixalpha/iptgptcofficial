@@ -7,6 +7,7 @@ import hodModel from "./hod";
 import staffModel from "./staff";
 import galleryModel from "./gallery";
 import aictemandatesModel from "./aictemandates";
+import principalModel from "./pricipal";
 export {
   demoModel,
   adminModel,
@@ -17,4 +18,5 @@ export {
   staffModel,
   galleryModel,
   aictemandatesModel,
+  principalModel,
 };
