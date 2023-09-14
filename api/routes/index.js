@@ -10,6 +10,7 @@ import {
   StaffRoute,
   GalleryRoute,
   AicteMandatesRoute,
+  PricipalRoute,
 } from "./routes";
 const url = "/api";
 
@@ -22,5 +23,6 @@ router.use(`${url}/hod`, hodRoute);
 router.use(`${url}/staff`, StaffRoute);
 router.use(`${url}/gallery`, GalleryRoute);
 router.use(`${url}/aicte`, AicteMandatesRoute);
+router.use(`${url}/pricipal`, PricipalRoute);
 
 export default router;

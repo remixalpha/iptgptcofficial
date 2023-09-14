@@ -6,6 +6,7 @@ import notificationRoute from "./notificationRoute";
 import StaffRoute from "./staffRoute";
 import GalleryRoute from "./galleryRoute";
 import AicteMandatesRoute from "./aicteMandatesRoute";
+import PricipalRoute from "./pricipalRoute";
 export {
   demoRoute,
   indexRoute,
@@ -15,4 +16,5 @@ export {
   StaffRoute,
   GalleryRoute,
   AicteMandatesRoute,
+  PricipalRoute,
 };
