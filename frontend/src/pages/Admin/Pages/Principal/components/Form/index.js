@@ -119,9 +119,9 @@ export default function Form() {
       }) => (
         <form onSubmit={handleSubmit}>
           {isEdit ? (
-            <div className=" xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
+            <div className=" xl:w-[110rem] p-20 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] ">
               <div className="grid grid-cols-2  gap-x-[8rem] gap-y-8 ">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 xl:grid-cols-2">
+                <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2">
                   {/* imageUpload */}
                   <div className="col-2 flex justify-center  ">
                     <div className="relative inline-block  ">
@@ -177,7 +177,7 @@ export default function Form() {
                     <div className="m:col-span-1">
                       <label
                         htmlFor="name"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Name
                       </label>
@@ -198,7 +198,7 @@ export default function Form() {
                     <div className="m:col-span-1">
                       <label
                         htmlFor="qualification"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Qualification
                       </label>
@@ -223,7 +223,7 @@ export default function Form() {
                     <div className="col-span-full">
                       <label
                         htmlFor="quote"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Quote
                       </label>
@@ -247,7 +247,7 @@ export default function Form() {
                     <div className="col-span-full">
                       <label
                         htmlFor="writer"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Writer
                       </label>
@@ -271,7 +271,7 @@ export default function Form() {
                     <div className="col-span-full">
                       <label
                         htmlFor="message"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Message
                       </label>
@@ -297,32 +297,30 @@ export default function Form() {
               <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
                 {/* Delete button */}
                 <button
-                  type="submit"
+                  type="button"
                   disabled={isSubmitting}
                   onClick={handleToggleDeleteDialog}
                   className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer "
                 >
                   <PiTrashSimpleLight
-                    type="submit"
                     className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                     aria-hidden="true"
                   />
-                  <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                     Delete
                   </span>
                 </button>
                 {/* cancel button */}
                 <button
-                  type="submit"
+                  type="button"
                   disabled={isSubmitting}
                   className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
                 >
                   <PiXLight
-                    type="submit"
                     className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                     aria-hidden="true"
                   />
-                  <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                     Cancel
                   </span>
                 </button>
@@ -337,7 +335,7 @@ export default function Form() {
                     className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                     aria-hidden="true"
                   />
-                  <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                     Update
                   </span>
                 </button>
@@ -376,7 +374,7 @@ export default function Form() {
                         <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-4 shadow-xl">
                           <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                             <div className="flex items-start justify-between">
-                              <Dialog.Title className="text-lg font-medium text-gray-900">
+                              <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
                                 Principals
                               </Dialog.Title>
                               <div className="ml-3 flex h-7 items-center">
@@ -401,7 +399,7 @@ export default function Form() {
                                   {principal.map((item) => (
                                     <li
                                       key={item.id}
-                                      className="flex py-6 px-4 bg-gray-50 rounded-xl hover:shadow-lg transition-all duration-300"
+                                      className="flex mt-5 py-8 px-4 bg-lightPrimary rounded-xl hover:shadow-lg transition-all duration-300"
                                     >
                                       <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md ">
                                         <img
@@ -413,7 +411,7 @@ export default function Form() {
 
                                       <div className="ml-4 flex flex-1 flex-col">
                                         <div>
-                                          <div className="flex justify-between text-base font-medium text-gray-900">
+                                          <div className="flex justify-between text-base font-medium text-gray-900 antialiased tracking-normal font-sans leading-[1.3] ">
                                             <h3>
                                               <a href={item.href}>
                                                 {item.name}
@@ -422,14 +420,15 @@ export default function Form() {
                                           </div>
                                         </div>
                                         <div className="flex flex-1 items-end justify-end text-sm">
-                                          <div className="">
-                                            <button
-                                              type="button"
-                                              className="font-medium text-indigo-600 hover:text-indigo-500"
-                                            >
-                                              Remove
-                                            </button>
-                                          </div>
+                                          <button
+                                            type="button"
+                                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                                          >
+                                            <PiTrashSimpleLight
+                                              className="w-7 h-7 p-1 text-black  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                                              aria-hidden="true"
+                                            />
+                                          </button>
                                         </div>
                                       </div>
                                     </li>

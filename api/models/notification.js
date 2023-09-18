@@ -10,6 +10,7 @@ const notificationSchema = Mongoose.Schema(
     message: { type: String, require: true, max: 1024, min: 6 },
     link: { type: String, require: true, default: "" },
     fileUrl: { type: String, require: true },
+    selectedType: { type: String, required: true },
   },
   { timestamps: true }
 );

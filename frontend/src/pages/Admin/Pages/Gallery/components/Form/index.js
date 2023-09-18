@@ -151,7 +151,7 @@ export default function Form({ departments }) {
 
   return (
     <Formik
-      initialValues={{}}
+      initialValues={{ event: "" }}
       // validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
@@ -160,13 +160,13 @@ export default function Form({ departments }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("dept", sortOption);
+        formData.append("gallery", sortOption);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
 
         console.log({ formData: formData });
-        postLogin("", formData)
+        postLogin("/gallery/create", formData)
           .then(async (res) => {
             if (res?.statusText === "OK") {
               console.log(res.data);
@@ -194,8 +194,8 @@ export default function Form({ departments }) {
       }) => (
         <form onSubmit={handleSubmit}>
           {isEdit ? (
-            <div className=" xl:w-[55rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
-              <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 xl:grid-cols-2 ">
+            <div className=" xl:w-[55rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] px-20 py-10  ">
+              <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                 {/* imageUpload */}
                 <div className="col-2 flex justify-center  ">
                   <div className="relative inline-block  ">
@@ -248,7 +248,7 @@ export default function Form({ departments }) {
                 <div className="sm:col-span-1">
                   <label
                     htmlFor="departments"
-                    className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Departments
                   </label>
@@ -276,26 +276,25 @@ export default function Form({ departments }) {
               </div>
 
               {/* buttons */}
-              <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
+              <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 relative left-[2rem] ">
                 {/* Delete button */}
                 <button
-                  type="submit"
+                  type="button"
                   disabled={isSubmitting}
                   onClick={handleToggleDeleteDialog}
                   className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
                 >
                   <PiTrashSimpleLight
-                    type="submit"
                     className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                     aria-hidden="true"
                   />
-                  <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                     Delete
                   </span>
                 </button>
                 {/* cancel button */}
                 <button
-                  type="submit"
+                  type="button"
                   disabled={isSubmitting}
                   className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
                 >
@@ -304,7 +303,7 @@ export default function Form({ departments }) {
                     className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                     aria-hidden="true"
                   />
-                  <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                     Cancel
                   </span>
                 </button>
@@ -319,7 +318,7 @@ export default function Form({ departments }) {
                     className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                     aria-hidden="true"
                   />
-                  <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                     Update
                   </span>
                 </button>
@@ -357,7 +356,7 @@ export default function Form({ departments }) {
                         <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-9 shadow-xl">
                           <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                             <div className="flex items-start justify-between">
-                              <Dialog.Title className="text-xl text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]">
+                              <Dialog.Title className=" ml-8 mt-2 text-xl text-gray-900 antialiased tracking-normal font-sans font-medium  leading-[1.3]">
                                 Images
                               </Dialog.Title>
                               <div className="ml-3 flex h-7 items-center">
@@ -416,9 +415,9 @@ export default function Form({ departments }) {
                                                       className={classNames(
                                                         option.current
                                                           ? "font-medium text-gray-900"
-                                                          : "text-gray-500",
+                                                          : "text-gray-900",
                                                         active
-                                                          ? "bg-gray-100 rounded-xl m-1 transition-all duration-300 "
+                                                          ? "bg-gray-100 rounded-xl m-1 transition-all duration-300 cursor-pointer "
                                                           : "m-2",
                                                         "block px-4 py-2 text-sm"
                                                       )}

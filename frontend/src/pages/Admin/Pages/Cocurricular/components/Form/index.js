@@ -158,11 +158,11 @@ export default function Form({ departments }) {
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit}>
-          <div className="xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-300 relative -top-[2rem] ">
-            <div className="grid grid-cols-2  gap-x-[8rem] items-center  gap-y-8 ">
+          <div className="xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] ">
+            <div className="grid grid-cols-2  gap-x-[8rem] items-center  gap-y-8 pl-10 pb-10 ">
               {/* photo and name and department */}
               {isEdit ? (
-                <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2 ">
+                <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                   {/* imageUpload */}
                   <div className="flex justify-center col-2 ">
                     <div className="relative inline-block ">
@@ -218,7 +218,7 @@ export default function Form({ departments }) {
                     <div className="m:col-span-1">
                       <label
                         htmlFor="name"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Name
                       </label>
@@ -239,7 +239,7 @@ export default function Form({ departments }) {
                     <div className="m:col-span-1">
                       <label
                         htmlFor="name"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Position
                       </label>
@@ -261,7 +261,7 @@ export default function Form({ departments }) {
                     <div className="sm:col-span-1">
                       <label
                         htmlFor="departments"
-                        className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Departments
                       </label>
@@ -291,7 +291,7 @@ export default function Form({ departments }) {
                       {/* cancel button */}
 
                       <button
-                        type="submit"
+                        type="button"
                         disabled={isSubmitting}
                         className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
                       >
@@ -300,7 +300,7 @@ export default function Form({ departments }) {
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                           aria-hidden="true"
                         />
-                        <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                           Cancel
                         </span>
                       </button>
@@ -315,7 +315,7 @@ export default function Form({ departments }) {
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                           aria-hidden="true"
                         />
-                        <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                           Update
                         </span>
                       </button>

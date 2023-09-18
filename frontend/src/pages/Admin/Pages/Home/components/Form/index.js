@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+//icons
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import {
   PiUploadSimpleThin,
@@ -11,7 +12,7 @@ import { AiOutlineLink } from "react-icons/ai";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../../../assets/images/logos/iptlogomin.png";
 // backend
-import { Formik } from "formik";
+import { Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 
 import { postLogin } from "../../../../../../utils/agent";
@@ -25,18 +26,24 @@ const notificationSchema = Yup.object().shape({
 const uploadedNotifications = [
   {
     id: 1,
-    content: "uploaded content",
+    selectedType: "file",
+    file: "hello.pdf",
+    message: "uploaded content",
   },
   {
     id: 2,
-    content: "uploaded content",
+    selectedType: "link",
+    link: "https://example.com",
+    message: "uploaded content",
   },
 ];
 
 export default function Form() {
   const [open, setOpen] = useState(true);
-  const [Myfile, setMyfile] = useState([]);
   const [selectedOption, setSelectedOption] = useState("file");
+
+  //backend
+  const [Myfile, setMyfile] = useState([]);
 
   const imgHandler = (event) => {
     setMyfile(event.target.files);
@@ -47,10 +54,11 @@ export default function Form() {
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
+  const { values, setFieldValue } = useState([]);
 
   return (
     <Formik
-      initialValues={{ notification: "", link: "" }}
+      initialValues={{ notification: "", link: "", selectedType: "file" }}
       validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
@@ -91,7 +99,7 @@ export default function Form() {
         isSubmitting,
       }) => (
         <form onSubmit={handleSubmit}>
-          <div className="xl:w-[70rem] space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-xl bg-white border border-gray-200 p-10 relative -top-6 ">
+          <div className="xl:w-[70rem] space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-200 px-20 py-10 relative -top-6 ">
             <div className="">
               <div className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-semibold leading-[1.3] ">
                 Choose option
@@ -113,7 +121,10 @@ export default function Form() {
                         name="option"
                         value="file"
                         checked={selectedOption === "file"}
-                        onChange={() => setSelectedOption("file")}
+                        onChange={() => {
+                          setSelectedOption("file");
+                          setFieldValue("selectedType", "file");
+                        }}
                         className="sr-only"
                       />
                       <BsFileEarmarkPdf />
@@ -132,12 +143,22 @@ export default function Form() {
                         name="option"
                         value="link"
                         checked={selectedOption === "link"}
-                        onChange={() => setSelectedOption("link")}
+                        onChange={() => {
+                          setSelectedOption("link");
+                          setFieldValue("selectedType", "link");
+                        }}
                         className="sr-only"
                       />
                       <AiOutlineLink />
                     </label>
                   </div>
+
+                  <input
+                    type="hidden"
+                    id="selectedType"
+                    name="selectedType"
+                    value={values.selectedType}
+                  />
 
                   {selectedOption === "file" && (
                     <div>
@@ -150,7 +171,7 @@ export default function Form() {
                           <div className="flex mt-4 text-sm leading-6 text-gray-600">
                             <label
                               htmlFor="file-upload"
-                              className="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                              className="relative font-semibold text-black bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                             >
                               <span>Upload a file</span>
                               <input
@@ -164,7 +185,7 @@ export default function Form() {
                             <p className="pl-1">or drag and drop</p>
                           </div>
                           <p className="text-xs leading-5 text-gray-600">
-                            PNG, JPG, GIF up to 10MB
+                            PDF up to 700MB
                           </p>
                         </div>
                       </div>
@@ -188,7 +209,7 @@ export default function Form() {
                         onBlur={handleBlur}
                         value={values.link}
                         autoComplete="link"
-                        className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -200,7 +221,7 @@ export default function Form() {
               <div className="col-span-full">
                 <label
                   htmlFor="about"
-                  className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
+                  className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
                 >
                   Notification
                 </label>
@@ -213,7 +234,7 @@ export default function Form() {
                     value={values.notification}
                     placeholder="Enter the notification message here"
                     rows={3}
-                    className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -222,7 +243,7 @@ export default function Form() {
             <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
               {/* Delete button */}
               <button
-                type="submit"
+                type="button"
                 disabled={isSubmitting}
                 onClick={handleToggleDeleteDialog}
                 className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
@@ -232,13 +253,13 @@ export default function Form() {
                   className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                   aria-hidden="true"
                 />
-                <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                   Delete
                 </span>
               </button>
               {/* cancel button */}
               <button
-                type="submit"
+                type="button"
                 disabled={isSubmitting}
                 className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
               >
@@ -247,7 +268,7 @@ export default function Form() {
                   className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                   aria-hidden="true"
                 />
-                <span className="absolute invisible group-hover:relative group-hover:visible  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                   Cancel
                 </span>
               </button>
@@ -262,7 +283,7 @@ export default function Form() {
                   className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                   aria-hidden="true"
                 />
-                <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                   Update
                 </span>
               </button>
@@ -301,8 +322,8 @@ export default function Form() {
                         <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-4 shadow-xl">
                           <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                             <div className="flex items-start justify-between">
-                              <Dialog.Title className="text-lg font-medium text-gray-900">
-                                Principals
+                              <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
+                                Notifications
                               </Dialog.Title>
                               <div className="ml-3 flex h-7 items-center">
                                 <button
@@ -326,35 +347,47 @@ export default function Form() {
                                   {uploadedNotifications.map((item) => (
                                     <li
                                       key={item.id}
-                                      className="flex py-6 px-4 bg-gray-50 rounded-xl hover:shadow-lg transition-all duration-300"
+                                      className="flex mt-5 py-8 px-4 bg-gray-50 rounded-xl hover:shadow-lg transition-all duration-300"
                                     >
-                                      <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md ">
-                                        <img
-                                          src={Logo}
-                                          alt="IPT&GPTC LOGO"
-                                          className="h-full w-full object-cover object-center"
-                                        />
+                                      <div className="h-6 w-6 flex-shrink-0 overflow-hidden rounded-md">
+                                        {item.selectedType === "file" ? (
+                                          <BsFileEarmarkPdf className="h-full w-full object-cover object-center" />
+                                        ) : (
+                                          <AiOutlineLink className="h-full w-full object-cover object-center" />
+                                        )}
                                       </div>
 
                                       <div className="ml-4 flex flex-1 flex-col">
-                                        <div>
-                                          <div className="flex justify-between text-base font-medium text-gray-900">
-                                            <h3>
-                                              <a href={item.href}>
-                                                {item.name}
+                                        <div className="flex justify-between text-md text-gray-900 antialiased tracking-normal font-sans font-bold leading-[1.3]">
+                                          <h3>
+                                            {item.type === "file" ? (
+                                              <a href={item.file}>
+                                                {item.file}
                                               </a>
-                                            </h3>
-                                          </div>
+                                            ) : (
+                                              <a href={item.link}>
+                                                {item.link}
+                                              </a>
+                                            )}
+                                          </h3>
+                                        </div>
+                                        <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
+                                          <h3>
+                                            <a href={item.href}>
+                                              {item.message}
+                                            </a>
+                                          </h3>
                                         </div>
                                         <div className="flex flex-1 items-end justify-end text-sm">
-                                          <div className="">
-                                            <button
-                                              type="button"
-                                              className="font-medium text-indigo-600 hover:text-indigo-500"
-                                            >
-                                              Remove
-                                            </button>
-                                          </div>
+                                          <button
+                                            type="button"
+                                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                                          >
+                                            <PiTrashSimpleLight
+                                              className="w-7 h-7 p-1 text-black transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                                              aria-hidden="true"
+                                            />
+                                          </button>
                                         </div>
                                       </div>
                                     </li>

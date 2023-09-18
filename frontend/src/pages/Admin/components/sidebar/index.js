@@ -6,7 +6,7 @@ import User from "../../../../assets/images/section/Departments/computer/Staff/S
 
 import { CiUser, CiLogout } from "react-icons/ci";
 import { IoIosToday } from "react-icons/io";
-import { BsPersonAdd } from "react-icons/bs";
+import { BsPersonAdd, BsPerson } from "react-icons/bs";
 import { PiCertificate } from "react-icons/pi";
 import { TbPhotoEdit } from "react-icons/tb";
 import { GoHome } from "react-icons/go";
@@ -190,10 +190,14 @@ export default function Sidebar() {
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <img
+                      {/* <img
                         className="h-12 w-12 rounded-full  "
                         src={user.imageUrl}
                         alt=""
+                      /> */}
+                      <BsPerson
+                        className="h-10 w-10 text-white rounded-full p-2 "
+                        aria-hidden="true"
                       />
                     </div>
                   </div>
@@ -243,6 +247,7 @@ export default function Sidebar() {
         </div>
       </nav>
 
+      {/* Mobile view */}
       <Dialog
         as="div"
         className="lg:hidden"
