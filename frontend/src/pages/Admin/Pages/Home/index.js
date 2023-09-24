@@ -9,11 +9,13 @@ import { getRequest } from "../../../../utils/agent";
 export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [Notifications, setNotifications] = useState([]);
   function fetchNotification() {
     getRequest("/notification/")
       .then(async (res) => {
         if (res.statusText === "OK") {
-          console.log(res.data.doNotTrack);
+          // console.log(res.data.doNotTrack);
+          setNotifications(res.data.doNotTrack);
         } else {
           console.error("response not found");
         }
@@ -58,7 +60,7 @@ export default function Home() {
         )}
 
         <div className="mb-[5rem] mt-5 scale-125 ">
-          <Form />
+          <Form Notifications={Notifications} />
         </div>
       </div>
     </div>

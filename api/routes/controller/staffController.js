@@ -6,7 +6,7 @@ export const createData = async (req, res, next) => {
       res.status(400).json({ status: false, doNotTrack: "file not found" });
     }
     req.body.fileUrl = req.file?.path;
-    console.log({req:req.body})
+    console.log({ req: req.body });
     let doc = await new staffModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });
   } catch (err) {
@@ -38,6 +38,7 @@ export const getData = async (req, res, next) => {
 export const deleteData = async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log({ id: id });
     let doc = await staffModel.findOne({ _id: id });
     if (doc) {
       await staffModel.deleteOne({ _id: id });

@@ -12,6 +12,6 @@ router.post(
   notificationController.createDataWithFile
 );
 router.get("/createLink", notificationController.createDataWithLink);
-// router.post("/del", demoController.deleteData);
+router.post("/del/:id", notificationController.deleteData);
 
 export default router;

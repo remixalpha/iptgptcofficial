@@ -15,10 +15,10 @@ import Logo from "../../../../../../assets/images/logos/iptlogomin.png";
 import { Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
 
-import { postLogin } from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 
 const notificationSchema = Yup.object().shape({
-  notification: Yup.string().required("Required"),
+  message: Yup.string().required("Required"),
 });
 
 // data
@@ -38,10 +38,10 @@ const uploadedNotifications = [
   },
 ];
 
-export default function Form() {
+export default function Form({ Notifications }) {
   const [open, setOpen] = useState(true);
   const [selectedOption, setSelectedOption] = useState("file");
-
+  console.log({ NOT: Notifications });
   //backend
   const [Myfile, setMyfile] = useState([]);
 
@@ -54,11 +54,27 @@ export default function Form() {
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
-  const { values, setFieldValue } = useState([]);
-
+  const [values, setFieldValue] = useState([]);
+  function DeleteNotification(id) {
+    postLogin(`/notification/del/${id}`)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data);
+          window.location.reload();
+        } else {
+          console.log("No response found");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.info("API CALL");
+      });
+  }
   return (
     <Formik
-      initialValues={{ notification: "", link: "", selectedType: "file" }}
+      initialValues={{ message: "", link: "", selectedType: "file" }}
       validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
@@ -73,11 +89,12 @@ export default function Form() {
 
         console.log({ formData: formData });
         postLogin("/notification/create", formData)
-          .then(async (res) => {
+          .then((res) => {
             if (res.statusText === "OK") {
-              console.log(res.data);
-              // window.location.reload();
+              console.log("created");
+              window.location.reload();
             } else {
+              window.location.reload();
               console.log("not get response");
             }
           })
@@ -227,11 +244,11 @@ export default function Form() {
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="notification"
-                    name="notification"
+                    id="message"
+                    name="message"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.notification}
+                    value={values.message}
                     placeholder="Enter the notification message here"
                     rows={3}
                     className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
@@ -240,17 +257,17 @@ export default function Form() {
               </div>
             </div>
             {/* buttons */}
-            <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
+            <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 ">
               {/* Delete button */}
               <button
                 type="button"
                 disabled={isSubmitting}
                 onClick={handleToggleDeleteDialog}
-                className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
               >
                 <PiTrashSimpleLight
                   type="submit"
-                  className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                   aria-hidden="true"
                 />
                 <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
@@ -261,7 +278,7 @@ export default function Form() {
               <button
                 type="button"
                 disabled={isSubmitting}
-                className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
               >
                 <PiXLight
                   type="submit"
@@ -276,7 +293,7 @@ export default function Form() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
               >
                 <PiUploadSimpleThin
                   type="submit"
@@ -303,12 +320,12 @@ export default function Form() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-hidden">
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                  <div className="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
                     <Transition.Child
                       as={Fragment}
                       enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -318,23 +335,23 @@ export default function Form() {
                       leaveFrom="translate-x-0"
                       leaveTo="translate-x-full"
                     >
-                      <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                        <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-4 shadow-xl">
-                          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <Dialog.Panel className="w-screen max-w-md pointer-events-auto">
+                        <div className="flex flex-col h-full mt-2 mr-4 overflow-hidden bg-white shadow-xl rounded-xl">
+                          <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
                                 Notifications
                               </Dialog.Title>
-                              <div className="ml-3 flex h-7 items-center">
+                              <div className="flex items-center ml-3 h-7">
                                 <button
                                   type="button"
-                                  className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                                  className="relative p-2 -m-2 text-gray-400 hover:text-gray-500"
                                   onClick={() => setOpen(false)}
                                 >
                                   <span className="absolute -inset-0.5" />
                                   <span className="sr-only">Close panel</span>
                                   <XMarkIcon
-                                    className="h-6 w-6"
+                                    className="w-6 h-6"
                                     aria-hidden="true"
                                   />
                                 </button>
@@ -344,25 +361,30 @@ export default function Form() {
                             <div className="mt-8">
                               <div className="flow-root">
                                 <ul role="list" className="-my-6 space-y-4 ">
-                                  {uploadedNotifications.map((item) => (
+                                  {Notifications.map((item) => (
                                     <li
-                                      key={item.id}
-                                      className="flex mt-5 py-8 px-4 bg-gray-50 rounded-xl hover:shadow-lg transition-all duration-300"
+                                      key={item._id}
+                                      className="flex px-4 py-8 mt-5 transition-all duration-300 bg-gray-50 rounded-xl hover:shadow-lg"
                                     >
-                                      <div className="h-6 w-6 flex-shrink-0 overflow-hidden rounded-md">
-                                        {item.selectedType === "file" ? (
-                                          <BsFileEarmarkPdf className="h-full w-full object-cover object-center" />
+                                      <div className="flex-shrink-0 w-6 h-6 overflow-hidden rounded-md">
+                                        {item.fileUrl ? (
+                                          <BsFileEarmarkPdf className="object-cover object-center w-full h-full" />
                                         ) : (
-                                          <AiOutlineLink className="h-full w-full object-cover object-center" />
+                                          <AiOutlineLink className="object-cover object-center w-full h-full" />
                                         )}
                                       </div>
 
-                                      <div className="ml-4 flex flex-1 flex-col">
+                                      <div className="flex flex-col flex-1 ml-4">
                                         <div className="flex justify-between text-md text-gray-900 antialiased tracking-normal font-sans font-bold leading-[1.3]">
                                           <h3>
-                                            {item.type === "file" ? (
-                                              <a href={item.file}>
-                                                {item.file}
+                                            {item.fileUrl ? (
+                                              <a
+                                                href={`${
+                                                  image_url + item.fileUrl
+                                                }`}
+                                                target="_blank"
+                                              >
+                                                {item.message}
                                               </a>
                                             ) : (
                                               <a href={item.link}>
@@ -378,13 +400,16 @@ export default function Form() {
                                             </a>
                                           </h3>
                                         </div>
-                                        <div className="flex flex-1 items-end justify-end text-sm">
+                                        <div className="flex items-end justify-end flex-1 text-sm">
                                           <button
+                                            onClick={() =>
+                                              DeleteNotification(item._id)
+                                            }
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
                                           >
                                             <PiTrashSimpleLight
-                                              className="w-7 h-7 p-1 text-black transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                                              className="p-1 text-black transition-transform duration-300 ease-in-out transform w-7 h-7 group-hover:-translate-y-1"
                                               aria-hidden="true"
                                             />
                                           </button>
