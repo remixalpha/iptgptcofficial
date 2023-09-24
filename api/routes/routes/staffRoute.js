@@ -6,7 +6,7 @@ import * as staffController from "../controller/staffController";
 import singleImageUploader from "../controller/imageController";
 // requests
 
-router.post("/", staffController.getData);
+router.get("/", staffController.getData);
 router.post("/sort", staffController.getDataOne);
 router.post("/create", singleImageUploader, staffController.createData);
 router.post("/put", staffController.updateData);

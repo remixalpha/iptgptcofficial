@@ -17,7 +17,11 @@ import person from "../../../../../../assets/images/section/Departments/Electron
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { image_url, postLogin } from "../../../../../../utils/agent";
+import {
+  FetchRequest,
+  image_url,
+  postLogin,
+} from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
 
 function classNames(...classes) {
@@ -109,7 +113,7 @@ export default function Form({ departments }) {
 
   //featching HOD data
   function fetchHod() {
-    getRequest("/hod/")
+    FetchRequest("/hod/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
@@ -171,12 +175,12 @@ export default function Form({ departments }) {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[110rem] px-20 py-20 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl  bg-white border border-gray-200 relative -top-[2rem] ">
-            <div className="grid grid-cols-2   items-center  gap-y-8 ">
+            <div className="grid items-center grid-cols-2 gap-y-8 ">
               {/* photo and name and Qualification, department */}
               {isEdit ? (
-                <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2  ">
+                <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                   {/* imageUpload */}
-                  <div className="flex justify-center col-2 cursor-pointer">
+                  <div className="flex justify-center cursor-pointer col-2">
                     <div className="relative inline-block ">
                       <input
                         id="fileInput"
@@ -298,7 +302,7 @@ export default function Form({ departments }) {
                       <button
                         type="button"
                         disabled={isSubmitting}
-                        className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                       >
                         <PiXLight
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
@@ -312,7 +316,7 @@ export default function Form({ departments }) {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                       >
                         <PiUploadSimpleThin
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
@@ -325,7 +329,7 @@ export default function Form({ departments }) {
                     </div>
                   </div>
                   {isUploadSuccess && (
-                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mt-4">
+                    <div className="px-4 py-2 mt-4 text-green-700 bg-green-100 border border-green-400 rounded">
                       Data uploaded successfully!{" "}
                       <button onClick={() => window.location.reload()}>
                         OK
@@ -360,7 +364,7 @@ export default function Form({ departments }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl cursor-pointer  ">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg cursor-pointer w-80 rounded-xl ">
                       <div className="py-1">
                         {departments.map((option, index) => (
                           <Menu.Item key={option._id}>
@@ -392,7 +396,7 @@ export default function Form({ departments }) {
                     {FilteredArray.map((item) => (
                       <li
                         key={item.id}
-                        className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400  rounded-xl hover:shadow-md sm:pb-4"
+                        className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
                       >
                         <div className="flex items-center space-x-4">
                           <div className="flex-shrink-0">
@@ -485,7 +489,7 @@ export default function Form({ departments }) {
                   >
                     <Dialog.Panel className="flex w-full text-base text-left transition transform md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                       <div className="relative flex items-center w-full px-4 pb-8 overflow-hidden shadow-2xl pt-14 sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                        <div className="fixed inset-0 z-50 flex items-center justify-center  top-8">
+                        <div className="fixed inset-0 z-50 flex items-center justify-center top-8">
                           <div className="p-8 bg-white shadow-lg rounded-xl ">
                             <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2">
                               {/* Update Image */}
@@ -609,7 +613,7 @@ export default function Form({ departments }) {
                                 <button
                                   type="submit"
                                   disabled={isSubmitting}
-                                  className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 "
+                                  className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg group w-25 rounded-xl"
                                 >
                                   <PiUploadSimpleThin
                                     type="submit"

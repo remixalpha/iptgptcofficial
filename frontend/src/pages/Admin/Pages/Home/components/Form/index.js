@@ -301,7 +301,7 @@ export default function Form({ Notifications }) {
                   aria-hidden="true"
                 />
                 <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                  Update
+                  Submit
                 </span>
               </button>
             </div>
