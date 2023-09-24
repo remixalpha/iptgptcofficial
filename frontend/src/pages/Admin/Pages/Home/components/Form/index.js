@@ -21,23 +21,6 @@ const notificationSchema = Yup.object().shape({
   message: Yup.string().required("Required"),
 });
 
-// data
-
-const uploadedNotifications = [
-  {
-    id: 1,
-    selectedType: "file",
-    file: "hello.pdf",
-    message: "uploaded content",
-  },
-  {
-    id: 2,
-    selectedType: "link",
-    link: "https://example.com",
-    message: "uploaded content",
-  },
-];
-
 export default function Form({ Notifications }) {
   const [open, setOpen] = useState(true);
   const [selectedOption, setSelectedOption] = useState("file");

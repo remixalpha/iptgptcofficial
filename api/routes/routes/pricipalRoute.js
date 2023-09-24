@@ -9,6 +9,7 @@ import singleImageUploader from "../controller/imageController";
 router.get("/", principalController.getData);
 router.post("/create", singleImageUploader, principalController.createData);
 router.post("/put", principalController.updateData);
+router.post("/del/:id", principalController.deleteData);
 // router.post("/:id", principalController.getParams);
 
 export default router;

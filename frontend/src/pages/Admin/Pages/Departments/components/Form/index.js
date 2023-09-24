@@ -177,6 +177,7 @@ export default function Form({ departments }) {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[110rem] px-20 py-20 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl  bg-white border border-gray-200 relative -top-[2rem] ">
@@ -309,12 +310,15 @@ export default function Form({ departments }) {
                         type="button"
                         disabled={isSubmitting}
                         className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                        onClick={() => {
+                          resetForm(); // Call resetForm to clear the form fields
+                        }}
                       >
                         <PiXLight
-                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                           aria-hidden="true"
                         />
-                        <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                           Cancel
                         </span>
                       </button>
@@ -397,7 +401,7 @@ export default function Form({ departments }) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <div className="max-h-[400px] overflow-scroll ml-[4rem] mt-5 max-w-2xl p-4  ">
+                <div className="max-h-[400px]  overflow-scroll overflow-x-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
                     {FilteredArray.map((item) => (
                       <li
@@ -424,7 +428,7 @@ export default function Form({ departments }) {
                                 {item.department}
                               </p>
                             </div>
-                            <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
+                            <div className=" fixed flex  items-center justify-center text-sm  space-x-[4rem]  mt-10 ">
                               <div className="flex flex-col justify-end cursor-pointer group">
                                 <div
                                   type="button"

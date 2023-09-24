@@ -4,10 +4,26 @@ import { IoIosArrowUp } from "react-icons/io";
 
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
+import { FetchRequest, getRequest } from "../../../../utils/agent";
 
 export default function Principal() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [Principals, setPrincipals] = useState([]);
+  //fetch principal
+  function fetchPrincipal() {
+    FetchRequest("/notification/")
+      .then(async (res) => {
+        if (res.statusText === "OK") {
+          // console.log(res.data.doNotTrack);
+          setPrincipals(res.data.doNotTrack);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -22,6 +38,7 @@ export default function Principal() {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
+    fetchPrincipal();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -45,7 +62,7 @@ export default function Principal() {
         {/* Circles with opacity */}
 
         <div className=" mb-[10rem] scale-105 ">
-          <Form />
+          <Form Principals={Principals} />
         </div>
       </div>
     </div>

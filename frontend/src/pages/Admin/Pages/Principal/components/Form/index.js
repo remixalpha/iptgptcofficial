@@ -13,38 +13,19 @@ import {
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-import Principal1 from "../../../../../../assets/images/section/Home/Principal.jpeg";
-
 // Backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { postLogin } from "../../../../../../utils/agent";
-import { getRequest } from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 
-// data
-const principal = [
-  {
-    id: 1,
-    name: "Asamis",
-    href: "#",
-    imageSrc: Principal1,
-    imageAlt: "Principal",
-  },
-  {
-    id: 2,
-    name: "Asamis",
-    href: "#",
-    imageSrc: Principal1,
-    imageAlt: "Principal",
-  },
-];
-
-export default function Form() {
+export default function Form({ Principals }) {
   const [open, setOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
+  // Success and error messages
+  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
   // backend
   const [Myfile, setMyfile] = useState([]);
 
@@ -63,9 +44,39 @@ export default function Form() {
   };
 
   //backend
+  //delete function
+  // function DeletePrincipal(id) {
+  //   postLogin(`/principal/del/${id}`)
+  //     .then((res) => {
+  //       if (res.statusText === "OK") {
+  //         console.log(res.data);
+  //         window.location.reload();
+  //       } else {
+  //         console.log("No response found");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     })
+  //     .finally(() => {
+  //       console.info("API CALL");
+  //     });
+  // }
+
+  // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+
+      reader.onload = () => {
+        setImage(reader.result);
+        setIsImageUploaded(true);
+      };
+    }
   };
 
   return (
@@ -91,7 +102,7 @@ export default function Form() {
         });
 
         console.log({ formData: formData });
-        postLogin("", formData)
+        postLogin("/pricipal/create", formData)
           .then(async (res) => {
             if (res?.statusText === "OK") {
               console.log(res.data);
@@ -116,6 +127,7 @@ export default function Form() {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           {isEdit ? (
@@ -123,33 +135,30 @@ export default function Form() {
               <div className="grid grid-cols-2  gap-x-[8rem] gap-y-8 ">
                 <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2">
                   {/* imageUpload */}
-                  <div className="col-2 flex justify-center  ">
-                    <div className="relative inline-block  ">
+                  <div className="flex justify-center cursor-pointer col-2">
+                    <div className="relative inline-block ">
                       <input
                         id="fileInput"
+                        name="fileUrl"
                         type="file"
                         key={fileInputKey}
                         className="sr-only"
-                        // onChange={(e) => {
-                        //   setFileInputKey((prev) => prev + 1);
-                        //   handleFileChange(e);
-                        // }}
                         onChange={imgHandler}
                       />
                       <label
                         htmlFor="fileInput"
-                        className="relative w-96 h-96 rounded-xl border-dashed border-2 border-navy-300 flex justify-center items-center cursor-pointer"
+                        className="relative flex items-center justify-center border-2 border-gray-400 border-dashed cursor-pointer w-96 h-96 rounded-xl"
                       >
                         {isImageUploaded ? (
                           <img
-                            className="w-full h-full object-cover rounded-xl"
+                            className="object-cover w-full h-full rounded-xl"
                             alt="Uploaded"
                             src={image}
                           />
                         ) : (
                           <div className="flex flex-col items-center">
                             <IoImageOutline
-                              className="h-1/2 w-1/2 mb-2 text-gray-300 "
+                              className="w-1/2 mb-2 text-gray-300 h-1/2 "
                               src=""
                               alt="Placeholder"
                             />
@@ -161,11 +170,11 @@ export default function Form() {
                       </label>
                       <label
                         htmlFor="fileInput"
-                        className="absolute top-80 -right-8 bg-white p-2 rounded-xl shadow-lg cursor-pointer"
+                        className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
                       >
                         <div className="flex flex-col justify-end ">
                           <LuEdit2
-                            className="h-10 w-10 p-1 text-navy-900 "
+                            className="w-10 h-10 p-1 text-navy-900 "
                             aria-hidden="true"
                           />
                         </div>
@@ -197,20 +206,20 @@ export default function Form() {
                     {/* Qualification */}
                     <div className="m:col-span-1">
                       <label
-                        htmlFor="qualification"
+                        htmlFor="name"
                         className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Qualification
                       </label>
-                      <div className="mt-2">
+                      <div className="mt-2 cursor-pointer">
                         <input
-                          id="qualification"
-                          name="qualification"
+                          id="Qualification"
+                          name="Qualification"
                           type="text"
-                          autoComplete
                           onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.Qualification}
+                          autoComplete="name"
                           className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -314,13 +323,16 @@ export default function Form() {
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                  className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                  onClick={() => {
+                    resetForm(); // Call resetForm to clear the form fields
+                  }}
                 >
                   <PiXLight
-                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                     aria-hidden="true"
                   />
-                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                     Cancel
                   </span>
                 </button>
@@ -396,14 +408,14 @@ export default function Form() {
                             <div className="mt-8">
                               <div className="flow-root">
                                 <ul role="list" className="-my-6 space-y-4 ">
-                                  {principal.map((item) => (
+                                  {Principals.map((item) => (
                                     <li
                                       key={item.id}
                                       className="flex mt-5 py-8 px-4 bg-lightPrimary rounded-xl hover:shadow-lg transition-all duration-300"
                                     >
                                       <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md ">
                                         <img
-                                          src={item.imageSrc}
+                                          src={`${image_url + item.fileUrl}`}
                                           alt={item.imageAlt}
                                           className="h-full w-full object-cover object-center"
                                         />
@@ -412,15 +424,14 @@ export default function Form() {
                                       <div className="ml-4 flex flex-1 flex-col">
                                         <div>
                                           <div className="flex justify-between text-base font-medium text-gray-900 antialiased tracking-normal font-sans leading-[1.3] ">
-                                            <h3>
-                                              <a href={item.href}>
-                                                {item.name}
-                                              </a>
-                                            </h3>
+                                            <h2 className="text-[20px] font-bold text-gray-900 truncate dark:text-white">
+                                              {item.name}
+                                            </h2>
                                           </div>
                                         </div>
                                         <div className="flex flex-1 items-end justify-end text-sm">
                                           <button
+                                            // onClick={DeletePrincipal(item._id)}
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
                                           >

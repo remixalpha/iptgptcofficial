@@ -196,7 +196,7 @@ export default function Form({ departments }) {
                       >
                         {isImageUploaded ? (
                           <img
-                            className="object-fill w-full h-full rounded-xl"
+                            className="object-cover w-full h-full rounded-xl"
                             alt="Uploaded"
                             src={image}
                           />
