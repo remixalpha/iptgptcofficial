@@ -47,7 +47,7 @@ export default function Flyout() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-bold leading-6 xl:text-white text-Primary ">
+      <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-bold leading-6 lg:text-white text-Primary  ">
         <span>Co-curricular</span>
         {isPanelOpen ? (
           <ChevronUpIcon className="h-5 w-5 " aria-hidden="true" />

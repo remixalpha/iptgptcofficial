@@ -17,17 +17,8 @@ import person from "../../../../../../assets/images/section/Departments/Electron
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { postLogin } from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
-
-//sortData
-const sortOptions = [
-  { name: "Electronics Department", href: "#", current: true },
-  { name: "Computer Department", href: "#", current: false },
-  { name: "Printing Technology", href: "#", current: false },
-  { name: "Mechanical Workshop", href: "#", current: false },
-  { name: "General Department", href: "#", current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -39,14 +30,21 @@ export default function Form({ departments }) {
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  //fetched data added to items
-  const [items, setItems] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
-  //backend
-  const [Myfile, setMyfile] = useState([]);
-  const [sortOption, setSortOption] = useState("64bad26c578e4a044eb886a1");
+  const [hods, setHods] = useState([]);
 
+  const [FilteredArray, setFilteredArray] = useState([]);
+  const [items, setItems] = useState([]);
+  // Success and error messages
+  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+
+  // Backend
+  const [Myfile, setMyfile] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [formDeptOption, setFormDeptOption] = useState(
+    "64bad26c578e4a044eb886a1"
+  );
+
+  //
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -56,9 +54,14 @@ export default function Form({ departments }) {
       setIsImageUploaded(true);
     };
   };
-  const filteredItems = items.filter(
-    (item) => item.department === selectedSortOption.name
-  );
+  //filter the department and show it in the uploaded part
+  function filterArrayById(deptId) {
+    console.log(hods);
+    console.log({ id: deptId });
+    const filtered = hods.filter((item) => item.dept === deptId);
+    setFilteredArray(filtered);
+    console.log({ FilterArray: filtered });
+  }
 
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
@@ -72,30 +75,46 @@ export default function Form({ departments }) {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
-  //backend
+  // Function to handle upload success
+  const handleUploadSuccess = () => {
+    setIsUploadSuccess(true);
+  };
 
+  // Backend
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
     console.log({ selectedDepartment: selectedDepartment });
   };
-  const handleSortOption = (e) => {
-    setSortOption(e.target.value);
-    console.log(sortOption);
-    console.log({ sortOption: sortOption });
+
+  const handleFormDept = (e) => {
+    setFormDeptOption(e.target.value);
+    console.log({ Selected: formDeptOption });
   };
 
+  // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+
+      reader.onload = () => {
+        setImage(reader.result);
+        setIsImageUploaded(true);
+      };
+    }
   };
 
   //featching HOD data
   function fetchHod() {
     getRequest("/hod/")
-      .then(async (res) => {
+      .then((res) => {
+        // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doNotTrack);
-          setItems(res.data.doNotTrack);
+          console.log(res.data.doc);
+          setHods(res.data.doc);
         } else {
           console.error("response not found");
         }
@@ -103,7 +122,6 @@ export default function Form({ departments }) {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
-
   useEffect(() => {
     fetchHod();
   }, []);
@@ -119,7 +137,7 @@ export default function Form({ departments }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("dept", sortOption);
+        formData.append("dept", formDeptOption);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
@@ -166,10 +184,6 @@ export default function Form({ departments }) {
                         type="file"
                         key={fileInputKey}
                         className="sr-only"
-                        // onChange={(e) => {
-                        //   setFileInputKey((prev) => prev + 1);
-                        //   handleFileChange(e);
-                        // }}
                         onChange={imgHandler}
                       />
                       <label
@@ -264,16 +278,11 @@ export default function Form({ departments }) {
                           id="departments"
                           name="departments"
                           autoComplete="country-name"
-                          value={setSortOption}
-                          onChange={handleSortOption}
-                          className=" cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                          value={formDeptOption}
+                          onChange={handleFormDept}
+                          className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                          {/* <option>Electronics Department</option>
-                          <option>Computer Department</option>
-                          <option>Printing Department</option>
-                          <option>General Department</option>
-                          <option>Mechanical Department</option>
-                          <option>Office</option> */}
+                          {/* form departments */}
                           {departments.map((item, i) => (
                             <option value={item._id} key={i * 10}>
                               {item.name}
@@ -315,6 +324,14 @@ export default function Form({ departments }) {
                       </button>
                     </div>
                   </div>
+                  {isUploadSuccess && (
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mt-4">
+                      Data uploaded successfully!{" "}
+                      <button onClick={() => window.location.reload()}>
+                        OK
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : null}
 
@@ -345,21 +362,21 @@ export default function Form({ departments }) {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl cursor-pointer  ">
                       <div className="py-1">
-                        {departments.map((option) => (
-                          <Menu.Item key={option.name}>
+                        {departments.map((option, index) => (
+                          <Menu.Item key={option._id}>
                             {({ active }) => (
                               <a
-                                href={option.href}
+                                // href={option.href}
                                 className={classNames(
                                   option.current
-                                    ? "font-medium text-gray-900"
-                                    : "text-gray-800",
+                                    ? "font-medium  "
+                                    : " text-navy-900  cursor-pointer",
                                   active
-                                    ? "bg-gray-100 rounded-xl m-1 transition-all duration-300 "
+                                    ? "bg-gray-100 text-gray-600  rounded-xl mx-4 transition-all duration-300 "
                                     : "m-2",
                                   "block px-4 py-2 text-sm"
                                 )}
-                                onClick={() => setSelectedSortOption(option)}
+                                onClick={() => filterArrayById(option._id)}
                               >
                                 {option.name}
                               </a>
@@ -372,7 +389,7 @@ export default function Form({ departments }) {
                 </Menu>
                 <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                    {filteredItems.map((item) => (
+                    {FilteredArray.map((item) => (
                       <li
                         key={item.id}
                         className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400  rounded-xl hover:shadow-md sm:pb-4"
@@ -380,8 +397,8 @@ export default function Form({ departments }) {
                         <div className="flex items-center space-x-4">
                           <div className="flex-shrink-0">
                             <img
-                              className="object-fill w-12 h-12 rounded-full "
-                              src={person}
+                              className="object-cover w-12 h-12 rounded-full "
+                              src={`${image_url + item.fileUrl}`}
                               alt=""
                             />
                           </div>
@@ -390,10 +407,10 @@ export default function Form({ departments }) {
                               <p className="text-[20px] font-bold text-gray-900 truncate dark:text-white">
                                 {item.name}
                               </p>
-                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
-                                {item.dept}
+                              <p className="text-sm font-medium text-gray-700 truncate ">
+                                {item.department}
                               </p>
-                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
+                              <p className="text-sm font-medium text-gray-700 truncate ">
                                 {item.Qualification}
                               </p>
                             </div>

@@ -73,7 +73,7 @@ export default function Navbar() {
                 </Disclosure.Button>
               </div>
 
-              <div className="flex-shrink-0 ml-20 sm:ml-[10rem] md:ml-[20rem]  lg:ml-20  ">
+              <div className="flex-shrink-0 ml-[8rem] sm:ml-[14rem] md:ml-[20rem]  lg:ml-20  ">
                 <Link to="/" className="flex flex-shrink-0  cursor-pointer ">
                   <img
                     className="h-[2rem] sm:h-[3rem] md:h-[4rem] w-auto transition-all duration-300  "
@@ -112,16 +112,19 @@ export default function Navbar() {
                 <div className="w-full sm:w-auto">
                   <Department />
                 </div>
+                {/* CoCurricular */}
                 <div className="w-full sm:w-auto ">
                   <CoCurricular />
                 </div>
+                {/* AntiRagging */}
                 <div className=" w-full sm:w-auto">
                   <AntiRagging />
                 </div>
-
+                {/* DisClosure*/}
                 <div className="w-full sm:w-auto ">
                   <DisClosure />
                 </div>
+                {/*Feedback*/}
                 <div className="w-full sm:w-auto ">
                   {feedback.map((item) => (
                     <a
@@ -140,9 +143,11 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
+                {/*Related*/}
                 <div className="w-full sm:w-auto">
                   <Related />
                 </div>
+                {/*Mandatory*/}
                 <div className=" w-full sm:w-auto">
                   {mandatory.map((item) => (
                     <a
@@ -161,6 +166,7 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
+                {/*Grievance*/}
                 <div className="w-full sm:w-auto">
                   {grievance.map((item) => (
                     <a
@@ -179,9 +185,11 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
+                {/*Downloads*/}
                 <div className="w-full sm:w-auto">
                   <Downloads />
                 </div>
+                {/*Contactus*/}
                 <div className="w-full sm:w-auto ">
                   {contactus.map((item) => (
                     <a

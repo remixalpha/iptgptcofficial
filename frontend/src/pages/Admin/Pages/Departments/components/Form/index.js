@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Menu, Dialog, Transition } from "@headlessui/react";
 
-//icons
+// Icons
 import { LuEdit2 } from "react-icons/lu";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
@@ -11,31 +11,14 @@ import {
 } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 
-//Image
+// Image
 import person from "../../../../../../assets/images/section/Departments/Electronics/Asharaf.jpg";
 
-// import { departments } from "../../../../../../utils/constants";
-
-//backend
+// Backend
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { image_url, postLogin } from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
-
-//sortData
-const sortOptions = [
-  { name: "Electronics Department", href: "#", current: true },
-  { name: "Computer Department", href: "#", current: false },
-  { name: "Printing Technology", href: "#", current: false },
-  { name: "Mechanical Workshop", href: "#", current: false },
-  { name: "General Department", href: "#", current: false },
-];
-
-//data
-const initialItems = [
-  { id: 1, name: "Ashiraf", department: "Electronics Department" },
-  { id: 2, name: "Ashiraf", department: "Electronics Department" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -48,9 +31,13 @@ export default function Form({ departments }) {
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [staffs, setStaffs] = useState([]);
-  const [selectedSortOption, setSelectedSortOption] = useState("");
+
   const [FilteredArray, setFilteredArray] = useState([]);
-  //backend
+  const [items, setItems] = useState([]);
+  // Success and error messages
+  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+
+  // Backend
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [formDeptOption, setFormDeptOption] = useState(
@@ -67,10 +54,7 @@ export default function Form({ departments }) {
       setIsImageUploaded(true);
     };
   };
-  // const filteredItems = items.filter(
-  //   (item) => item._id === selectedSortOption._id
-  // );
-  // console.log({ F: filteredItems });
+
   function filterArrayById(deptId) {
     console.log(staffs);
     console.log({ id: deptId });
@@ -78,6 +62,7 @@ export default function Form({ departments }) {
     setFilteredArray(filtered);
     console.log({ FilterArray: filtered });
   }
+
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
@@ -90,24 +75,39 @@ export default function Form({ departments }) {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
-  //backend
+  // Function to handle upload success
+  const handleUploadSuccess = () => {
+    setIsUploadSuccess(true);
+  };
 
+  // Backend
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
     console.log({ selectedDepartment: selectedDepartment });
   };
+
   const handleFormDept = (e) => {
     setFormDeptOption(e.target.value);
-
     console.log({ Selected: formDeptOption });
   };
 
+  // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+
+      reader.onload = () => {
+        setImage(reader.result);
+        setIsImageUploaded(true);
+      };
+    }
   };
 
-  //featching HOD data
+  // Fetching HOD data
   function fetchStaff() {
     getRequest("/staff/")
       .then((res) => {
@@ -147,8 +147,8 @@ export default function Form({ departments }) {
         postLogin("/staff/create", formData)
           .then(async (res) => {
             if (res?.statusText === "OK") {
-              console.log(res.data);
-              // window.location.reload();
+              // console.log(res.data);
+              handleUploadSuccess();
             } else {
               console.log("not get response");
             }
@@ -185,10 +185,6 @@ export default function Form({ departments }) {
                         type="file"
                         key={fileInputKey}
                         className="sr-only"
-                        // onChange={(e) => {
-                        //   setFileInputKey((prev) => prev + 1);
-                        //   handleFileChange(e);
-                        // }}
                         onChange={imgHandler}
                       />
                       <label
@@ -288,12 +284,6 @@ export default function Form({ departments }) {
                           onChange={handleFormDept}
                           className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                          {/* <option>Electronics Department</option>
-                      <option>Computer Department</option>
-                      <option>Printing Department</option>
-                      <option>General Department</option>
-                      <option>Mechanical Department</option>
-                      <option>Office</option> */}
                           {/* form departments */}
                           {departments.map((item, i) => (
                             <option value={item._id} key={i * 10}>
@@ -307,7 +297,6 @@ export default function Form({ departments }) {
                     {/* buttons */}
                     <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] ">
                       {/* cancel button */}
-
                       <button
                         type="button"
                         disabled={isSubmitting}
@@ -337,11 +326,19 @@ export default function Form({ departments }) {
                       </button>
                     </div>
                   </div>
+                  {isUploadSuccess && (
+                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mt-4">
+                      Data uploaded successfully!{" "}
+                      <button onClick={() => window.location.reload()}>
+                        OK
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : null}
 
               {/* all ready uploaded */}
-              <div>
+              <div className=" mx-8 p-4   ">
                 <Menu
                   as="div"
                   className="relative inline-block text-left -right-[37rem] "
@@ -367,7 +364,7 @@ export default function Form({ departments }) {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white border rounded-lg shadow-lg cursor-pointer w-80 ">
                       <div className="py-1">
-                        {departments.map((option) => (
+                        {departments.map((option, index) => (
                           <Menu.Item key={option._id}>
                             {({ active }) => (
                               <a
@@ -392,7 +389,7 @@ export default function Form({ departments }) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
+                <div className="max-h-[400px] overflow-scroll ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
                     {FilteredArray.map((item) => (
                       <li
@@ -402,7 +399,7 @@ export default function Form({ departments }) {
                         <div className="flex items-center space-x-4">
                           <div className="flex-shrink-0">
                             <img
-                              className="object-fill w-12 h-12 rounded-full "
+                              className="object-cover w-12 h-12 rounded-full "
                               src={`${image_url + item.fileUrl}`}
                               alt=""
                             />
@@ -474,7 +471,10 @@ export default function Form({ departments }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 hidden transition-opacity bg-gray-500 bg-opacity-75 md:block" />
+                <div
+                  className="fixed inset-0 hidden transition-opacity bg-gray-500 bg-opacity-75 md:block"
+                  style={{ backdropFilter: "blur(10px)" }}
+                />
               </Transition.Child>
 
               <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -610,14 +610,14 @@ export default function Form({ departments }) {
                                 <button
                                   type="submit"
                                   disabled={isSubmitting}
-                                  className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
+                                  className="flex flex-row ml-[18rem] items-center justify-end px-3 py-2  text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                                 >
                                   <PiUploadSimpleThin
                                     type="submit"
                                     className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                                     aria-hidden="true"
                                   />
-                                  <span className="absolute invisible group-hover:relative group-hover:visible antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                                  <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
                                     Update
                                   </span>
                                 </button>
