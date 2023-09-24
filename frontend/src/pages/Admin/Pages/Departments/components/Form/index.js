@@ -19,7 +19,7 @@ import person from "../../../../../../assets/images/section/Departments/Electron
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { postLogin } from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
 
 //sortData
@@ -47,9 +47,9 @@ export default function Form({ departments }) {
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [staffs, setStaffs] = useState([]);
   const [selectedSortOption, setSelectedSortOption] = useState("");
-
+  const [FilteredArray, setFilteredArray] = useState([]);
   //backend
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -67,11 +67,17 @@ export default function Form({ departments }) {
       setIsImageUploaded(true);
     };
   };
-  const filteredItems = items.filter(
-    (item) => item._id === selectedSortOption._id
-  );
-  console.log({ F: filteredItems });
-
+  // const filteredItems = items.filter(
+  //   (item) => item._id === selectedSortOption._id
+  // );
+  // console.log({ F: filteredItems });
+  function filterArrayById(deptId) {
+    console.log(staffs);
+    console.log({ id: deptId });
+    const filtered = staffs.filter((item) => item.dept === deptId);
+    setFilteredArray(filtered);
+    console.log({ FilterArray: filtered });
+  }
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
@@ -108,7 +114,7 @@ export default function Form({ departments }) {
         // console.log(res.data);
         if (res.statusText === "OK") {
           console.log(res.data.doc);
-          setItems(res.data.doc);
+          setStaffs(res.data.doc);
         } else {
           console.error("response not found");
         }
@@ -375,11 +381,9 @@ export default function Form({ departments }) {
                                     : "m-2",
                                   "block px-4 py-2 text-sm"
                                 )}
-                                onClick={() =>
-                                  setSelectedSortOption(option._Id)
-                                }
+                                onClick={() => filterArrayById(option._id)}
                               >
-                                {option._id}
+                                {option.name}
                               </a>
                             )}
                           </Menu.Item>
@@ -390,7 +394,7 @@ export default function Form({ departments }) {
                 </Menu>
                 <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                    {filteredItems.map((item) => (
+                    {FilteredArray.map((item) => (
                       <li
                         key={item.id}
                         className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
@@ -399,19 +403,19 @@ export default function Form({ departments }) {
                           <div className="flex-shrink-0">
                             <img
                               className="object-fill w-12 h-12 rounded-full "
-                              src={person}
+                              src={`${image_url + item.fileUrl}`}
                               alt=""
                             />
                           </div>
                           <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
                             <div className="justify-between flex-1">
-                              <p className="text-[20px] font-bold text-gray-900 truncate dark:text-white">
+                              <p className="text-[20px] font-bold text-gray-900">
                                 {item.name}
                               </p>
-                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
+                              <p className="text-sm font-medium text-gray-700 truncate">
                                 {item.position}
                               </p>
-                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
+                              <p className="text-sm font-medium text-gray-700 truncate ">
                                 {item.department}
                               </p>
                             </div>
