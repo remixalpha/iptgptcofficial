@@ -12,6 +12,7 @@ import Downloads from "./components/Flyout/Downloadss/flyout";
 
 import { Link } from "react-router-dom";
 
+//data
 const home = [{ name: "Home", href: "#", current: true }];
 const feedback = [
   {
@@ -53,10 +54,13 @@ export default function Navbar() {
           <div className=" flex items-center justify-center relative top-5  transition-all duration-300 ">
             <div className="h-[6rem] max-w-[125rem] mx-5 left-0 right-0 absolute bg-gray-800 opacity-30 rounded-xl z-20 transition-all duration-300" />
 
-            <div className="flex h-[6rem]  items-center justify-between ml-10   z-40   ">
-              <div className="absolute inset-y-0 left-12  flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+            <div
+              className="flex h-[6rem] w-[125rem]  items-center justify-between mx-5   z-40 rounded-xl   "
+              style={{ backdropFilter: "blur(10px)" }}
+            >
+              {/* Mobile menu button*/}
+              <div className="absolute inset-y-0 mx-4 flex items-center lg:hidden">
+                <Disclosure.Button className="inline-flex  items-center justify-center rounded-md p-2 bg-gray-500 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -68,13 +72,21 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex-shrink-0 sm:ml-[35rem] md:ml-[25rem] lg:ml-[10rem]  xl:ml-1 -ml-10 ">
+
+              <div className="flex-shrink-0 ml-20 sm:ml-[10rem] md:ml-[20rem]  lg:ml-20  ">
                 <Link to="/" className="flex flex-shrink-0  cursor-pointer ">
-                  <img className="h-[4rem] w-auto " src={Logo} alt="IPT LOGO" />
+                  <img
+                    className="h-[2rem] sm:h-[3rem] md:h-[4rem] w-auto transition-all duration-300  "
+                    src={Logo}
+                    alt="IPT LOGO"
+                  />
                 </Link>
               </div>
-              <div className=" sm:flex sm:justify-start sm:items-center sm:ml-10 sm:gap-2       xl:flex xl:justify-start xl:items-center xl:ml-10 xl:gap-2 hidden ">
-                <div className="">
+
+              {/* Main Navbar */}
+              <div className="hidden  mx-[2rem] p-4  lg:flex lg:flex-wrap lg:justify-items-stretch lg:items-center lg:ml-10 lg:gap-2">
+                {/* Home */}
+                <div className="w-full sm:w-auto">
                   {home.map((item) => (
                     <Link
                       key={item.name}
@@ -92,23 +104,25 @@ export default function Navbar() {
                     </Link>
                   ))}
                 </div>
-
-                <div className="">
+                {/* AboutUs */}
+                <div className="w-full sm:w-auto">
                   <AboutUS />
                 </div>
-                <div className="">
+                {/* Department */}
+                <div className="w-full sm:w-auto">
                   <Department />
                 </div>
-                <div className=" ">
+                <div className="w-full sm:w-auto ">
                   <CoCurricular />
                 </div>
-                <div className=" ">
+                <div className=" w-full sm:w-auto">
                   <AntiRagging />
                 </div>
-                <div className=" ">
+
+                <div className="w-full sm:w-auto ">
                   <DisClosure />
                 </div>
-                <div className=" ">
+                <div className="w-full sm:w-auto ">
                   {feedback.map((item) => (
                     <a
                       key={item.name}
@@ -126,10 +140,10 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
-                <div className="">
+                <div className="w-full sm:w-auto">
                   <Related />
                 </div>
-                <div className=" ">
+                <div className=" w-full sm:w-auto">
                   {mandatory.map((item) => (
                     <a
                       key={item.name}
@@ -147,7 +161,7 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
-                <div className="">
+                <div className="w-full sm:w-auto">
                   {grievance.map((item) => (
                     <a
                       key={item.name}
@@ -165,12 +179,10 @@ export default function Navbar() {
                     </a>
                   ))}
                 </div>
-
-                <div className="">
+                <div className="w-full sm:w-auto">
                   <Downloads />
                 </div>
-
-                <div className=" ">
+                <div className="w-full sm:w-auto ">
                   {contactus.map((item) => (
                     <a
                       key={item.name}
@@ -192,8 +204,13 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden absolute left-1/2  mt-10  max-w-fit -translate-x-1/2  z-50 ">
-            <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl   text-sm leading-6 shadow-lg  ring-gray-900/5">
+          {/* Mobile view */}
+
+          <Disclosure.Panel className="lg:hidden absolute left-1/2  mt-8  bg-opacity-10 max-w-fit -translate-x-1/2  z-50 ">
+            <div
+              className="w-screen max-w-lg flex-auto overflow-hidden rounded-xl  text-sm leading-6 shadow-lg  ring-gray-900/5"
+              style={{ backdropFilter: "blur(10px)" }}
+            >
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {home.map((item) => (
                   <Disclosure.Button
