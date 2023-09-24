@@ -48,12 +48,14 @@ export default function Form({ departments }) {
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+  const [selectedSortOption, setSelectedSortOption] = useState("");
 
   //backend
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [sortOption, setSortOption] = useState("64bad26c578e4a044eb886a1");
+  const [formDeptOption, setFormDeptOption] = useState(
+    "64bad26c578e4a044eb886a1"
+  );
 
   //
   const handleFileChange = (e) => {
@@ -66,8 +68,9 @@ export default function Form({ departments }) {
     };
   };
   const filteredItems = items.filter(
-    (item) => item.department === selectedSortOption.name
+    (item) => item._id === selectedSortOption._id
   );
+  console.log({ F: filteredItems });
 
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
@@ -87,10 +90,10 @@ export default function Form({ departments }) {
     setSelectedDepartment(e.target.value);
     console.log({ selectedDepartment: selectedDepartment });
   };
-  const handleSortOption = (e) => {
-    setSortOption(e.target.value);
-    console.log(sortOption);
-    console.log({ sortOption: sortOption });
+  const handleFormDept = (e) => {
+    setFormDeptOption(e.target.value);
+
+    console.log({ Selected: formDeptOption });
   };
 
   const imgHandler = (event) => {
@@ -99,12 +102,13 @@ export default function Form({ departments }) {
   };
 
   //featching HOD data
-  function fetchHod() {
+  function fetchStaff() {
     getRequest("/staff/")
-      .then(async (res) => {
+      .then((res) => {
+        // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doNotTrack);
-          setItems(res.data.doNotTrack);
+          console.log(res.data.doc);
+          setItems(res.data.doc);
         } else {
           console.error("response not found");
         }
@@ -114,7 +118,7 @@ export default function Form({ departments }) {
   }
 
   useEffect(() => {
-    fetchHod();
+    fetchStaff();
   }, []);
 
   return (
@@ -128,7 +132,7 @@ export default function Form({ departments }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("dept", sortOption);
+        formData.append("dept", formDeptOption);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
@@ -162,12 +166,12 @@ export default function Form({ departments }) {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[110rem] px-20 py-20 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl  bg-white border border-gray-200 relative -top-[2rem] ">
-            <div className="grid grid-cols-2   items-center  gap-y-8 ">
+            <div className="grid items-center grid-cols-2 gap-y-8 ">
               {/* photo and name and Qualification, department */}
               {isEdit ? (
-                <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2  ">
+                <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                   {/* imageUpload */}
-                  <div className="flex justify-center col-2 cursor-pointer">
+                  <div className="flex justify-center cursor-pointer col-2">
                     <div className="relative inline-block ">
                       <input
                         id="fileInput"
@@ -274,8 +278,8 @@ export default function Form({ departments }) {
                           id="departments"
                           name="departments"
                           autoComplete="country-name"
-                          value={setSortOption}
-                          onChange={handleSortOption}
+                          value={formDeptOption}
+                          onChange={handleFormDept}
                           className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                           {/* <option>Electronics Department</option>
@@ -284,6 +288,7 @@ export default function Form({ departments }) {
                       <option>General Department</option>
                       <option>Mechanical Department</option>
                       <option>Office</option> */}
+                          {/* form departments */}
                           {departments.map((item, i) => (
                             <option value={item._id} key={i * 10}>
                               {item.name}
@@ -300,7 +305,7 @@ export default function Form({ departments }) {
                       <button
                         type="button"
                         disabled={isSubmitting}
-                        className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                       >
                         <PiXLight
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
@@ -314,7 +319,7 @@ export default function Form({ departments }) {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                       >
                         <PiUploadSimpleThin
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
@@ -354,13 +359,13 @@ export default function Form({ departments }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-lg border cursor-pointer ">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white border rounded-lg shadow-lg cursor-pointer w-80 ">
                       <div className="py-1">
                         {departments.map((option) => (
-                          <Menu.Item key={option.name}>
+                          <Menu.Item key={option._id}>
                             {({ active }) => (
                               <a
-                                href={option.href}
+                                // href={option.href}
                                 className={classNames(
                                   option.current
                                     ? "font-medium  "
@@ -370,9 +375,11 @@ export default function Form({ departments }) {
                                     : "m-2",
                                   "block px-4 py-2 text-sm"
                                 )}
-                                onClick={() => setSelectedSortOption(option)}
+                                onClick={() =>
+                                  setSelectedSortOption(option._Id)
+                                }
                               >
-                                {option.name}
+                                {option._id}
                               </a>
                             )}
                           </Menu.Item>
@@ -599,7 +606,7 @@ export default function Form({ departments }) {
                                 <button
                                   type="submit"
                                   disabled={isSubmitting}
-                                  className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                                  className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                                 >
                                   <PiUploadSimpleThin
                                     type="submit"
