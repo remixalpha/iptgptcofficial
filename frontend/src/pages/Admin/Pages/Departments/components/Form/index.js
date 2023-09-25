@@ -401,7 +401,7 @@ export default function Form({ departments }) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <div className="max-h-[400px]  overflow-scroll overflow-x-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
+                <div className="max-h-[400px] overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden  ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
                     {FilteredArray.map((item) => (
                       <li
@@ -409,12 +409,38 @@ export default function Form({ departments }) {
                         className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
                       >
                         <div className="flex items-center space-x-4">
+                          {/* Dp */}
                           <div className="flex-shrink-0">
-                            <img
-                              className="object-cover w-12 h-12 rounded-full "
-                              src={`${image_url + item.fileUrl}`}
-                              alt=""
-                            />
+                            {item.fileUrl ? (
+                              <img
+                                className="object-cover w-12 h-12 rounded-full"
+                                src={`${image_url + item.fileUrl}`}
+                                alt=""
+                              />
+                            ) : (
+                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-300">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-6 w-6 text-gray-600"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 4a4 4 0 100 8 4 4 0 000-8z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M20 10v2a8 8 0 01-8 8h0a8 8 0 01-8-8v-2"
+                                  />
+                                </svg>
+                              </div>
+                            )}
                           </div>
                           <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
                             <div className="justify-between flex-1">

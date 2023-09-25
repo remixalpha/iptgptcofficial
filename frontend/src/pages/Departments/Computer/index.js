@@ -6,8 +6,9 @@ import Navbar from "../../../components/Navbar/navbar";
 import Banners from "./components/Banner";
 import Hod from "./components/hod/index";
 import MissionVision from "./components/MissionVision/Visionmission";
-import Footer from "../../../components/Footer/index";
 import Lab from "./components/Lab";
+import Staff from "./components/Staff-card";
+import Footer from "../../../components/Footer/index";
 
 const Computer = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -61,9 +62,11 @@ const Computer = () => {
         <div className="">
           <Lab />
         </div>
+        <div>
+          <Staff />
+        </div>
       </div>
       <div className=" ">
-        {" "}
         <Footer />
       </div>
     </div>

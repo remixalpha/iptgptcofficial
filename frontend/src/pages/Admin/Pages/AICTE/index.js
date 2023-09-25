@@ -4,10 +4,25 @@ import { IoIosArrowUp } from "react-icons/io";
 
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
+import { FetchRequest, getRequest } from "../../../../utils/agent";
 
 export default function Aicte() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [Certificate, setCertificate] = useState([]);
+  function fetchCertificate() {
+    FetchRequest("/aicte/")
+      .then(async (res) => {
+        if (res.statusText === "OK") {
+          // console.log(res.data.doNotTrack);
+          setCertificate(res.data.doNotTrack);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -22,6 +37,7 @@ export default function Aicte() {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
+    fetchCertificate();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -44,7 +60,7 @@ export default function Aicte() {
         )}
 
         <div className="mb-[15rem] scale-125 ">
-          <Form />
+          <Form Certificate={Certificate} />
         </div>
       </div>
     </div>

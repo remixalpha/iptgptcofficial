@@ -17,55 +17,53 @@ import Logo from "../../../../../../assets/images/logos/iptlogomin.png";
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { postLogin } from "../../../../../../utils/agent";
-import { getRequest } from "../../../../../../utils/agent";
 
-// data
+import { image_url, postLogin } from "../../../../../../utils/agent";
 
-const uploadedData = [
-  {
-    id: 1,
-    name: "uploaded content",
-    year: "2023-24",
-  },
-  {
-    id: 2,
-    name: "uploaded content",
-    year: "2023-24",
-  },
-];
-
-export default function Form() {
+export default function Form({ Certificate }) {
   const [open, setOpen] = useState(true);
-  const [image, setImage] = useState("https://via.placeholder.com/150");
-  const [fileInputKey, setFileInputKey] = useState(0);
-  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   //backend
   const [Myfile, setMyfile] = useState([]);
+  //For file handling
+  const imgHandler = (event) => {
+    setMyfile(event.target.files);
+    console.log(event.target.files);
+  };
   //
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImage(reader.result);
-      setIsImageUploaded(true);
-    };
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     setImage(reader.result);
+  //     setIsImageUploaded(true);
+  //   };
+  // };
 
   // Handle the sideFrame open
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
 
-  //backend
-
-  const imgHandler = (event) => {
-    setMyfile(event.target.files);
-    console.log(event.target.files);
-  };
+  function DeleteCertificate(id) {
+    postLogin(`/aicte/del/${id}`)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data);
+          window.location.reload();
+        } else {
+          console.log("No response found");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.info("API CALL");
+      });
+  }
 
   return (
     <Formik
@@ -88,8 +86,9 @@ export default function Form() {
           .then(async (res) => {
             if (res?.statusText === "OK") {
               console.log(res.data);
-              // window.location.reload();
+              window.location.reload();
             } else {
+              window.location.reload();
               console.log("not get response");
             }
           })
@@ -109,6 +108,7 @@ export default function Form() {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="space-y-12">
@@ -197,7 +197,7 @@ export default function Form() {
                   {/* Delete button */}
                   <button
                     type="button"
-                    disabled={isSubmitting}
+                    // disabled={isSubmitting}
                     onClick={handleToggleDeleteDialog}
                     className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
                   >
@@ -216,14 +216,16 @@ export default function Form() {
                   <button
                     type="button"
                     disabled={isSubmitting}
-                    className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                    className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                    onClick={() => {
+                      resetForm(); // Call resetForm to clear the form fields
+                    }}
                   >
                     <PiXLight
-                      type="submit"
-                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                       aria-hidden="true"
                     />
-                    <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                    <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                       Cancel
                     </span>
                   </button>
@@ -239,7 +241,7 @@ export default function Form() {
                       aria-hidden="true"
                     />
                     <span className=" relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                      Update
+                      Upload
                     </span>
                   </button>
                 </div>
@@ -249,7 +251,7 @@ export default function Form() {
 
           {/* sideForm */}
 
-          <Transition.Root show={open} as={Fragment}>
+          {/* <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
               <Transition.Child
                 as={Fragment}
@@ -301,7 +303,7 @@ export default function Form() {
                             <div className="mt-8">
                               <div className="flow-root">
                                 <ul role="list" className="-my-6 space-y-4 ">
-                                  {uploadedData.map((item) => (
+                                  {Certificate.map((item) => (
                                     <li
                                       key={item.id}
                                       className="flex mt-5 py-4 px-4 bg-gray-50  rounded-xl hover:shadow-lg transition-all duration-300"
@@ -322,13 +324,16 @@ export default function Form() {
                                           </h3>
                                         </div>
 
-                                        <div className="flex flex-1 items-end justify-end text-sm">
+                                        <div className="flex items-end justify-end flex-1 text-sm">
                                           <button
+                                            onClick={() =>
+                                              DeleteCertificate(item._id)
+                                            }
                                             type="button"
                                             className="font-medium text-indigo-600 hover:text-indigo-500"
                                           >
                                             <PiTrashSimpleLight
-                                              className="w-7 h-7 p-1 text-black  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                                              className="p-1 text-black transition-transform duration-300 ease-in-out transform w-7 h-7 group-hover:-translate-y-1"
                                               aria-hidden="true"
                                             />
                                           </button>
@@ -347,7 +352,7 @@ export default function Form() {
                 </div>
               </div>
             </Dialog>
-          </Transition.Root>
+          </Transition.Root> */}
         </form>
       )}
     </Formik>

@@ -7,6 +7,7 @@ import Banners from "./components/Banner";
 import Hod from "./components/hod/index";
 import MissionVision from "./components/MissionVision";
 import Lab from "./components/Lab";
+import Staff from "./components/Staff-card";
 import Footer from "../../../components/Footer/index";
 
 const Gallery = () => {
@@ -60,6 +61,9 @@ const Gallery = () => {
         </div>
         <div className="">
           <Lab />
+        </div>
+        <div>
+          <Staff />
         </div>
       </div>
       <div className=" ">

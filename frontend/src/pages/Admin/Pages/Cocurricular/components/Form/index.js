@@ -11,28 +11,15 @@ import {
 } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 
-//Image
-import person from "../../../../../../assets/images/section/Departments/Electronics/Asharaf.jpg";
-
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { postLogin } from "../../../../../../utils/agent";
+import {
+  FetchRequest,
+  image_url,
+  postLogin,
+} from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
-
-//date
-const sortOptions = [
-  { name: "Electronics Department", href: "#", current: true },
-  { name: "Computer Department", href: "#", current: false },
-  { name: "Printing Technology", href: "#", current: false },
-  { name: "Mechanical Workshop", href: "#", current: false },
-  { name: "General Department", href: "#", current: false },
-];
-
-const initialItems = [
-  { id: 1, name: "Ashiraf", department: "Electronics Department" },
-  { id: 2, name: "Ashiraf", department: "Electronics Department" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -44,13 +31,20 @@ export default function Form({ departments }) {
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [items, setItems] = useState([]);
-  const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+  const [staffs, setStaffs] = useState([]);
 
-  //backend
+  const [FilteredArray, setFilteredArray] = useState([]);
+  const [items, setItems] = useState([]);
+  // Success and error messages
+  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+
+  // Backend
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [sortOption, setSortOption] = useState("64bad26c578e4a044eb886a1");
+  const [formDeptOption, setFormDeptOption] = useState(
+    "64bad26c578e4a044eb886a1"
+  );
+  const [EditItem, setEditItem] = useState({});
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -62,9 +56,13 @@ export default function Form({ departments }) {
     };
   };
 
-  const filteredItems = items.filter(
-    (item) => item.department === selectedSortOption.name
-  );
+  function filterArrayById(deptId) {
+    console.log(staffs);
+    console.log({ id: deptId });
+    const filtered = staffs.filter((item) => item.dept === deptId);
+    setFilteredArray(filtered);
+    console.log({ FilterArray: filtered });
+  }
 
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
@@ -78,30 +76,46 @@ export default function Form({ departments }) {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
-  //backend
+  // Function to handle upload success
+  const handleUploadSuccess = () => {
+    setIsUploadSuccess(true);
+  };
 
+  // Backend
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
     console.log({ selectedDepartment: selectedDepartment });
   };
-  const handleSortOption = (e) => {
-    setSortOption(e.target.value);
-    console.log(sortOption);
-    console.log({ sortOption: sortOption });
+
+  const handleFormDept = (e) => {
+    setFormDeptOption(e.target.value);
+    console.log({ Selected: formDeptOption });
   };
 
+  // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+
+      reader.onload = () => {
+        setImage(reader.result);
+        setIsImageUploaded(true);
+      };
+    }
   };
 
-  //featching HOD data
-  function fetchHod() {
-    getRequest("/staff/")
-      .then(async (res) => {
+  // Fetching HOD data
+  function fetchStaff() {
+    FetchRequest("/staff/")
+      .then((res) => {
+        // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doNotTrack);
-          setItems(res.data.doNotTrack);
+          console.log(res.data.doc);
+          setStaffs(res.data.doc);
         } else {
           console.error("response not found");
         }
@@ -111,7 +125,7 @@ export default function Form({ departments }) {
   }
 
   useEffect(() => {
-    fetchHod();
+    fetchStaff();
   }, []);
 
   return (
@@ -125,17 +139,19 @@ export default function Form({ departments }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("dept", sortOption);
+        formData.append("dept", formDeptOption);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
 
         console.log({ formData: formData });
-        postLogin("", formData)
+        postLogin("/staff/create", formData)
           .then(async (res) => {
-            if (res?.statusText === "OK") {
-              console.log(res.data);
-              // window.location.reload();
+            console.log({ res: res });
+            if (res?.statusText === "Created") {
+              // console.log(res.data);
+              handleUploadSuccess();
+              window.location.reload();
             } else {
               console.log("not get response");
             }
@@ -156,6 +172,7 @@ export default function Form({ departments }) {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[110rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] ">
@@ -164,17 +181,14 @@ export default function Form({ departments }) {
               {isEdit ? (
                 <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                   {/* imageUpload */}
-                  <div className="flex justify-center col-2 ">
+                  <div className="flex justify-center cursor-pointer col-2">
                     <div className="relative inline-block ">
                       <input
                         id="fileInput"
+                        name="fileUrl"
                         type="file"
                         key={fileInputKey}
                         className="sr-only"
-                        // onChange={(e) => {
-                        //   setFileInputKey((prev) => prev + 1);
-                        //   handleFileChange(e);
-                        // }}
                         onChange={imgHandler}
                       />
                       <label
@@ -265,19 +279,16 @@ export default function Form({ departments }) {
                       >
                         Departments
                       </label>
-                      <div className="mt-2">
+                      <div className="mt-2 ">
                         <select
                           id="departments"
                           name="departments"
                           autoComplete="country-name"
-                          className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                          value={formDeptOption}
+                          onChange={handleFormDept}
+                          className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                          {/* <option>Electronics Department</option>
-                          <option>Computer Department</option>
-                          <option>Printing Department</option>
-                          <option>General Department</option>
-                          <option>Mechanical Department</option>
-                          <option>Office</option> */}
+                          {/* form departments */}
                           {departments.map((item, i) => (
                             <option value={item._id} key={i * 10}>
                               {item.name}
@@ -289,18 +300,19 @@ export default function Form({ departments }) {
                     {/* buttons */}
                     <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] ">
                       {/* cancel button */}
-
                       <button
                         type="button"
                         disabled={isSubmitting}
-                        className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                        onClick={() => {
+                          resetForm(); // Call resetForm to clear the form fields
+                        }}
                       >
                         <PiXLight
-                          type="submit"
-                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                           aria-hidden="true"
                         />
-                        <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                           Cancel
                         </span>
                       </button>
@@ -308,10 +320,9 @@ export default function Form({ departments }) {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                       >
                         <PiUploadSimpleThin
-                          type="submit"
                           className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
                           aria-hidden="true"
                         />
@@ -325,7 +336,7 @@ export default function Form({ departments }) {
               ) : null}
 
               {/* all ready uploaded */}
-              <div>
+              <div className="p-4 mx-8 ">
                 <Menu
                   as="div"
                   className="relative inline-block text-left -right-[37rem] "
@@ -349,13 +360,13 @@ export default function Form({ departments }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl border  ">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white border rounded-lg shadow-lg cursor-pointer w-80 ">
                       <div className="py-1">
-                        {departments.map((option) => (
-                          <Menu.Item key={option.name}>
+                        {departments.map((option, index) => (
+                          <Menu.Item key={option._id}>
                             {({ active }) => (
                               <a
-                                href={option.href}
+                                // href={option.href}
                                 className={classNames(
                                   option.current
                                     ? "font-medium  "
@@ -365,7 +376,7 @@ export default function Form({ departments }) {
                                     : "m-2",
                                   "block px-4 py-2 text-sm"
                                 )}
-                                onClick={() => setSelectedSortOption(option)}
+                                onClick={() => filterArrayById(option._id)}
                               >
                                 {option.name}
                               </a>
@@ -376,34 +387,60 @@ export default function Form({ departments }) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
+                <div className="max-h-[400px]  overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden  ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                    {filteredItems.map((item) => (
+                    {FilteredArray.map((item) => (
                       <li
                         key={item.id}
-                        className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-300  rounded-xl hover:shadow-md sm:pb-4"
+                        className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
                       >
                         <div className="flex items-center space-x-4">
+                          {/* Dp */}
                           <div className="flex-shrink-0">
-                            <img
-                              className="object-fill w-12 h-12 rounded-full "
-                              src={person}
-                              alt=""
-                            />
+                            {item.fileUrl ? (
+                              <img
+                                className="object-cover w-12 h-12 rounded-full"
+                                src={`${image_url + item.fileUrl}`}
+                                alt=""
+                              />
+                            ) : (
+                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-300">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-6 w-6 text-gray-600"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 4a4 4 0 100 8 4 4 0 000-8z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M20 10v2a8 8 0 01-8 8h0a8 8 0 01-8-8v-2"
+                                  />
+                                </svg>
+                              </div>
+                            )}
                           </div>
                           <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
                             <div className="justify-between flex-1">
-                              <p className="text-[20px] font-bold text-gray-900 truncate dark:text-white">
+                              <p className="text-[20px] font-bold text-gray-900">
                                 {item.name}
                               </p>
-                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
+                              <p className="text-sm font-medium text-gray-700 truncate">
                                 {item.position}
                               </p>
-                              <p className="text-sm font-medium text-gray-700 truncate dark:text-white">
+                              <p className="text-sm font-medium text-gray-700 truncate ">
                                 {item.department}
                               </p>
                             </div>
-                            <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
+                            <div className=" fixed flex  items-center justify-center text-sm  space-x-[4rem]  mt-10 ">
                               <div className="flex flex-col justify-end cursor-pointer group">
                                 <div
                                   type="button"
@@ -457,7 +494,10 @@ export default function Form({ departments }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 hidden transition-opacity bg-gray-500 bg-opacity-75 md:block" />
+                <div
+                  className="fixed inset-0 hidden transition-opacity bg-gray-500 bg-opacity-75 md:block"
+                  style={{ backdropFilter: "blur(10px)" }}
+                />
               </Transition.Child>
 
               <div className="fixed inset-0 z-10 overflow-y-auto">

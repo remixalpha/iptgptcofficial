@@ -6,7 +6,7 @@ export function TeamCard({ img, name, position }) {
     <Card
       color="transparent"
       shadow={false}
-      className="text-center flex flex-col items-center justify-center hover:scale-110 transition-all duration-300 "
+      className="text-center flex flex-col items-center justify-center hover:scale-110 transition-all duration-300  "
     >
       <Avatar
         src={img}
@@ -28,14 +28,14 @@ export function TeamCard({ img, name, position }) {
 
 TeamCard.defaultProps = {
   position: "",
-  socials: null,
+  // socials: null,
 };
 
 TeamCard.propTypes = {
   img: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   position: PropTypes.string,
-  socials: PropTypes.node,
+  // socials: PropTypes.node,
 };
 
 TeamCard.displayName = "../../widgets/cards/team-card.jsx";

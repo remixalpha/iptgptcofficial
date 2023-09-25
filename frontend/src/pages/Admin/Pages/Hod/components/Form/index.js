@@ -150,8 +150,9 @@ export default function Form({ departments }) {
         postLogin("/hod/create", formData)
           .then(async (res) => {
             if (res?.statusText === "OK") {
-              console.log(res.data);
-              // window.location.reload();
+              // console.log(res.data);
+              handleUploadSuccess();
+              window.location.reload();
             } else {
               console.log("not get response");
             }
@@ -172,6 +173,7 @@ export default function Form({ departments }) {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[110rem] px-20 py-20 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl  bg-white border border-gray-200 relative -top-[2rem] ">
@@ -303,12 +305,15 @@ export default function Form({ departments }) {
                         type="button"
                         disabled={isSubmitting}
                         className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                        onClick={() => {
+                          resetForm(); // Call resetForm to clear the form fields
+                        }}
                       >
                         <PiXLight
-                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                           aria-hidden="true"
                         />
-                        <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                           Cancel
                         </span>
                       </button>
@@ -391,7 +396,7 @@ export default function Form({ departments }) {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <div className="max-h-[400px] overflow-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
+                <div className="max-h-[400px] overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
                     {FilteredArray.map((item) => (
                       <li
@@ -399,16 +404,42 @@ export default function Form({ departments }) {
                         className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
                       >
                         <div className="flex items-center space-x-4">
+                          {/* Dp */}
                           <div className="flex-shrink-0">
-                            <img
-                              className="object-cover w-12 h-12 rounded-full "
-                              src={`${image_url + item.fileUrl}`}
-                              alt=""
-                            />
+                            {item.fileUrl ? (
+                              <img
+                                className="object-cover w-12 h-12 rounded-full"
+                                src={`${image_url + item.fileUrl}`}
+                                alt=""
+                              />
+                            ) : (
+                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-300">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="h-6 w-6 text-gray-600"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 4a4 4 0 100 8 4 4 0 000-8z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M20 10v2a8 8 0 01-8 8h0a8 8 0 01-8-8v-2"
+                                  />
+                                </svg>
+                              </div>
+                            )}
                           </div>
                           <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
                             <div className="justify-between flex-1">
-                              <p className="text-[20px] font-bold text-gray-900 truncate dark:text-white">
+                              <p className="text-[20px] font-bold text-gray-900">
                                 {item.name}
                               </p>
                               <p className="text-sm font-medium text-gray-700 truncate ">

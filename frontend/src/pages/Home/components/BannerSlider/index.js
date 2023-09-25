@@ -15,18 +15,35 @@ import { MdArrowOutward } from "react-icons/md";
 
 import Opening from "../Open-Close";
 
-const banners = [Banner1, Banner2, Banner3];
+//Backend
+import { FetchRequest, getRequest } from "../../../../utils/agent";
 
+const banners = [Banner1, Banner2, Banner3];
 const BannerSlider = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [showWelcomeAnimation, setShowWelcomeAnimation] = useState(false);
+  const [Notifications, setNotifications] = useState([]);
+  //fetch data
+  function fetchNotification() {
+    FetchRequest("/notification/")
+      .then(async (res) => {
+        if (res.statusText === "OK") {
+          // console.log(res.data.doNotTrack);
+          setNotifications(res.data.doNotTrack);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevIndex) => (prevIndex + 1) % banners.length);
     }, 5000);
-
+    fetchNotification();
     return () => clearInterval(interval);
   }, []);
 
@@ -51,21 +68,18 @@ const BannerSlider = () => {
   }, []);
 
   //Download pdf
-  const handlePdfDownload = (pdfPath, pdfFileName) => {
-    const pdfUrl = process.env.PUBLIC_URL + pdfPath;
 
-    const anchor = document.createElement("a");
-    anchor.href = pdfUrl;
-
-    anchor.download = pdfFileName;
-
-    anchor.click();
+  const handleFileDownload = (fileUrl, fileName) => {
+    const dummyLink = document.createElement("a");
+    dummyLink.href = fileUrl;
+    dummyLink.download = fileName;
+    dummyLink.click();
   };
 
   return (
     <div className="relative">
       <div>
-        <div className="absolute inset-0 bg-black z-10 -top-40 h-[64rem] -mx-10 opacity-30" />
+        <div className="absolute inset-0 bg-black z-10 -top-[6rem] max-h-screen  opacity-30" />
 
         <div className="relative z-0">
           <img
@@ -100,63 +114,64 @@ const BannerSlider = () => {
                 Polytechnic College Shoranur official Website.
               </p> */}
             </div>
-            <div className="flex flex-col space-y-10 px-20 py-8 mx-[20rem] ">
-  {/* Notification 1 */}
-              <div className="group bg-white opacity-70 shadow-lg rounded-full px-10 py-4 flex flex-row items-center justify-center text-justify space-x-6 antialiased tracking-normal font-sans text-lg font-semibold leading-[1.3] ">
-                <div className="flex-shrink-0">
-                  <img
-                    className="object-fill w-16 h-16 rounded-full"
-                    src={Logo}
-                    alt=""
-                  />
-                </div>
-
-                <span className="text-black font-bold">
-                  Quotations For Supply Of Books To Library Under Book Bank
-                  Scheme Are Invited{" "}
-                  <a className="text-sm font-bold">For More Details</a>
-                </span>
+            <div className="flex flex-col space-y-10 px-10 py-8 ml-[22rem] mr-[10rem] ">
+              {Notifications.map((item) => (
                 <div
-                  className="relative top-10 left-10 h-20 w-20 flex items-center justify-center p-6  text-4xl cursor-pointer bg-red-400 rounded-full text-white z-50  group-hover:scale-110 transition-all duration-300"
-                  onClick={() =>
-                    handlePdfDownload(pdf1, "B08_QuotationExtensionNotice.pdf")
-                  }
+                  key={item._id}
+                  className="group bg-white opacity-70 shadow-lg rounded-full px-8 py-4 flex flex-row items-center justify-center text-justify space-x-6 antialiased tracking-normal font-sans text-lg font-semibold leading-[1.3] "
                 >
-                  <div className=" h-full w-full ">
-                    <MdArrowOutward />
+                  <div className="flex-shrink-0">
+                    <img
+                      className="object-cover w-16 h-16 rounded-full"
+                      src={Logo}
+                      alt=""
+                    />
                   </div>
-                </div>
-              </div>
-  {/* Notification 2 */}
-              <div className="group bg-white opacity-70 shadow-lg rounded-full px-10 py-4 flex flex-row items-center justify-center text-justify space-x-6 antialiased tracking-normal font-sans text-lg font-semibold leading-[1.3]">
-                <div className="flex-shrink-0">
-                  <img
-                    className="object-fill w-16 h-16 rounded-full"
-                    src={Logo}
-                    alt=""
-                  />
-                </div>
-                <span className="text-black font-bold">
-                  Quotation for the purchase of Napkin incinerator to ladies
-                  friendly building are invited{" "}
-                  <a className="text-sm font-bold">For More Details</a>
-                </span>
-                <div
-                  className="relative top-10 left-10 h-20 w-20 flex items-center justify-center p-6  text-4xl  cursor-pointer bg-red-400 rounded-full text-white z-50  group-hover:scale-110 transition-all duration-300"
-                  onClick={() => handlePdfDownload(pdf2, "quotation10.pdf")}
-                >
-                  <div className=" h-full w-full ">
-                    <MdArrowOutward />
-                  </div>
-                </div>
-              </div>
 
-
+                  <span className="text-black font-bold">
+                    {item.message}
+                    {item.fileUrl ? (
+                      <a
+                        className="text-sm font-bold ml-5 "
+                        href={item.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        For more details
+                      </a>
+                    ) : (
+                      <a
+                        className="text-sm font-bold"
+                        onClick={() => {
+                          // Check if it's a link before opening
+                          if (item.link) {
+                            window.open(item.link, "_blank");
+                          }
+                        }}
+                      >
+                        For more details
+                      </a>
+                    )}
+                  </span>
+                  {item.fileUrl && (
+                    <button
+                      className="relative top-10 left-10 h-20 w-20 flex items-center justify-center p-6 text-4xl cursor-pointer bg-red-400 rounded-full text-white z-50 group-hover:scale-110 transition-all duration-300"
+                      onClick={() =>
+                        handleFileDownload(item.fileUrl, item.fileName)
+                      }
+                    >
+                      <div className="h-full w-full">
+                        <MdArrowOutward />
+                      </div>
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
           {/* Title */}
           <div className="">
-            <h1 className="text-white opacity-50 antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] mb-8 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem] relative xl:-top-[16rem] xl:left-20 ">
+            <h1 className="fixed -top-[10rem] left-[28rem]  text-white opacity-50  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] mb-8 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem]  ">
               IPT GPTC
             </h1>
           </div>

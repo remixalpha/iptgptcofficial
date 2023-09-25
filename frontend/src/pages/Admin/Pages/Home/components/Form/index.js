@@ -24,10 +24,11 @@ const notificationSchema = Yup.object().shape({
 export default function Form({ Notifications }) {
   const [open, setOpen] = useState(true);
   const [selectedOption, setSelectedOption] = useState("file");
+  const [values, setFieldValue] = useState([]);
   console.log({ NOT: Notifications });
   //backend
   const [Myfile, setMyfile] = useState([]);
-
+  //For file handling
   const imgHandler = (event) => {
     setMyfile(event.target.files);
     console.log(event.target.files);
@@ -37,7 +38,7 @@ export default function Form({ Notifications }) {
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
-  const [values, setFieldValue] = useState([]);
+
   function DeleteNotification(id) {
     postLogin(`/notification/del/${id}`)
       .then((res) => {
@@ -97,6 +98,7 @@ export default function Form({ Notifications }) {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[70rem] space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-200 px-20 py-10 relative -top-6 ">
@@ -244,7 +246,7 @@ export default function Form({ Notifications }) {
               {/* Delete button */}
               <button
                 type="button"
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 onClick={handleToggleDeleteDialog}
                 className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
               >
@@ -262,13 +264,15 @@ export default function Form({ Notifications }) {
                 type="button"
                 disabled={isSubmitting}
                 className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                onClick={() => {
+                  resetForm(); // Call resetForm to clear the form fields
+                }}
               >
                 <PiXLight
-                  type="submit"
-                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                   aria-hidden="true"
                 />
-                <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                   Cancel
                 </span>
               </button>
@@ -284,7 +288,7 @@ export default function Form({ Notifications }) {
                   aria-hidden="true"
                 />
                 <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                  Submit
+                  Upload
                 </span>
               </button>
             </div>
