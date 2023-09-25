@@ -17,11 +17,7 @@ import person from "../../../../../../assets/images/section/Departments/Electron
 // Backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {
-  FetchRequest,
-  image_url,
-  postLogin,
-} from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
 
 function classNames(...classes) {
@@ -72,8 +68,7 @@ export default function Form({ departments }) {
     setOpen(!open);
   };
 
-  const handleToggleEditDialog = (item) => {
-    setEditItem(item);
+  const handleToggleEditDialog = () => {
     setOpen(true);
   };
 
@@ -115,7 +110,7 @@ export default function Form({ departments }) {
 
   // Fetching HOD data
   function fetchStaff() {
-    FetchRequest("/staff/")
+    getRequest("/staff/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
@@ -153,10 +148,10 @@ export default function Form({ departments }) {
         postLogin("/staff/create", formData)
           .then(async (res) => {
             console.log({ res: res });
-            if (res?.statusText === "Created") {
+            if (res?.statusText === "OK") {
               // console.log(res.data);
               handleUploadSuccess();
-              window.location.reload();
+              // window.location.reload();
             } else {
               console.log("not get response");
             }
@@ -339,7 +334,7 @@ export default function Form({ departments }) {
                     </div>
                   </div>
                   {isUploadSuccess && (
-                    <div className="px-4 py-2 mt-4 text-green-700 bg-green-100 border border-green-400 rounded">
+                    <div className=" bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mt-4 ">
                       Data uploaded successfully!{" "}
                       <button onClick={() => window.location.reload()}>
                         OK
@@ -350,7 +345,7 @@ export default function Form({ departments }) {
               ) : null}
 
               {/* all ready uploaded */}
-              <div className="p-4 mx-8 ">
+              <div className=" mx-8 p-4 ">
                 <Menu
                   as="div"
                   className="relative inline-block text-left -right-[37rem] "
@@ -529,151 +524,149 @@ export default function Form({ departments }) {
                     <Dialog.Panel className="flex w-full text-base text-left transition transform md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                       <div className="relative flex items-center w-full px-4 pb-8 overflow-hidden shadow-2xl pt-14 sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                         <div className="fixed inset-0 z-50 flex items-center justify-center top-8">
-                          <form>
-                            <div className="p-8 bg-white shadow-lg rounded-xl ">
-                              <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2">
-                                {/* Update Image */}
-                                <div className="flex justify-center col-2 ">
-                                  <div className="relative inline-block ">
-                                    <input
-                                      id="fileInput"
-                                      type="file"
-                                      key={fileInputKey}
-                                      className="sr-only"
-                                      // onChange={(e) => {
-                                      //   setFileInputKey((prev) => prev + 1);
-                                      //   handleFileChange(e);
-                                      // }}
-                                      onChange={imgHandler}
-                                    />
-                                    <label
-                                      htmlFor="fileInput"
-                                      className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-96 h-96 rounded-xl border-navy-300"
-                                    >
-                                      {isImageUploaded ? (
-                                        <img
-                                          className="object-cover w-full h-full rounded-xl"
-                                          alt="Uploaded"
-                                          src={image}
-                                        />
-                                      ) : (
-                                        <div className="flex flex-col items-center">
-                                          <IoImageOutline
-                                            className="w-1/2 mb-2 text-gray-300 h-1/2 "
-                                            src=""
-                                            alt="Placeholder"
-                                          />
-                                          <span className="text-gray-500">
-                                            Upload an image
-                                          </span>
-                                        </div>
-                                      )}
-                                    </label>
-                                    <label
-                                      htmlFor="fileInput"
-                                      className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
-                                    >
-                                      <div className="flex flex-col justify-end ">
-                                        <LuEdit2
-                                          className="w-10 h-10 p-1 text-navy-900 "
-                                          aria-hidden="true"
-                                        />
-                                      </div>
-                                    </label>
-                                  </div>
-                                </div>
-                                <div className="space-y-10">
-                                  {/* Update name */}
-                                  <div className="m:col-span-1">
-                                    <label
-                                      htmlFor="name"
-                                      className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
-                                    >
-                                      Name
-                                    </label>
-                                    <div className="mt-2">
-                                      <input
-                                        id="name"
-                                        name="name"
-                                        type="text"
-                                        autoComplete="name"
-                                        className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                                      />
-                                    </div>
-                                  </div>
-                                  {/* Update Position */}
-                                  <div className="m:col-span-1">
-                                    <label
-                                      htmlFor="name"
-                                      className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
-                                    >
-                                      Position
-                                    </label>
-                                    <div className="mt-2">
-                                      <input
-                                        id="position"
-                                        name="position"
-                                        type="text"
-                                        autoComplete="position"
-                                        className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                                      />
-                                    </div>
-                                  </div>
-                                  {/* Update Departments */}
-                                  <div className="sm:col-span-1">
-                                    <label
-                                      htmlFor="departments"
-                                      className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
-                                    >
-                                      Departments
-                                    </label>
-                                    <div className="mt-2">
-                                      <select
-                                        id="departments"
-                                        name="departments"
-                                        autoComplete="country-name"
-                                        value={selectedDepartment}
-                                        onChange={handleDepartmentChange}
-                                        className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                      >
-                                        {/* <option>Electronics Department</option> */}
-                                        {departments.map((item, i) => (
-                                          <option value={item.id} key={i * 10}>
-                                            {item.name}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  </div>
-                                  {/* Upload button for update */}
-                                  <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="flex flex-row ml-[18rem] items-center justify-end px-3 py-2  text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
+                          <div className="p-8 bg-white shadow-lg rounded-xl ">
+                            <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2">
+                              {/* Update Image */}
+                              <div className="flex justify-center col-2 ">
+                                <div className="relative inline-block ">
+                                  <input
+                                    id="fileInput"
+                                    type="file"
+                                    key={fileInputKey}
+                                    className="sr-only"
+                                    // onChange={(e) => {
+                                    //   setFileInputKey((prev) => prev + 1);
+                                    //   handleFileChange(e);
+                                    // }}
+                                    onChange={imgHandler}
+                                  />
+                                  <label
+                                    htmlFor="fileInput"
+                                    className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-96 h-96 rounded-xl border-navy-300"
                                   >
-                                    <PiUploadSimpleThin
-                                      type="submit"
-                                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
-                                      aria-hidden="true"
-                                    />
-                                    <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                                      Update
-                                    </span>
-                                  </button>
+                                    {isImageUploaded ? (
+                                      <img
+                                        className="object-cover w-full h-full rounded-xl"
+                                        alt="Uploaded"
+                                        src={image}
+                                      />
+                                    ) : (
+                                      <div className="flex flex-col items-center">
+                                        <IoImageOutline
+                                          className="w-1/2 mb-2 text-gray-300 h-1/2 "
+                                          src=""
+                                          alt="Placeholder"
+                                        />
+                                        <span className="text-gray-500">
+                                          Upload an image
+                                        </span>
+                                      </div>
+                                    )}
+                                  </label>
+                                  <label
+                                    htmlFor="fileInput"
+                                    className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                                  >
+                                    <div className="flex flex-col justify-end ">
+                                      <LuEdit2
+                                        className="w-10 h-10 p-1 text-navy-900 "
+                                        aria-hidden="true"
+                                      />
+                                    </div>
+                                  </label>
                                 </div>
                               </div>
-                              <div className="flex flex-1 items-center justify-end relative xl:bottom-[27rem] ">
-                                <div className="relative cursor-pointer ">
-                                  <PiXLight
-                                    type="button"
-                                    className="w-10 h-10 p-1 transition-transform duration-300 ease-in-out transform text-navy-900 group-hover:-translate-y-4"
-                                    aria-hidden="true"
-                                    onClick={() => setOpen(false)}
-                                  />
+                              <div className="space-y-10">
+                                {/* Update name */}
+                                <div className="m:col-span-1">
+                                  <label
+                                    htmlFor="name"
+                                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                                  >
+                                    Name
+                                  </label>
+                                  <div className="mt-2">
+                                    <input
+                                      id="name"
+                                      name="name"
+                                      type="text"
+                                      autoComplete="name"
+                                      className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                                    />
+                                  </div>
                                 </div>
+                                {/* Update Position */}
+                                <div className="m:col-span-1">
+                                  <label
+                                    htmlFor="name"
+                                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                                  >
+                                    Position
+                                  </label>
+                                  <div className="mt-2">
+                                    <input
+                                      id="position"
+                                      name="position"
+                                      type="text"
+                                      autoComplete="position"
+                                      className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                                    />
+                                  </div>
+                                </div>
+                                {/* Update Departments */}
+                                <div className="sm:col-span-1">
+                                  <label
+                                    htmlFor="departments"
+                                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                                  >
+                                    Departments
+                                  </label>
+                                  <div className="mt-2">
+                                    <select
+                                      id="departments"
+                                      name="departments"
+                                      autoComplete="country-name"
+                                      value={selectedDepartment}
+                                      onChange={handleDepartmentChange}
+                                      className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                    >
+                                      {/* <option>Electronics Department</option> */}
+                                      {departments.map((item, i) => (
+                                        <option value={item.id} key={i * 10}>
+                                          {item.name}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                </div>
+                                {/* Upload button for update */}
+                                <button
+                                  type="submit"
+                                  disabled={isSubmitting}
+                                  className="flex flex-row ml-[18rem] items-center justify-end px-3 py-2  text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
+                                >
+                                  <PiUploadSimpleThin
+                                    type="submit"
+                                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                                    aria-hidden="true"
+                                  />
+                                  <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                                    Update
+                                  </span>
+                                </button>
                               </div>
                             </div>
-                          </form>
+                            <div className="flex flex-1 items-center justify-end relative xl:bottom-[27rem] ">
+                              <div className="relative cursor-pointer ">
+                                <PiXLight
+                                  type="button"
+                                  className="w-10 h-10 p-1 transition-transform duration-300 ease-in-out transform text-navy-900 group-hover:-translate-y-4"
+                                  aria-hidden="true"
+                                  onClick={() => setOpen(false)}
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </Dialog.Panel>
