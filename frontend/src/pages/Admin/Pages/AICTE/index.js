@@ -4,14 +4,14 @@ import { IoIosArrowUp } from "react-icons/io";
 
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
-import { FetchRequest, getRequest } from "../../../../utils/agent";
+import { getRequest } from "../../../../utils/agent";
 
 export default function Aicte() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [Certificate, setCertificate] = useState([]);
   function fetchCertificate() {
-    FetchRequest("/aicte/")
+    getRequest("/aicte/")
       .then(async (res) => {
         if (res.statusText === "OK") {
           // console.log(res.data.doNotTrack);

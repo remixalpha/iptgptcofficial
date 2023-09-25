@@ -6,7 +6,7 @@ import * as galleryController from "../controller/galleryController";
 import singleImageUploader from "../controller/imageController";
 // requests
 
-router.get("/", galleryController.getData);
+router.post("/", galleryController.getData);
 router.post("/sort", galleryController.getDataOne);
 router.post("/create", singleImageUploader, galleryController.createData);
 router.post("/put", galleryController.updateData);

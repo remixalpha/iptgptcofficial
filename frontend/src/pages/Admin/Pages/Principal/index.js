@@ -4,7 +4,7 @@ import { IoIosArrowUp } from "react-icons/io";
 
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
-import { FetchRequest, getRequest } from "../../../../utils/agent";
+import { getRequest } from "../../../../utils/agent";
 
 export default function Principal() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -12,7 +12,7 @@ export default function Principal() {
   const [Principals, setPrincipals] = useState([]);
   //fetch principal
   function fetchPrincipal() {
-    FetchRequest("/notification/")
+    getRequest("/notification/")
       .then(async (res) => {
         if (res.statusText === "OK") {
           // console.log(res.data.doNotTrack);

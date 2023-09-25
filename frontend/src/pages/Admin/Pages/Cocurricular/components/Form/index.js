@@ -14,11 +14,7 @@ import { IoImageOutline } from "react-icons/io5";
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {
-  FetchRequest,
-  image_url,
-  postLogin,
-} from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
 
 function classNames(...classes) {
@@ -110,7 +106,7 @@ export default function Form({ departments }) {
 
   // Fetching HOD data
   function fetchStaff() {
-    FetchRequest("/staff/")
+    getRequest("/staff/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {

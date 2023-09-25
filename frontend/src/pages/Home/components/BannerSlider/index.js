@@ -6,17 +6,13 @@ import Banner2 from "../../../../assets/images/Banner/ipt banner 3.jpeg";
 import Banner3 from "../../../../assets/images/Banner/iptimage1.jpg";
 import Logo from "../../../../assets/images/logos/iptlogomin.png";
 
-//Home page pdf
-import pdf1 from "../../../../assets/pdf/B08_QuotationExtensionNotice.pdf";
-import pdf2 from "../../../../assets/pdf/quotation10.pdf";
-
 //icons
 import { MdArrowOutward } from "react-icons/md";
 
 import Opening from "../Open-Close";
 
 //Backend
-import { FetchRequest, getRequest } from "../../../../utils/agent";
+import { image_url, getRequest } from "../../../../utils/agent";
 
 const banners = [Banner1, Banner2, Banner3];
 const BannerSlider = () => {
@@ -26,7 +22,7 @@ const BannerSlider = () => {
   const [Notifications, setNotifications] = useState([]);
   //fetch data
   function fetchNotification() {
-    FetchRequest("/notification/")
+    getRequest("/notification/")
       .then(async (res) => {
         if (res.statusText === "OK") {
           // console.log(res.data.doNotTrack);
@@ -114,11 +110,11 @@ const BannerSlider = () => {
                 Polytechnic College Shoranur official Website.
               </p> */}
             </div>
-            <div className="flex flex-col space-y-10 px-10 py-8 ml-[22rem] mr-[10rem] ">
+            <div className="flex flex-col space-y-10 px-10 py-8 ml-[22rem] mr-[14rem] ">
               {Notifications.map((item) => (
                 <div
                   key={item._id}
-                  className="group bg-white opacity-70 shadow-lg rounded-full px-8 py-4 flex flex-row items-center justify-start text-justify space-x-6 antialiased tracking-normal font-sans  font-semibold leading-[1.3] "
+                  className="group bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start text-justify space-x-6 antialiased tracking-normal font-sans  font-semibold leading-[1.3] "
                 >
                   <div className="  flex-shrink-0">
                     <img
@@ -128,20 +124,18 @@ const BannerSlider = () => {
                     />
                   </div>
 
-                  <span className="text-black font-bold text-lg ">
-                    {item.message}
+                  <span className="text-black font-bold cursor-pointer   ">
                     {item.fileUrl ? (
                       <a
-                        className="text-sm font-base ml-5 "
-                        href={item.fileUrl}
+                        href={`${image_url + item.fileUrl}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        className="text-xl font-base "
                       >
-                        For more details
+                        {item.message}
                       </a>
                     ) : (
                       <a
-                        className="text-sm font-base cursor-pointer ml-5"
+                        className="text-xl font-base cursor-pointer "
                         onClick={() => {
                           // Check if it's a link before opening
                           if (item.link) {
@@ -153,25 +147,25 @@ const BannerSlider = () => {
                       </a>
                     )}
                   </span>
-                  {item.fileUrl && (
+                  {/* {item.fileUrl && (
                     <button
                       className="relative top-10 left-10 h-20 w-20 flex items-center justify-center p-6 text-4xl cursor-pointer bg-red-400 rounded-full text-white z-50 group-hover:scale-110 transition-all duration-300"
                       onClick={() =>
-                        handleFileDownload(item.fileUrl, item.fileName)
+                        handleFileDownload(`${image_url + item.fileUrl}`)
                       }
                     >
                       <div className="h-full w-full">
                         <MdArrowOutward />
                       </div>
                     </button>
-                  )}
+                  )} */}
                 </div>
               ))}
             </div>
           </div>
           {/* Title */}
           <div className="">
-            <h1 className="fixed -top-[7rem] left-[28rem]  text-white opacity-50  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] mb-8 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem]  ">
+            <h1 className="fixed -top-[7rem] left-[23rem]  text-white opacity-50  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] mb-8 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem]  ">
               IPT GPTC
             </h1>
           </div>

@@ -7,7 +7,7 @@ import singleImageUploader from "../controller/imageController";
 import verify from "../controller/verifyToken";
 // requests
 
-router.get("/", aictemandatesController.getData);
+router.post("/", aictemandatesController.getData);
 router.post("/sort", aictemandatesController.getDataOne);
 router.post(
   "/create",

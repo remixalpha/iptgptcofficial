@@ -1,19 +1,7 @@
-import { useState } from "react";
-import HODImage from "../../../../../assets/images/section/Departments/computer/Staff/kadharsir.jpeg";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-
-const HOD = [
-  {
-    name: "Kadhar",
-    Post: "HOD",
-    Qualification: "M Tech,FIE",
-    imageSrc: HODImage,
-    imageAlt: "Computer Department HOD of IPT & GPTC Shoranur",
-    href: "#",
-  },
-];
-
+import { image_url, getRequest } from "../../../../../utils/agent";
 const Content = [
   {
     id: 1,
@@ -23,6 +11,8 @@ const Content = [
 
 export default function Hod() {
   const [expandedSubjects, setExpandedSubjects] = useState([]);
+  const [hods, setHods] = useState([]);
+  const [deptId, setDeptId] = useState("64bad26c578e4a044eb886a1");
 
   const toggleDescription = (id) => {
     if (expandedSubjects.includes(id)) {
@@ -32,6 +22,27 @@ export default function Hod() {
     }
   };
 
+  // Backend
+  // Fetching HOD data
+  function fetchHod() {
+    getRequest("/hod/")
+      .then((res) => {
+        // console.log(res.data);
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+          setHods(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
+
+  useEffect(() => {
+    fetchHod();
+  }, []);
+  const filteredHod = hods.filter((item) => item.dept === deptId);
   return (
     <div className="relative flex flex-col-reverse  mb-20 lg:mb-auto mx-auto  max-w-2xl  items-center  gap-x-2 px-4  sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
       {Content.map((items) => (
@@ -69,35 +80,35 @@ export default function Hod() {
         }}
       >
         <div className="pattern" />
-        {HOD.map((items) => (
-          <div key={items.name} className="group relative -top-20 ">
+        {filteredHod.map((item) => (
+          <div key={item.id} className="group relative -top-20 ">
             <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
               <img
-                src={items.imageSrc}
-                alt={items.imageAlt}
                 className="h-full w-full object-cover object-center"
+                src={`${image_url + item.fileUrl}`}
+                alt=""
               />
             </div>
             <h1
               className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
               style={{ textAlign: "center" }}
             >
-              <a href={items.href}>
+              <a href={item.href}>
                 <span className="absolute inset-0" />
-                {items.name}
+                {item.name}
               </a>
             </h1>
             <p
               className=" block antialiased font-sans text-2xl font-normal  text-gray-800"
               style={{ textAlign: "center" }}
             >
-              {items.Post}
+              HOD
             </p>
             <p
               className="block antialiased font-sans text-lg font-normal  text-gray-700"
               style={{ textAlign: "center" }}
             >
-              {items.Qualification}
+              {item.Qualification}
             </p>
           </div>
         ))}

@@ -122,8 +122,26 @@ export default function Form({ departments }) {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
+  function DeleteHod(id) {
+    postLogin(`/hod/del/${id}`)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data);
+          window.location.reload();
+        } else {
+          console.log("No response found");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.info("API CALL");
+      });
+  }
   useEffect(() => {
     fetchHod();
+    DeleteHod();
   }, []);
 
   return (
@@ -365,7 +383,7 @@ export default function Form({ departments }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg w-80 rounded-xl  cursor-pointer ">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white shadow-lg cursor-pointer w-80 rounded-xl ">
                       <div className="py-1">
                         {departments.map((option, index) => (
                           <Menu.Item key={option._id}>
@@ -447,7 +465,7 @@ export default function Form({ departments }) {
                             </div>
                             <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
                               <div className="flex flex-col justify-end cursor-pointer group">
-                                <div
+                                <button
                                   type="button"
                                   className="fixed"
                                   onClick={handleToggleEditDialog}
@@ -460,12 +478,13 @@ export default function Form({ departments }) {
                                   <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px] font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
                                     Edit
                                   </a>
-                                </div>
+                                </button>
                               </div>
                               <div className="flex flex-col justify-end cursor-pointer group">
-                                <div
+                                <button
+                                  type="button"
                                   className="fixed"
-                                  onClick={() => handleDeleteItem(item.id)}
+                                  onClick={() => DeleteHod(item._id)}
                                 >
                                   <PiTrashSimpleLight
                                     type="submit"
@@ -475,7 +494,7 @@ export default function Form({ departments }) {
                                   <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px]  font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
                                     Delete
                                   </a>
-                                </div>
+                                </button>
                               </div>
                             </div>
                           </div>

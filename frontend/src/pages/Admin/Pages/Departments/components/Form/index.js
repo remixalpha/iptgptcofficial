@@ -123,9 +123,26 @@ export default function Form({ departments }) {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
-
+  function DeleteStaff(id) {
+    postLogin(`/staff/del/${id}`)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data);
+          window.location.reload();
+        } else {
+          console.log("No response found");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.info("API CALL");
+      });
+  }
   useEffect(() => {
     fetchStaff();
+    DeleteStaff();
   }, []);
 
   return (
@@ -467,9 +484,10 @@ export default function Form({ departments }) {
                                 </div>
                               </div>
                               <div className="flex flex-col justify-end cursor-pointer group">
-                                <div
+                                <button
+                                  type="button"
                                   className="fixed"
-                                  onClick={() => handleDeleteItem(item.id)}
+                                  onClick={() => DeleteStaff(item._id)}
                                 >
                                   <PiTrashSimpleLight
                                     type="submit"
@@ -479,7 +497,7 @@ export default function Form({ departments }) {
                                   <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px]  font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
                                     Delete
                                   </a>
-                                </div>
+                                </button>
                               </div>
                             </div>
                           </div>
