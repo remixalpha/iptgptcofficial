@@ -91,7 +91,7 @@ const BannerSlider = () => {
       </div>
       <div className="absolute inset-0 flex flex-col items-center justify-center z-50">
         <div
-          className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[20rem]  xl:right-[26rem] mx-4  "
+          className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[18rem]  xl:right-[26rem] mx-4  "
           style={{ transform: `translateY(-${animationDistance}px)` }}
         >
           <Opening />
@@ -118,9 +118,9 @@ const BannerSlider = () => {
               {Notifications.map((item) => (
                 <div
                   key={item._id}
-                  className="group bg-white opacity-70 shadow-lg rounded-full px-8 py-4 flex flex-row items-center justify-center text-justify space-x-6 antialiased tracking-normal font-sans text-lg font-semibold leading-[1.3] "
+                  className="group bg-white opacity-70 shadow-lg rounded-full px-8 py-4 flex flex-row items-center justify-start text-justify space-x-6 antialiased tracking-normal font-sans  font-semibold leading-[1.3] "
                 >
-                  <div className="flex-shrink-0">
+                  <div className="  flex-shrink-0">
                     <img
                       className="object-cover w-16 h-16 rounded-full"
                       src={Logo}
@@ -128,11 +128,11 @@ const BannerSlider = () => {
                     />
                   </div>
 
-                  <span className="text-black font-bold">
+                  <span className="text-black font-bold text-lg ">
                     {item.message}
                     {item.fileUrl ? (
                       <a
-                        className="text-sm font-bold ml-5 "
+                        className="text-sm font-base ml-5 "
                         href={item.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -141,7 +141,7 @@ const BannerSlider = () => {
                       </a>
                     ) : (
                       <a
-                        className="text-sm font-bold"
+                        className="text-sm font-base cursor-pointer ml-5"
                         onClick={() => {
                           // Check if it's a link before opening
                           if (item.link) {
@@ -171,7 +171,7 @@ const BannerSlider = () => {
           </div>
           {/* Title */}
           <div className="">
-            <h1 className="fixed -top-[10rem] left-[28rem]  text-white opacity-50  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] mb-8 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem]  ">
+            <h1 className="fixed -top-[7rem] left-[28rem]  text-white opacity-50  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] mb-8 text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem]  ">
               IPT GPTC
             </h1>
           </div>

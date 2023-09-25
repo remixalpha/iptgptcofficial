@@ -12,59 +12,15 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-//Images
-import ipt1 from "../../../../../../assets/images/section/Gallery/iptimage1.jpg";
-import ipt2 from "../../../../../../assets/images/section/Gallery/iptimage2.jpg";
-import ipt3 from "../../../../../../assets/images/section/Gallery/iptimage3.jpg";
-import ipt4 from "../../../../../../assets/images/section/Gallery/iptimage4.jpg";
-import ipt5 from "../../../../../../assets/images/section/Gallery/iptimage5.jpg";
-
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { postLogin } from "../../../../../../utils/agent";
+import {
+  FetchRequest,
+  image_url,
+  postLogin,
+} from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
-
-//data
-const products = [
-  {
-    id: 1,
-    imageSrc: ipt1,
-    imageAlt: "IPT",
-  },
-  {
-    id: 2,
-
-    imageSrc: ipt2,
-    imageAlt: "IPT",
-  },
-  {
-    id: 3,
-
-    imageSrc: ipt3,
-    imageAlt: "IPT",
-  },
-  {
-    id: 4,
-
-    imageSrc: ipt4,
-    imageAlt: "IPT",
-  },
-  {
-    id: 5,
-
-    imageSrc: ipt5,
-    imageAlt: "IPT",
-  },
-];
-
-const sortOptions = [
-  { name: "Electronics Department", href: "#", current: true },
-  { name: "Computer Department", href: "#", current: false },
-  { name: "Printing Technology", href: "#", current: false },
-  { name: "Mechanical Workshop", href: "#", current: false },
-  { name: "General Department", href: "#", current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -76,15 +32,19 @@ export default function Form({ departments }) {
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [hoveredProduct, setHoveredProduct] = useState(null);
-  const [product, setProduct] = useState(products);
-  const [items, setItems] = useState([]);
-  const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
 
+  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  // const [items, setItems] = useState([]);
+  // const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+
+  const [FilteredArray, setFilteredArray] = useState([]);
   //backend
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [sortOption, setSortOption] = useState("64bad26c578e4a044eb886a1");
+  const [formDeptOption, setFormDeptOption] = useState(
+    "64bad26c578e4a044eb886a1"
+  );
   //
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -95,6 +55,14 @@ export default function Form({ departments }) {
       setIsImageUploaded(true);
     };
   };
+
+  function filterArrayById(deptId) {
+    console.log(products);
+    console.log({ id: deptId });
+    const filtered = products.filter((item) => item.dept === deptId);
+    setFilteredArray(filtered);
+    console.log({ FilterArray: filtered });
+  }
 
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
@@ -108,35 +76,46 @@ export default function Form({ departments }) {
   };
 
   const handleDeleteItem = (productId) => {
-    setProduct((prevProduct) =>
+    setProducts((prevProduct) =>
       prevProduct.filter((product) => product.id !== productId)
     );
   };
 
   //backend
-
+  // Backend
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
     console.log({ selectedDepartment: selectedDepartment });
   };
-  const handleSortOption = (e) => {
-    setSortOption(e.target.value);
-    console.log(sortOption);
-    console.log({ sortOption: sortOption });
+
+  const handleFormDept = (e) => {
+    setFormDeptOption(e.target.value);
+    console.log({ Selected: formDeptOption });
   };
 
+  // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+
+      reader.onload = () => {
+        setImage(reader.result);
+        setIsImageUploaded(true);
+      };
+    }
   };
 
   //featching Images
   function fetchImage() {
-    getRequest("/staff/")
+    getRequest("/gallery/")
       .then(async (res) => {
         if (res.statusText === "OK") {
           console.log(res.data.doNotTrack);
-          setItems(res.data.doNotTrack);
+          setProducts(res.data.doNotTrack);
         } else {
           console.error("response not found");
         }
@@ -160,7 +139,7 @@ export default function Form({ departments }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("gallery", sortOption);
+        formData.append("dept", formDeptOption);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
@@ -191,39 +170,37 @@ export default function Form({ departments }) {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           {isEdit ? (
             <div className=" xl:w-[55rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] px-20 py-10  ">
               <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                 {/* imageUpload */}
-                <div className="col-2 flex justify-center  ">
-                  <div className="relative inline-block  ">
+                <div className="flex justify-center cursor-pointer col-2">
+                  <div className="relative inline-block ">
                     <input
                       id="fileInput"
+                      name="fileUrl"
                       type="file"
                       key={fileInputKey}
                       className="sr-only"
-                      // onChange={(e) => {
-                      //   setFileInputKey((prev) => prev + 1);
-                      //   handleFileChange(e);
-                      // }}
                       onChange={imgHandler}
                     />
                     <label
                       htmlFor="fileInput"
-                      className="relative w-96 h-96 rounded-xl border-dashed border-2 border-navy-300 flex justify-center items-center cursor-pointer"
+                      className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-96 h-96 rounded-xl border-navy-300"
                     >
                       {isImageUploaded ? (
                         <img
-                          className="w-full h-full object-cover rounded-xl"
+                          className="object-cover w-full h-full rounded-xl"
                           alt="Uploaded"
                           src={image}
                         />
                       ) : (
                         <div className="flex flex-col items-center">
                           <IoImageOutline
-                            className="h-1/2 w-1/2 mb-2 text-gray-300 "
+                            className="w-1/2 mb-2 text-gray-300 h-1/2 "
                             src=""
                             alt="Placeholder"
                           />
@@ -233,11 +210,11 @@ export default function Form({ departments }) {
                     </label>
                     <label
                       htmlFor="fileInput"
-                      className="absolute top-80 -right-8 bg-white p-2 rounded-xl shadow-lg cursor-pointer"
+                      className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
                     >
                       <div className="flex flex-col justify-end ">
                         <LuEdit2
-                          className="h-10 w-10 p-1 text-navy-900 "
+                          className="w-10 h-10 p-1 text-navy-900 "
                           aria-hidden="true"
                         />
                       </div>
@@ -252,19 +229,16 @@ export default function Form({ departments }) {
                   >
                     Departments
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-2 ">
                     <select
                       id="departments"
                       name="departments"
                       autoComplete="country-name"
-                      className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      value={formDeptOption}
+                      onChange={handleFormDept}
+                      className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
-                      {/* <option>Electronics Department</option>
-                      <option>Computer Department</option>
-                      <option>Printing Department</option>
-                      <option>General Department</option>
-                      <option>Mechanical Department</option>
-                      <option>Office</option> */}
+                      {/* form departments */}
                       {departments.map((item, i) => (
                         <option value={item._id} key={i * 10}>
                           {item.name}
@@ -296,14 +270,16 @@ export default function Form({ departments }) {
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                  className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                  onClick={() => {
+                    resetForm(); // Call resetForm to clear the form fields
+                  }}
                 >
                   <PiXLight
-                    type="submit"
-                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                    className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                     aria-hidden="true"
                   />
-                  <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                  <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
                     Cancel
                   </span>
                 </button>
@@ -407,26 +383,33 @@ export default function Form({ departments }) {
                                         >
                                           <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-xl  bg-white shadow-lg border ">
                                             <div className="py-1">
-                                              {departments.map((option) => (
-                                                <Menu.Item key={option.name}>
-                                                  {({ active }) => (
-                                                    <a
-                                                      href={option.href}
-                                                      className={classNames(
-                                                        option.current
-                                                          ? "font-medium text-gray-900"
-                                                          : "text-gray-900",
-                                                        active
-                                                          ? "bg-gray-100 rounded-xl m-1 transition-all duration-300 cursor-pointer "
-                                                          : "m-2",
-                                                        "block px-4 py-2 text-sm"
-                                                      )}
-                                                    >
-                                                      {option.name}
-                                                    </a>
-                                                  )}
-                                                </Menu.Item>
-                                              ))}
+                                              {departments.map(
+                                                (option, index) => (
+                                                  <Menu.Item key={option._id}>
+                                                    {({ active }) => (
+                                                      <a
+                                                        // href={option.href}
+                                                        className={classNames(
+                                                          option.current
+                                                            ? "font-medium  "
+                                                            : " text-navy-900  cursor-pointer",
+                                                          active
+                                                            ? "bg-gray-100 text-gray-600  rounded-xl mx-4 transition-all duration-300 "
+                                                            : "m-2",
+                                                          "block px-4 py-2 text-sm"
+                                                        )}
+                                                        onClick={() =>
+                                                          filterArrayById(
+                                                            option._id
+                                                          )
+                                                        }
+                                                      >
+                                                        {option.name}
+                                                      </a>
+                                                    )}
+                                                  </Menu.Item>
+                                                )
+                                              )}
                                             </div>
                                           </Menu.Items>
                                         </Transition>
@@ -434,34 +417,33 @@ export default function Form({ departments }) {
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                                      {product.map((product) => (
+                                      {FilteredArray.map((item) => (
                                         <div
-                                          key={product.id}
+                                          key={item.id}
                                           className="relative group"
                                           onMouseEnter={() =>
-                                            handleMouseEnter(product)
+                                            handleMouseEnter(item)
                                           }
                                           onMouseLeave={handleMouseLeave}
                                         >
-                                          <a
-                                            href={product.href}
-                                            className="group"
-                                          >
+                                          <a href={item.href} className="group">
                                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                                               <img
-                                                src={product.imageSrc}
-                                                alt={product.imageAlt}
-                                                className=" h-36 w-full object-cover object-center "
+                                                className="object-cover w-12 h-12 rounded-full"
+                                                src={`${
+                                                  image_url + item.fileUrl
+                                                }`}
+                                                alt=""
                                               />
                                             </div>
                                           </a>
-                                          {hoveredProduct === product && (
+                                          {hoveredProduct === item && (
                                             <div className="absolute inset-0 flex items-center justify-center rounded-lg cursor-pointer  text-white bg-gray-500 bg-opacity-80 transition-opacity duration-300 opacity-0 group-hover:opacity-100 ">
                                               <PiTrashSimpleLight
                                                 className="w-6 h-6 "
                                                 aria-hidden="true"
                                                 onClick={() =>
-                                                  handleDeleteItem(product.id)
+                                                  handleDeleteItem(item.id)
                                                 }
                                               />
                                             </div>

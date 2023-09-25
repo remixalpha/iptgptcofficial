@@ -1,4 +1,6 @@
 import { Fragment, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../assets/images/logos/ipt.png";
@@ -101,6 +103,14 @@ export default function Sidebar() {
   const handleItemClick = (name) => {
     setActiveItem(name);
   };
+
+  // const handleLogout = () => {
+  //   // Clear the token from local storage
+  //   localStorage.removeItem("token");
+
+  //   // Redirect the user to the userhome page
+  //   history.push("/userhome");
+  // };
 
   return (
     <header className="bg-black">
