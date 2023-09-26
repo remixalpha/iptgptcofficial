@@ -6,7 +6,7 @@ import * as hodController from "../controller/hodController";
 import singleImageUploader from "../controller/imageController";
 // requests
 
-router.post("/", hodController.getData);
+router.get("/", hodController.getData);
 router.post("/sort/:dept", hodController.getDataOne);
 router.post("/create", singleImageUploader, hodController.createData);
 router.post("/put", hodController.updateData);

@@ -14,11 +14,11 @@ const principal = [
 ];
 export default function Principal() {
   return (
-    <div className=" bg-white ">
+    <div className="bg-white ">
       <h1 className=" relative flex items-center justify-center -top-10 text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3 ">
         Principal's Message
       </h1>
-      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-20 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8  ">
+      <div className="grid items-center max-w-2xl grid-cols-1 px-4 mx-auto gap-x-20 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8 ">
         <div>
           <p className=" relative -top-[8rem] text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800">
             <span className="font-bold ">"</span> Education is the most powerful
@@ -53,12 +53,12 @@ export default function Principal() {
           <div className="pattern" />
 
           {principal.map((principal) => (
-            <div key={principal.name} className="group relative -top-20 ">
+            <div key={principal.name} className="relative group -top-20 ">
               <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
                 <img
                   src={principal.imageSrc}
                   alt={principal.imageAlt}
-                  className="h-full w-full object-cover object-center"
+                  className="object-cover object-center w-full h-full"
                 />
               </div>
               <h1
@@ -71,13 +71,13 @@ export default function Principal() {
                 </a>
               </h1>
               <p
-                className=" block antialiased font-sans text-2xl font-normal  text-gray-800"
+                className="block font-sans text-2xl antialiased font-normal text-gray-800 "
                 style={{ textAlign: "center" }}
               >
                 {principal.Post}
               </p>
               <p
-                className="block antialiased font-sans text-lg font-normal  text-gray-700"
+                className="block font-sans text-lg antialiased font-normal text-gray-700"
                 style={{ textAlign: "center" }}
               >
                 {principal.Qualification}

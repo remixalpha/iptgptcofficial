@@ -8,6 +8,7 @@ import staffModel from "./staff";
 import galleryModel from "./gallery";
 import aictemandatesModel from "./aictemandates";
 import principalModel from "./pricipal";
+import cocurricularModel from "./cocurricular";
 export {
   demoModel,
   adminModel,
@@ -19,4 +20,5 @@ export {
   galleryModel,
   aictemandatesModel,
   principalModel,
+  cocurricularModel,
 };

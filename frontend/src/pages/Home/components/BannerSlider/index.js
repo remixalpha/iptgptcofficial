@@ -85,7 +85,7 @@ const BannerSlider = () => {
           />
         </div>
       </div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-50">
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center">
         <div
           className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[18rem]  xl:right-[26rem] mx-4  "
           style={{ transform: `translateY(-${animationDistance}px)` }}
@@ -94,7 +94,7 @@ const BannerSlider = () => {
         </div>
 
         <div
-          className="text-center transition-all duration-300  "
+          className="text-center transition-all duration-300 "
           style={{ transform: `translateY(-${animationDistance}px)` }}
         >
           {/* notification */}
@@ -104,7 +104,7 @@ const BannerSlider = () => {
             }`}
           >
             <div className="overflow-hidden">
-              {/* <div className="  bg-white h-32 opacity-60 rounded-3xl mx-20 shadow-lg  " />
+              {/* <div className="h-32 mx-20 bg-white shadow-lg  opacity-60 rounded-3xl" />
               <p className="text-black text-3xl font-bold tracking-wider capitalize relative -top-[5rem] moving-text  ">
                 Welcome to Institute of Printing Technology & Goverment
                 Polytechnic College Shoranur official Website.
@@ -116,7 +116,7 @@ const BannerSlider = () => {
                   key={item._id}
                   className="group bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start text-justify space-x-6 antialiased tracking-normal font-sans  font-semibold leading-[1.3] "
                 >
-                  <div className="  flex-shrink-0">
+                  <div className="flex-shrink-0 ">
                     <img
                       className="object-cover w-16 h-16 rounded-full"
                       src={Logo}
@@ -124,7 +124,7 @@ const BannerSlider = () => {
                     />
                   </div>
 
-                  <span className="text-black font-bold cursor-pointer   ">
+                  <span className="font-bold text-black cursor-pointer ">
                     {item.fileUrl ? (
                       <a
                         href={`${image_url + item.fileUrl}`}
@@ -135,7 +135,7 @@ const BannerSlider = () => {
                       </a>
                     ) : (
                       <a
-                        className="text-xl font-base cursor-pointer "
+                        className="text-xl cursor-pointer font-base "
                         onClick={() => {
                           // Check if it's a link before opening
                           if (item.link) {
@@ -149,12 +149,12 @@ const BannerSlider = () => {
                   </span>
                   {/* {item.fileUrl && (
                     <button
-                      className="relative top-10 left-10 h-20 w-20 flex items-center justify-center p-6 text-4xl cursor-pointer bg-red-400 rounded-full text-white z-50 group-hover:scale-110 transition-all duration-300"
+                      className="relative z-50 flex items-center justify-center w-20 h-20 p-6 text-4xl text-white transition-all duration-300 bg-red-400 rounded-full cursor-pointer top-10 left-10 group-hover:scale-110"
                       onClick={() =>
                         handleFileDownload(`${image_url + item.fileUrl}`)
                       }
                     >
-                      <div className="h-full w-full">
+                      <div className="w-full h-full">
                         <MdArrowOutward />
                       </div>
                     </button>

@@ -1,4 +1,4 @@
-import { principalModel } from "../../models";
+import { cocurricularModel } from "../../models";
 
 export const createData = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ export const createData = async (req, res, next) => {
     let requests = await req.body;
     console.log({ req: requests });
     req.body.fileUrl = req.file?.path;
-    let doc = await new principalModel(req.body).save();
+    let doc = await new cocurricularModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });
   } catch (err) {
     next(err);
@@ -19,7 +19,7 @@ export const createData = async (req, res, next) => {
 export const getDataOne = async (req, res, next) => {
   try {
     // console.log({ dept: req.params.dept });
-    let doc = await principalModel.findOne({ dept: req.params.dept });
+    let doc = await cocurricularModel.findOne({ dept: req.params.dept });
     res.status(200).json({ status: true, doc: doc });
   } catch (err) {
     next(err);
@@ -29,7 +29,7 @@ export const getDataOne = async (req, res, next) => {
 
 export const getData = async (req, res, next) => {
   try {
-    let doc = await principalModel.find(req.body);
+    let doc = await cocurricularModel.find(req.body);
     res.status(200).json({ status: true, doc: doc });
   } catch (err) {
     next(err);
@@ -40,9 +40,9 @@ export const getData = async (req, res, next) => {
 export const deleteData = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let doc = await principalModel.findOne({ _id: id });
+    let doc = await cocurricularModel.findOne({ _id: id });
     if (doc) {
-      await principalModel.deleteOne({ _id: id });
+      await cocurricularModel.deleteOne({ _id: id });
       res.status(200).json({
         status: true,
         message: "data deleted successfully",
@@ -58,18 +58,21 @@ export const deleteData = async (req, res, next) => {
 
 export const updateData = async (req, res, next) => {
   try {
-    let isValid = await principalModel.findOne({ _id: req.body._id });
+    let isValid = await cocurricularModel.findOne({ _id: req.body._id });
 
     if (!isValid) {
       res
         .status(400)
         .json({ status: false, doc: {}, message: "_id not exists" });
     } else {
-      await principalModel.updateOne({ _id: req.body._id }, { $set: req.body });
+      await cocurricularModel.updateOne(
+        { _id: req.body._id },
+        { $set: req.body }
+      );
       res.status(200).json({
         status: true,
         msg: "updated",
-        doc: await principalModel.findOne({ _id: req.body._id }),
+        doc: await cocurricularModel.findOne({ _id: req.body._id }),
       });
     }
   } catch (err) {

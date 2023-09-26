@@ -7,6 +7,7 @@ import StaffRoute from "./staffRoute";
 import GalleryRoute from "./galleryRoute";
 import AicteMandatesRoute from "./aicteMandatesRoute";
 import PricipalRoute from "./pricipalRoute";
+import cocurricularRoute from "./CocurricularRoute";
 export {
   demoRoute,
   indexRoute,
@@ -17,4 +18,5 @@ export {
   GalleryRoute,
   AicteMandatesRoute,
   PricipalRoute,
+  cocurricularRoute,
 };

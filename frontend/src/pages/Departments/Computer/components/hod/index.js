@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { image_url, getRequest } from "../../../../../utils/agent";
+import {
+  image_url,
+  getRequest,
+  FetchRequest,
+} from "../../../../../utils/agent";
 const Content = [
   {
     id: 1,
@@ -25,15 +29,10 @@ export default function Hod() {
   // Backend
   // Fetching HOD data
   function fetchHod() {
-    getRequest("/hod/")
+    FetchRequest("/hod/")
       .then((res) => {
-        // console.log(res.data);
-        if (res.statusText === "OK") {
-          console.log(res.data.doc);
-          setHods(res.data.doc);
-        } else {
-          console.error("response not found");
-        }
+        console.log("hod res");
+        console.log({ HOD: res.data });
       })
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
@@ -44,10 +43,10 @@ export default function Hod() {
   }, []);
   const filteredHod = hods.filter((item) => item.dept === deptId);
   return (
-    <div className="relative flex flex-col-reverse  mb-20 lg:mb-auto mx-auto  max-w-2xl  items-center  gap-x-2 px-4  sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
+    <div className="relative flex flex-col-reverse items-center max-w-2xl px-4 mx-auto mb-20 lg:mb-auto gap-x-2 sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
       {Content.map((items) => (
         <div key={items.id}>
-          <p className="mt-4 text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800  border  rounded-primary p-8  ">
+          <p className="block p-8 mt-4 font-sans text-xl antialiased font-normal leading-relaxed text-justify text-gray-800 border rounded-primary ">
             {expandedSubjects.includes(items.id)
               ? items.Des
               : `${items.Des.substring(0, 1100)} ...`}
@@ -59,11 +58,11 @@ export default function Hod() {
               className="self-end text-navy-900 font-bold  focus:outline-none relative -top-5 -right-[35rem] z-50 hover:-top-7 transition-all ease-in-out duration-300 "
             >
               {expandedSubjects.includes(items.id) ? (
-                <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                <div className="w-10 h-10 p-3 text-white bg-gray-900 rounded-full ">
                   <IoIosArrowUp />
                 </div>
               ) : (
-                <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                <div className="w-10 h-10 p-3 text-white bg-gray-900 rounded-full ">
                   <IoIosArrowDown />
                 </div>
               )}
@@ -81,10 +80,10 @@ export default function Hod() {
       >
         <div className="pattern" />
         {filteredHod.map((item) => (
-          <div key={item.id} className="group relative -top-20 ">
+          <div key={item.id} className="relative group -top-20 ">
             <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
               <img
-                className="h-full w-full object-cover object-center"
+                className="object-cover object-center w-full h-full"
                 src={`${image_url + item.fileUrl}`}
                 alt=""
               />
@@ -99,13 +98,13 @@ export default function Hod() {
               </a>
             </h1>
             <p
-              className=" block antialiased font-sans text-2xl font-normal  text-gray-800"
+              className="block font-sans text-2xl antialiased font-normal text-gray-800 "
               style={{ textAlign: "center" }}
             >
               HOD
             </p>
             <p
-              className="block antialiased font-sans text-lg font-normal  text-gray-700"
+              className="block font-sans text-lg antialiased font-normal text-gray-700"
               style={{ textAlign: "center" }}
             >
               {item.Qualification}

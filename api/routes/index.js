@@ -11,6 +11,7 @@ import {
   GalleryRoute,
   AicteMandatesRoute,
   PricipalRoute,
+  cocurricularRoute,
 } from "./routes";
 const url = "/api";
 
@@ -23,6 +24,7 @@ router.use(`${url}/hod`, hodRoute);
 router.use(`${url}/staff`, StaffRoute);
 router.use(`${url}/gallery`, GalleryRoute);
 router.use(`${url}/aicte`, AicteMandatesRoute);
-router.use(`${url}/pricipal`, PricipalRoute);
+router.use(`${url}/cocu`, cocurricularRoute);
+router.use(`${url}/principal`, PricipalRoute);
 
 export default router;
