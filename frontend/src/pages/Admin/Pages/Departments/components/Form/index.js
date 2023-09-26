@@ -11,8 +11,7 @@ import {
 } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 
-// Image
-import person from "../../../../../../assets/images/section/Departments/Electronics/Asharaf.jpg";
+
 
 // Backend
 import { Formik } from "formik";

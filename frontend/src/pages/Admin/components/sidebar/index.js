@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -31,11 +31,11 @@ const userNavigation = [
     href: "#",
     icon: IoSettingsOutline,
   },
-  {
-    name: "Sign out",
-    href: "#",
-    icon: CiLogout,
-  },
+  // {
+  //   name: "Sign out",
+  //   href: "#",
+  //   icon: CiLogout,
+  // },
 ];
 
 const navigation = {
@@ -99,18 +99,18 @@ function classNames(...classes) {
 export default function Sidebar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState();
+  const navigate = useNavigate();
 
   const handleItemClick = (name) => {
     setActiveItem(name);
   };
 
-  // const handleLogout = () => {
-  //   // Clear the token from local storage
-  //   localStorage.removeItem("token");
+  const handleLogout = () => {
+    localStorage.removeItem("token");
 
-  //   // Redirect the user to the userhome page
-  //   history.push("/userhome");
-  // };
+    navigate("/");
+    window.location.reload();
+  };
 
   return (
     <header className="bg-black">
@@ -247,6 +247,26 @@ export default function Sidebar() {
                             </div>
                           </div>
                         ))}
+                        <button
+                          className="group relative flex gap-x-6 rounded-lg p-4 w-80  hover:bg-gray-50"
+                          onClick={handleLogout}
+                        >
+                          <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center ">
+                            <CiLogout
+                              className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <div>
+                            <a
+                              href="#"
+                              className="font-semibold text-gray-900 relative top-3 "
+                            >
+                              Sign Out
+                              <span className="absolute inset-0 " />
+                            </a>
+                          </div>
+                        </button>
                       </div>
                     </div>
                   </Popover.Panel>

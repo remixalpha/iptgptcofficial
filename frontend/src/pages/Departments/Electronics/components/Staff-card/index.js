@@ -1,13 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageTitle } from "../../../../../widgets/layout/page-title";
 import { TeamCard } from "../../../../../widgets/cards/team-card";
-
-import faculty1 from "../../../../../assets/images/section/Departments/Office/Abhijith.jpg";
-import faculty2 from "../../../../../assets/images/section/Departments/Office/Aithru.jpg";
-import faculty3 from "../../../../../assets/images/section/Departments/Office/Ajithkumar.jpg";
-import faculty4 from "../../../../../assets/images/section/Departments/Office/Aneesh.jpg";
-import faculty5 from "../../../../../assets/images/section/Departments/Office/Anton.jpg";
-import faculty6 from "../../../../../assets/images/section/Departments/Office/Basheer.jpg";
 
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
 
@@ -18,51 +11,38 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-const teamData = [
-  {
-    id: 1,
-    name: "Abhijith",
-    img: faculty1,
-    position: "Faculty",
-  },
-  {
-    id: 2,
-    name: "Aithru",
-    img: faculty2,
-    position: "Faculty",
-  },
-  {
-    id: 3,
-    name: "Abhijith",
-    img: faculty3,
-    position: "Faculty",
-  },
-  {
-    id: 4,
-    name: "Abhijith",
-    img: faculty4,
-    position: "Faculty",
-  },
-  {
-    id: 5,
-    name: "Abhijith",
-    img: faculty5,
-    position: "Faculty",
-  },
-  {
-    id: 6,
-    name: "Abhijith",
-    img: faculty6,
-    position: "Faculty",
-  },
-];
+import { image_url, getRequest } from "../../../../../utils/agent";
 
 export function Faculty() {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const [Staffs, setStaffs] = useState([]);
+  const [deptId, setDeptId] = useState("64bad287578e4a044eb886a5");
   const handleSlideChange = (swiper) => {
     setActiveIndex(swiper.activeIndex);
   };
+
+  // Backend
+  // Fetching HOD data
+  function fetchStaff() {
+    getRequest("/staff/")
+      .then((res) => {
+        // console.log(res.data);
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+          setStaffs(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
+
+  useEffect(() => {
+    fetchStaff();
+  }, []);
+
+  const filteredStaff = Staffs.filter((item) => item.dept === deptId);
 
   return (
     <>
@@ -85,14 +65,18 @@ export function Faculty() {
               navigation={true}
               onSwiper={(swiper) => console.log(swiper)}
             >
-              {teamData.map(({ img, name, position }, index) => (
+              {filteredStaff.map(({ img, name, position, fileUrl }, index) => (
                 <SwiperSlide
                   className={`py-12 cursor-pointer  ${
                     index === activeIndex ? "scale-150 " : ""
                   }`}
                   key={name}
                 >
-                  <TeamCard img={img} name={name} position={position} />
+                  <TeamCard
+                    img={`${image_url + fileUrl}`}
+                    name={name}
+                    position={position}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

@@ -15,11 +15,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {
-  FetchRequest,
-  image_url,
-  postLogin,
-} from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 import { getRequest } from "../../../../../../utils/agent";
 
 function classNames(...classes) {

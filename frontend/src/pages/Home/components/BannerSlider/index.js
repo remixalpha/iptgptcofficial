@@ -143,7 +143,7 @@ const BannerSlider = () => {
                           }
                         }}
                       >
-                        For more details
+                        {item.message}
                       </a>
                     )}
                   </span>
