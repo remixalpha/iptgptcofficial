@@ -40,7 +40,7 @@ export default function SCST() {
       <div className="flex flex-col justify-center items-center -space-y-[24rem] relative mb-[10rem] transition-all duration-300  ">
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-red-400 p-2 rounded-full text-white z-50 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />

@@ -7,10 +7,10 @@ export default function SCST() {
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              <h1 className="mt-2  text-gray-900 sm:text-4xl antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
                 SC-ST COMMITTEE
               </h1>
-              <p className="mt-6 text-xl leading-8 text-gray-700">
+              <p className="mt-6 text-xl  text-gray-700 text-justify  block antialiased font-sans font-normal leading-relaxed  ">
                 The scheduled Caste (SC) and Scheduled Tribes (ST) Cell in an
                 institute promotes the special interest of students in the
                 reserved category and to provide special inputs in areas where
@@ -28,14 +28,14 @@ export default function SCST() {
         </div>
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="lg:pr-4">
-            <div className="max-w-xl  text-base leading-7 text-gray-700 lg:max-w-lg">
+            <div className="max-w-xl  text-base leading-7 text-gray-700 text-justify  block antialiased font-sans font-normal  lg:max-w-lg">
               <p>
                 As per the order no: C1/2722/21, IPT& GPTC, dated: 09/11/2021,
                 SC/ST committee has been formed to take care of the welfare of
                 the SC/ST students in the institution.
               </p>
 
-              <h1 className="mt-8 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl">
+              <h1 className="mt-8 text-3xl font-bold tracking-tight text-gray-900 sm:text-2xl  antialiased  font-sans  leading-[1.3]  mb-3">
                 The Committee Members Are:
               </h1>
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
@@ -107,7 +107,7 @@ export default function SCST() {
                 </li>
               </ul>
 
-              <p className="mt-8">
+              <p className="mt-8 text-justify  block antialiased font-sans  font-normal leading-relaxed">
                 The judicious committee meetings were conducted for monitoring
                 and analysing various activities of SC/ST student welfare and to
                 resolve various issues related (if any) with SC/ST students. E

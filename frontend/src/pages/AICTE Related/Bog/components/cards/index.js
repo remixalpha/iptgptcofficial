@@ -62,18 +62,18 @@ export default function Governer() {
   return (
     <div className=" mx-auto  scale-90 grid grid-cols-1 gap-x-5 gap-y-5  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6  ">
       {Governers.map((item) => (
-        <Card extra=" lg:w-[18rem] border  ">
+        <Card extra=" lg:w-[18rem] border border-gray-300 ">
           <div key={item.id} className=" p-10  ">
             <div className="flex justify-center items-center   group-hover:opacity-75  ">
               {item.imageSrc ? (
                 <img
                   src={item.imageSrc}
                   alt={item.imageAlt}
-                  className="h-[8rem] w-[8rem] rounded-full object-cover "
+                  className="h-[10rem] w-[10rem] rounded-full object-cover "
                 />
               ) : (
                 <UserIcon
-                  className="h-[8rem] w-[8rem]  text-gray-600 group-hover:text-indigo-600"
+                  className="h-[8rem] w-[8rem]  text-gray-600 group-hover:text-red-400"
                   aria-hidden="true"
                 />
               )}
@@ -90,13 +90,13 @@ export default function Governer() {
                 </a>
               </h1>
               <p
-                className="mt-1 text-xl text-gray-700"
+                className="mt-1 text-xl text-gray-900"
                 style={{ textAlign: "center" }}
               >
                 {item.Post}
               </p>
               <p
-                className="mt-1 text-sm text-gray-500"
+                className="mt-1 text-sm text-gray-700"
                 style={{ textAlign: "center" }}
               >
                 {item.Designation}
