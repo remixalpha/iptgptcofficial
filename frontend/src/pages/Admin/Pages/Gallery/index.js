@@ -5,15 +5,11 @@ import { IoIosArrowUp } from "react-icons/io";
 import Header from "../../components/sidebar";
 import Form from "./components/Form";
 
-//backend
-import { getRequest } from "../../../../utils/agent";
-
 export default function Gallery() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   //backend
-  const [departments, setDepartments] = useState([]);
 
   //
   const handleScrollToTop = () => {
@@ -29,26 +25,11 @@ export default function Gallery() {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
-    fetchApi();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  //backend
-  function fetchApi() {
-    getRequest("/admin/getdept")
-      .then(async (res) => {
-        if (res) {
-          console.log(res.data.doNotTrack);
-          setDepartments(res.data.doNotTrack);
-        } else {
-          console.error("response not found");
-        }
-      })
-      .catch((error) => console.log(error))
-      .finally(() => console.log("API REQUEST"));
-  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
@@ -67,7 +48,7 @@ export default function Gallery() {
         )}
 
         <div className="mb-[15rem] scale-105 ">
-          <Form departments={departments} />
+          <Form />
         </div>
       </div>
     </div>

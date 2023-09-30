@@ -12,7 +12,7 @@ export default function CoCurricular() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   //backend
-  const [departments, setDepartments] = useState([]);
+  const [clubNames, setClubNames] = useState([]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -27,19 +27,19 @@ export default function CoCurricular() {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
-    fetchApi();
+    fetchClubNames();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   //backend
-  function fetchApi() {
+  function fetchClubNames() {
     getRequest("/admin/getdept")
       .then(async (res) => {
         if (res) {
           console.log(res.data.doNotTrack);
-          setDepartments(res.data.doNotTrack);
+          setClubNames(res.data.doNotTrack);
         } else {
           console.error("response not found");
         }
@@ -65,7 +65,7 @@ export default function CoCurricular() {
         )}
 
         <div className=" mb-[15rem] scale-105 ">
-          <Form departments={departments} />
+          <Form clubNames={clubNames} />
         </div>
       </div>
     </div>

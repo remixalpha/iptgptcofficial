@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Menu, Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 
 //icons
 import { LuEdit2 } from "react-icons/lu";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
 import {
   PiUploadSimpleThin,
   PiXLight,
@@ -15,13 +15,13 @@ import { IoImageOutline } from "react-icons/io5";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { image_url, postLogin } from "../../../../../../utils/agent";
-import { getRequest } from "../../../../../../utils/agent";
+import { FetchRequest } from "../../../../../../utils/agent";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Form({ departments }) {
+export default function Form({ clubNames }) {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
@@ -29,10 +29,10 @@ export default function Form({ departments }) {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [staffs, setStaffs] = useState([]);
 
-  const [FilteredArray, setFilteredArray] = useState([]);
+  // const [FilteredArray, setFilteredArray] = useState([]);
   const [items, setItems] = useState([]);
   // Success and error messages
-  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+  // const [isUploadSuccess, setIsUploadSuccess] = useState(false);
 
   // Backend
   const [Myfile, setMyfile] = useState([]);
@@ -40,29 +40,14 @@ export default function Form({ departments }) {
   const [formDeptOption, setFormDeptOption] = useState(
     "64bad26c578e4a044eb886a1"
   );
-  const [EditItem, setEditItem] = useState({});
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImage(reader.result);
-      setIsImageUploaded(true);
-    };
-  };
-
-  function filterArrayById(deptId) {
-    console.log(staffs);
-    console.log({ id: deptId });
-    const filtered = staffs.filter((item) => item.dept === deptId);
-    setFilteredArray(filtered);
-    console.log({ FilterArray: filtered });
-  }
-
-  const handleToggleDeleteDialog = () => {
-    setOpen(!open);
-  };
+  // function filterArrayById(deptId) {
+  //   console.log(staffs);
+  //   console.log({ id: deptId });
+  //   const filtered = staffs.filter((item) => item.dept === deptId);
+  //   setFilteredArray(filtered);
+  //   console.log({ FilterArray: filtered });
+  // }
 
   const handleToggleEditDialog = () => {
     setOpen(true);
@@ -73,9 +58,9 @@ export default function Form({ departments }) {
   };
 
   // Function to handle upload success
-  const handleUploadSuccess = () => {
-    setIsUploadSuccess(true);
-  };
+  // const handleUploadSuccess = () => {
+  //   setIsUploadSuccess(true);
+  // };
 
   // Backend
   const handleDepartmentChange = (e) => {
@@ -106,7 +91,7 @@ export default function Form({ departments }) {
 
   // Fetching HOD data
   function fetchStaff() {
-    getRequest("/staff/")
+    FetchRequest("/cocu/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
@@ -146,7 +131,7 @@ export default function Form({ departments }) {
             console.log({ res: res });
             if (res?.statusText === "Created") {
               // console.log(res.data);
-              handleUploadSuccess();
+              // handleUploadSuccess();
               window.location.reload();
             } else {
               console.log("not get response");
@@ -273,7 +258,7 @@ export default function Form({ departments }) {
                         htmlFor="departments"
                         className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
-                        Departments
+                        Club Name
                       </label>
                       <div className="mt-2 ">
                         <select
@@ -285,7 +270,7 @@ export default function Form({ departments }) {
                           className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                           {/* form departments */}
-                          {departments.map((item, i) => (
+                          {clubNames.map((item, i) => (
                             <option value={item._id} key={i * 10}>
                               {item.name}
                             </option>
@@ -333,7 +318,7 @@ export default function Form({ departments }) {
 
               {/* all ready uploaded */}
               <div className="p-4 mx-8 ">
-                <Menu
+                {/* <Menu
                   as="div"
                   className="relative inline-block text-left -right-[37rem] "
                 >
@@ -382,10 +367,10 @@ export default function Form({ departments }) {
                       </div>
                     </Menu.Items>
                   </Transition>
-                </Menu>
+                </Menu> */}
                 <div className="max-h-[400px]  overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden  ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                    {FilteredArray.map((item) => (
+                    {staffs.map((item) => (
                       <li
                         key={item.id}
                         className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
@@ -433,7 +418,7 @@ export default function Form({ departments }) {
                                 {item.position}
                               </p>
                               <p className="text-sm font-medium text-gray-700 truncate ">
-                                {item.department}
+                                {item.clubName}
                               </p>
                             </div>
                             <div className=" fixed flex  items-center justify-center text-sm  space-x-[4rem]  mt-10 ">
@@ -605,13 +590,13 @@ export default function Form({ departments }) {
                                     htmlFor="departments"
                                     className="block text-sm font-medium leading-6 text-gray-900"
                                   >
-                                    Departments
+                                    Club Name
                                   </label>
                                   <div className="mt-2">
                                     <select
-                                      id="departments"
-                                      name="departments"
-                                      autoComplete="country-name"
+                                      id="clubName"
+                                      name="clubName"
+                                      autoComplete="clubName"
                                       value={selectedDepartment}
                                       onChange={handleDepartmentChange}
                                       className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -622,7 +607,7 @@ export default function Form({ departments }) {
                                       <option>General Department</option>
                                       <option>Mechanical Department</option>
                                       <option>Office</option> */}
-                                      {departments.map((item, i) => (
+                                      {clubNames.map((item, i) => (
                                         <option value={item.id} key={i * 10}>
                                           {item.name}
                                         </option>

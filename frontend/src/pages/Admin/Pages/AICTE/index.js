@@ -9,13 +9,13 @@ import { getRequest } from "../../../../utils/agent";
 export default function Aicte() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-  const [Certificate, setCertificate] = useState([]);
+  const [Certificates, setCertificates] = useState([]);
   function fetchCertificate() {
     getRequest("/aicte/")
       .then(async (res) => {
         if (res.statusText === "OK") {
           // console.log(res.data.doNotTrack);
-          setCertificate(res.data.doNotTrack);
+          setCertificates(res.data.doNotTrack);
         } else {
           console.error("response not found");
         }
@@ -60,7 +60,7 @@ export default function Aicte() {
         )}
 
         <div className="mb-[15rem] scale-125 ">
-          <Form Certificate={Certificate} />
+          <Form Certificates={Certificates} />
         </div>
       </div>
     </div>

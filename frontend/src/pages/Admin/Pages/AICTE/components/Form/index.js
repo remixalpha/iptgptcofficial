@@ -4,15 +4,13 @@ import { Dialog, Transition } from "@headlessui/react";
 //icons
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { BsFileEarmarkPdf } from "react-icons/bs";
-import { IoImageOutline } from "react-icons/io5";
-import { LuEdit2 } from "react-icons/lu";
+import { AiOutlineLink } from "react-icons/ai";
 import {
   PiUploadSimpleThin,
   PiXLight,
   PiTrashSimpleLight,
 } from "react-icons/pi";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../../../../../../assets/images/logos/iptlogomin.png";
 
 //backend
 import { Formik } from "formik";
@@ -20,7 +18,7 @@ import * as Yup from "yup";
 
 import { image_url, postLogin } from "../../../../../../utils/agent";
 
-export default function Form({ Certificate }) {
+export default function Form({ Certificates }) {
   const [open, setOpen] = useState(true);
 
   //backend
@@ -46,6 +44,20 @@ export default function Form({ Certificate }) {
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
+
+  function getFileName(fullFileName) {
+    // Remove date-time information and "Blank" from the file name
+    const fileNameMatch = fullFileName.match(/([^/]+)$/);
+    let fileName = fileNameMatch ? fileNameMatch[0] : fullFileName;
+
+    // Remove date-time information
+    fileName = fileName.replace(/^(.*?--)/, "");
+
+    // Remove "Blank" (if present)
+    fileName = fileName.replace("Blank", "");
+
+    return fileName;
+  }
 
   function DeleteCertificate(id) {
     postLogin(`/aicte/del/${id}`)
@@ -83,9 +95,9 @@ export default function Form({ Certificate }) {
 
         console.log({ formData: formData });
         postLogin("/aicte/create", formData)
-          .then(async (res) => {
-            if (res?.statusText === "OK") {
-              console.log(res.data);
+          .then((res) => {
+            if (res.statusText === "OK") {
+              console.log("created");
               window.location.reload();
             } else {
               window.location.reload();
@@ -251,7 +263,7 @@ export default function Form({ Certificate }) {
 
           {/* sideForm */}
 
-          {/* <Transition.Root show={open} as={Fragment}>
+          <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
               <Transition.Child
                 as={Fragment}
@@ -262,12 +274,12 @@ export default function Form({ Certificate }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-hidden">
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                  <div className="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
                     <Transition.Child
                       as={Fragment}
                       enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -277,23 +289,23 @@ export default function Form({ Certificate }) {
                       leaveFrom="translate-x-0"
                       leaveTo="translate-x-full"
                     >
-                      <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                        <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-4 shadow-xl">
-                          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <Dialog.Panel className="w-screen max-w-md pointer-events-auto">
+                        <div className="flex flex-col max-h-screen pb-10 mt-2 mr-4 overflow-hidden bg-white shadow-xl rounded-xl">
+                          <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
-                                Uploaded
+                                Certificates
                               </Dialog.Title>
-                              <div className="ml-3 flex h-7 items-center">
+                              <div className="flex items-center ml-3 h-7">
                                 <button
                                   type="button"
-                                  className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                                  className="relative p-2 -m-2 text-gray-400 hover:text-gray-500"
                                   onClick={() => setOpen(false)}
                                 >
                                   <span className="absolute -inset-0.5" />
                                   <span className="sr-only">Close panel</span>
                                   <XMarkIcon
-                                    className="h-6 w-6"
+                                    className="w-6 h-6"
                                     aria-hidden="true"
                                   />
                                 </button>
@@ -303,44 +315,65 @@ export default function Form({ Certificate }) {
                             <div className="mt-8">
                               <div className="flow-root">
                                 <ul role="list" className="-my-6 space-y-4 ">
-                                  {Certificate.map((item) => (
-                                    <li
-                                      key={item.id}
-                                      className="flex mt-5 py-4 px-4 bg-gray-50  rounded-xl hover:shadow-lg transition-all duration-300"
-                                    >
-                                      <div className="h-6 w-6 flex-shrink-0 overflow-hidden rounded-md ">
-                                        <BsFileEarmarkPdf className="h-full w-full object-cover object-center" />
-                                      </div>
-
-                                      <div className="ml-4 flex flex-1 flex-col">
-                                        <div className="flex justify-between text-md  text-gray-900 antialiased tracking-normal font-sans font-bold  leading-[1.3]">
-                                          <h3>
-                                            <a href={item.href}>{item.name}</a>
-                                          </h3>
-                                        </div>
-                                        <div className="flex justify-between text-sm  text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
-                                          <h3>
-                                            <a href={item.href}>{item.year}</a>
-                                          </h3>
+                                  {Certificates &&
+                                    Certificates.map((item) => (
+                                      <li
+                                        key={item._id}
+                                        className="flex p-8 mt-5 transition-all duration-300 bg-gray-50 rounded-xl hover:shadow-lg"
+                                      >
+                                        <div className="flex-shrink-0 w-6 h-6 overflow-hidden rounded-md">
+                                          {item.fileUrl ? (
+                                            <BsFileEarmarkPdf className="object-cover object-center w-full h-full text-black" />
+                                          ) : (
+                                            <AiOutlineLink className="object-cover object-center w-full h-full" />
+                                          )}
                                         </div>
 
-                                        <div className="flex items-end justify-end flex-1 text-sm">
-                                          <button
-                                            onClick={() =>
-                                              DeleteCertificate(item._id)
-                                            }
-                                            type="button"
-                                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                                          >
-                                            <PiTrashSimpleLight
-                                              className="p-1 text-black transition-transform duration-300 ease-in-out transform w-7 h-7 group-hover:-translate-y-1"
-                                              aria-hidden="true"
-                                            />
-                                          </button>
+                                        <div className="flex flex-col flex-1 ml-4">
+                                          <div className="flex justify-between text-md text-gray-900 antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize mb-2 ">
+                                            <h3 className="max-w-[200px] overflow-hidden overflow-ellipsis">
+                                              {item.fileUrl ? (
+                                                <>
+                                                  <div className="mb-2">
+                                                    <a
+                                                      href={`${
+                                                        image_url + item.fileUrl
+                                                      }`}
+                                                      target="_blank"
+                                                    >
+                                                      {item.message}
+                                                    </a>
+                                                  </div>
+                                                  <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
+                                                    {getFileName(item.fileUrl)}
+                                                  </div>
+                                                </>
+                                              ) : (
+                                                <h3>
+                                                  <a href={item.href}>
+                                                    {item.message}
+                                                  </a>
+                                                </h3>
+                                              )}
+                                            </h3>
+                                          </div>
+                                          <div className="flex items-end justify-end flex-1 text-sm">
+                                            <button
+                                              onClick={() =>
+                                                DeleteCertificate(item._id)
+                                              }
+                                              type="button"
+                                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                                            >
+                                              <PiTrashSimpleLight
+                                                className="p-1 text-black transition-transform duration-300 ease-in-out transform w-7 h-7 group-hover:-translate-y-1"
+                                                aria-hidden="true"
+                                              />
+                                            </button>
+                                          </div>
                                         </div>
-                                      </div>
-                                    </li>
-                                  ))}
+                                      </li>
+                                    ))}
                                 </ul>
                               </div>
                             </div>
@@ -352,7 +385,7 @@ export default function Form({ Certificate }) {
                 </div>
               </div>
             </Dialog>
-          </Transition.Root> */}
+          </Transition.Root>
         </form>
       )}
     </Formik>

@@ -3,7 +3,7 @@ import { Menu, Dialog, Transition } from "@headlessui/react";
 
 //icons
 import { LuEdit2 } from "react-icons/lu";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+
 import {
   PiUploadSimpleThin,
   PiXLight,
@@ -11,8 +11,7 @@ import {
 } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 
-//image
-import person from "../../../../../../assets/images/section/Departments/Electronics/Asharaf.jpg";
+
 
 //backend
 import { Formik } from "formik";
@@ -22,7 +21,7 @@ import {
   image_url,
   postLogin,
 } from "../../../../../../utils/agent";
-import { getRequest } from "../../../../../../utils/agent";
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -36,7 +35,7 @@ export default function Form({ departments }) {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [hods, setHods] = useState([]);
 
-  const [FilteredArray, setFilteredArray] = useState([]);
+  // const [FilteredArray, setFilteredArray] = useState([]);
   const [items, setItems] = useState([]);
   // Success and error messages
   const [isUploadSuccess, setIsUploadSuccess] = useState(false);
@@ -59,13 +58,13 @@ export default function Form({ departments }) {
     };
   };
   //filter the department and show it in the uploaded part
-  function filterArrayById(deptId) {
-    console.log(hods);
-    console.log({ id: deptId });
-    const filtered = hods.filter((item) => item.dept === deptId);
-    setFilteredArray(filtered);
-    console.log({ FilterArray: filtered });
-  }
+  // function filterArrayById(deptId) {
+  //   console.log(hods);
+  //   console.log({ id: deptId });
+  //   const filtered = hods.filter((item) => item.dept === deptId);
+  //   setFilteredArray(filtered);
+  //   console.log({ FilterArray: filtered });
+  // }
 
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
@@ -363,7 +362,7 @@ export default function Form({ departments }) {
 
               {/* all ready uploaded */}
               <div>
-                <Menu
+                {/* <Menu
                   as="div"
                   className="relative inline-block text-left -right-[37rem] "
                 >
@@ -412,10 +411,10 @@ export default function Form({ departments }) {
                       </div>
                     </Menu.Items>
                   </Transition>
-                </Menu>
+                </Menu> */}
                 <div className="max-h-[400px] overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
                   <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                    {FilteredArray.map((item) => (
+                    {hods.map((item) => (
                       <li
                         key={item.id}
                         className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"

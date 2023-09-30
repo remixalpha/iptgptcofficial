@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { image_url, getRequest } from "../../../../../utils/agent";
+import { image_url, FetchRequest } from "../../../../../utils/agent";
 
 const Content = [
   {
@@ -26,7 +26,7 @@ export default function Hod() {
   // Backend
   // Fetching HOD data
   function fetchHod() {
-    getRequest("/hod/")
+    FetchRequest ("/hod/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
@@ -43,6 +43,7 @@ export default function Hod() {
   useEffect(() => {
     fetchHod();
   }, []);
+  
 
   const filteredHod = hods.filter((item) => item.dept === deptId);
 

@@ -10,7 +10,7 @@ import {
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiOutlineLink } from "react-icons/ai";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../../../../../../assets/images/logos/iptlogomin.png";
+
 // backend
 import { Formik, useFormikContext } from "formik";
 import * as Yup from "yup";
@@ -38,6 +38,20 @@ export default function Form({ Notifications }) {
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
+
+  function getFileName(fullFileName) {
+    // Remove date-time information and "Blank" from the file name
+    const fileNameMatch = fullFileName.match(/([^/]+)$/);
+    let fileName = fileNameMatch ? fileNameMatch[0] : fullFileName;
+
+    // Remove date-time information
+    fileName = fileName.replace(/^(.*?--)/, "");
+
+    // Remove "Blank" (if present)
+    fileName = fileName.replace("Blank", "");
+
+    return fileName;
+  }
 
   function DeleteNotification(id) {
     postLogin(`/notification/del/${id}`)
@@ -323,7 +337,7 @@ export default function Form({ Notifications }) {
                       leaveTo="translate-x-full"
                     >
                       <Dialog.Panel className="w-screen max-w-md pointer-events-auto">
-                        <div className="flex flex-col h-full mt-2 mr-4 overflow-hidden bg-white shadow-xl rounded-xl">
+                        <div className="flex flex-col max-h-screen pb-10 mt-2 mr-4 overflow-hidden bg-white shadow-xl rounded-xl">
                           <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
@@ -351,42 +365,49 @@ export default function Form({ Notifications }) {
                                   {Notifications.map((item) => (
                                     <li
                                       key={item._id}
-                                      className="flex px-4 py-8 mt-5 transition-all duration-300 bg-gray-50 rounded-xl hover:shadow-lg"
+                                      className="flex p-8 mt-5 transition-all duration-300 bg-gray-50 rounded-xl hover:shadow-lg"
                                     >
                                       <div className="flex-shrink-0 w-6 h-6 overflow-hidden rounded-md">
                                         {item.fileUrl ? (
-                                          <BsFileEarmarkPdf className="object-cover object-center w-full h-full" />
+                                          <BsFileEarmarkPdf className="object-cover object-center w-full h-full text-black " />
                                         ) : (
                                           <AiOutlineLink className="object-cover object-center w-full h-full" />
                                         )}
                                       </div>
 
                                       <div className="flex flex-col flex-1 ml-4">
-                                        <div className="flex justify-between text-md text-gray-900 antialiased tracking-normal font-sans font-bold leading-[1.3]">
-                                          <h3>
+                                        <div className="flex justify-between text-md text-gray-900 antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize mb-2 ">
+                                          <h3 className="max-w-[200px] overflow-hidden overflow-ellipsis">
                                             {item.fileUrl ? (
-                                              <a
-                                                href={`${
-                                                  image_url + item.fileUrl
-                                                }`}
-                                                target="_blank"
-                                              >
-                                                {item.message}
-                                              </a>
+                                              <>
+                                                <div className="mb-2">
+                                                  <a
+                                                    href={`${
+                                                      image_url + item.fileUrl
+                                                    }`}
+                                                    target="_blank"
+                                                  >
+                                                    {item.message}
+                                                  </a>
+                                                </div>
+                                                <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
+                                                  {getFileName(item.fileUrl)}
+                                                </div>
+                                              </>
                                             ) : (
-                                              <a href={item.link}>
-                                                {item.link}
-                                              </a>
+                                              <h3>
+                                                <a href={item.href}>
+                                                  {item.message}
+                                                </a>
+                                              </h3>
                                             )}
                                           </h3>
                                         </div>
-                                        <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
-                                          <h3>
-                                            <a href={item.href}>
-                                              {item.message}
-                                            </a>
-                                          </h3>
-                                        </div>
+                                        {item.fileUrl ? null : (
+                                          <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3] max-w-[200px] overflow-hidden overflow-ellipsis">
+                                            <a href={item.link}>{item.link}</a>
+                                          </div>
+                                        )}
                                         <div className="flex items-end justify-end flex-1 text-sm">
                                           <button
                                             onClick={() =>
