@@ -96,7 +96,7 @@ export default function Form({ Certificates }) {
         console.log({ formData: formData });
         postLogin("/aicte/create", formData)
           .then((res) => {
-            if (res.statusText === "OK") {
+            if (res.statusText === "Created") {
               console.log("created");
               window.location.reload();
             } else {
@@ -274,7 +274,10 @@ export default function Form({ Certificates }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+                <div
+                  className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+                  style={{ backdropFilter: "blur(10px)" }}
+                />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-hidden">
@@ -290,7 +293,7 @@ export default function Form({ Certificates }) {
                       leaveTo="translate-x-full"
                     >
                       <Dialog.Panel className="w-screen max-w-md pointer-events-auto">
-                        <div className="flex flex-col max-h-screen pb-10 mt-2 mr-4 overflow-hidden bg-white shadow-xl rounded-xl">
+                        <div className="flex flex-col max-h-screen pb-10 mt-2 mr-4 overflow-hidden bg-gray-200 shadow-xl rounded-xl">
                           <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
@@ -332,29 +335,21 @@ export default function Form({ Certificates }) {
                                         <div className="flex flex-col flex-1 ml-4">
                                           <div className="flex justify-between text-md text-gray-900 antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize mb-2 ">
                                             <h3 className="max-w-[200px] overflow-hidden overflow-ellipsis">
-                                              {item.fileUrl ? (
-                                                <>
-                                                  <div className="mb-2">
-                                                    <a
-                                                      href={`${
-                                                        image_url + item.fileUrl
-                                                      }`}
-                                                      target="_blank"
-                                                    >
-                                                      {item.message}
-                                                    </a>
-                                                  </div>
-                                                  <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
-                                                    {getFileName(item.fileUrl)}
-                                                  </div>
-                                                </>
-                                              ) : (
-                                                <h3>
-                                                  <a href={item.href}>
-                                                    {item.message}
+                                              <>
+                                                <div className="mb-2">
+                                                  <a
+                                                    href={`${
+                                                      image_url + item.fileUrl
+                                                    }`}
+                                                    target="_blank"
+                                                  >
+                                                    {item.name} - {item.year}
                                                   </a>
-                                                </h3>
-                                              )}
+                                                </div>
+                                                <div className="flex justify-between text-sm text-gray-700 antialiased tracking-normal font-sans font-normal leading-[1.3]">
+                                                  {getFileName(item.fileUrl)}
+                                                </div>
+                                              </>
                                             </h3>
                                           </div>
                                           <div className="flex items-end justify-end flex-1 text-sm">

@@ -6,13 +6,13 @@ import Header from "../../components/sidebar";
 import Form from "./components/Form";
 
 //backend
-import { getRequest } from "../../../../utils/agent";
+import { FetchRequest } from "../../../../utils/agent";
 
 export default function CoCurricular() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   //backend
-  const [clubNames, setClubNames] = useState([]);
+  const [clubName, setClubNames] = useState([]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -35,12 +35,14 @@ export default function CoCurricular() {
 
   //backend
   function fetchClubNames() {
-    getRequest("/admin/getdept")
+    FetchRequest("/cocu/")
       .then(async (res) => {
         if (res) {
           console.log(res.data.doNotTrack);
-          setClubNames(res.data.doNotTrack);
-        } else {
+          const clubNamesArray = res.data.doNotTrack.map(
+            (item) => item.clubName
+          );
+          setClubNames(clubNamesArray);
           console.error("response not found");
         }
       })
@@ -65,7 +67,7 @@ export default function CoCurricular() {
         )}
 
         <div className=" mb-[15rem] scale-105 ">
-          <Form clubNames={clubNames} />
+          <Form clubName={clubName} />
         </div>
       </div>
     </div>

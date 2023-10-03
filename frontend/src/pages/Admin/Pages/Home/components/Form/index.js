@@ -321,7 +321,10 @@ export default function Form({ Notifications }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+                <div
+                  className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+                  style={{ backdropFilter: "blur(10px)" }}
+                  />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-hidden">
@@ -337,7 +340,7 @@ export default function Form({ Notifications }) {
                       leaveTo="translate-x-full"
                     >
                       <Dialog.Panel className="w-screen max-w-md pointer-events-auto">
-                        <div className="flex flex-col max-h-screen pb-10 mt-2 mr-4 overflow-hidden bg-white shadow-xl rounded-xl">
+                        <div className="flex flex-col max-h-screen pb-10 mt-2 mr-4 overflow-hidden bg-gray-200 shadow-xl rounded-xl">
                           <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className="text-lg antialiased tracking-normal font-sans font-medium leading-[1.3] text-gray-900">
@@ -365,7 +368,7 @@ export default function Form({ Notifications }) {
                                   {Notifications.map((item) => (
                                     <li
                                       key={item._id}
-                                      className="flex p-8 mt-5 transition-all duration-300 bg-gray-50 rounded-xl hover:shadow-lg"
+                                      className="flex p-8 mt-5 transition-all duration-300 bg-white rounded-xl hover:shadow-lg  "
                                     >
                                       <div className="flex-shrink-0 w-6 h-6 overflow-hidden rounded-md">
                                         {item.fileUrl ? (

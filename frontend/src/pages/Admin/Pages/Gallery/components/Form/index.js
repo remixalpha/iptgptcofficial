@@ -30,7 +30,7 @@ export default function Form() {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const [hoveredProduct, setHoveredProduct] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [gallerys, setgallerys] = useState([]);
   // const [items, setItems] = useState([]);
   // const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
 
@@ -38,7 +38,9 @@ export default function Form() {
   const [Myfile, setMyfile] = useState([]);
   const [tabs, setTabs] = useState([]); // To store all tabs
   const [selectedTab, setSelectedTab] = useState(""); // To store the selected tab for the current image
-  const [filterArray, setFilterArray] = useState([]); // Initialize as an empty array
+  const [filteredImages, setFilteredImages] = useState([]); // Initialize as an empty array
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [formDeptOption, setFormDeptOption] = useState("CAMPUS");
   //
 
   const addTab = (tab) => {
@@ -56,21 +58,33 @@ export default function Form() {
   };
 
   const handleDeleteItem = (productId) => {
-    setProducts((prevProduct) =>
+    setgallerys((prevProduct) =>
       prevProduct.filter((product) => product.id !== productId)
     );
   };
 
+  let galleryTabs = [
+    "CAMPUS",
+    "NCC",
+    "NSS",
+    "IEDC",
+    "HOSTEL",
+    "AUDITORIUM",
+    "WORKSHOP",
+    "LIBRARY",
+  ];
+
   // Backend
 
-  //  filter the department and show it in the uploaded part
-  function filterArrayByTabs(tab) {
-    console.log(products);
-    console.log({ tab });
-    const filtered = products.filter((item) => item.tabs === tab);
-    setFilterArray(filtered); // Set the state to the filtered array
-    console.log({ FilterArray: filtered });
-  }
+  const handleDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value);
+    console.log({ selectedDepartment: selectedDepartment });
+  };
+
+  const handleFormDept = (e) => {
+    setFormDeptOption(e.target.value);
+    console.log({ Selected: formDeptOption });
+  };
 
   // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
@@ -89,22 +103,20 @@ export default function Form() {
   };
 
   // Define a function to handle tab clicks
-  const handleTabClick = (tab) => {
-    setSelectedTab(tab); // Set the selected tab
-    filterArrayByTabs(tab); // Call the function to filter images based on the tab
+  const handleTabClick = (tabs) => {
+    setSelectedTab(tabs);
+    const filtered = gallerys.filter((items) => items.tabs === tabs);
+    setFilteredImages(filtered); // Call the function to filter images based on the tab
   };
 
   //featching Images
   function fetchImage() {
     FetchRequest("/gallery/")
-      .then(async (res) => {
+      .then((res) => {
+        // console.log(res.data);
         if (res.statusText === "OK") {
-          const imageData = res.data.doNotTrack;
-          setProducts(imageData);
-
-          // Extract unique tabs from the fetched data
-          const uniqueTabs = [...new Set(imageData.map((item) => item.tabs))];
-          setTabs(uniqueTabs);
+          console.log(res.data.doc);
+          setgallerys(res.data.doc);
         } else {
           console.error("response not found");
         }
@@ -119,11 +131,11 @@ export default function Form() {
 
   return (
     <Formik
-      initialValues={{ tabs: "" }}
+      initialValues={{ event: "" }}
       // validationSchema={notificationSchema}
 
       onSubmit={(values) => {
-        values.tabs = selectedTab;
+        // values.tabs = selectedTab;
         console.log({ values: values });
         const formData = new FormData();
         // formData.append("admin", "64f86826ea168a20207d0110");
@@ -135,12 +147,13 @@ export default function Form() {
           formData.append("fileUrl", file);
         });
 
+        formData.append("tabs", formDeptOption);
+
         console.log({ formData: formData });
         postLogin("/gallery/create", formData)
           .then(async (res) => {
-            if (res?.statusText === "OK") {
-              console.log(res.data);
-
+            console.log(res.data);
+            if (res?.statusText === "Created") {
               // Add the new tab to the tabs state if it doesn't exist
               if (!tabs.includes(selectedTab)) {
                 addTab(selectedTab);
@@ -220,26 +233,51 @@ export default function Form() {
                     </label>
                   </div>
                 </div>
-                {/* Departments */}
-                {/* Name */}
+                {/* Events */}
                 <div className="m:col-span-1">
+                  <label
+                    htmlFor="tabs"
+                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                  >
+                    Events
+                  </label>
+                  <div className="mt-2 cursor-pointer ">
+                    <input
+                      id="event"
+                      name="event"
+                      type="text"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.event}
+                      autoComplete="event"
+                      className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+                {/* Tabs */}
+                <div className="sm:col-span-1">
                   <label
                     htmlFor="tabs"
                     className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                   >
                     Tabs
                   </label>
-                  <div className="mt-2 cursor-pointer ">
-                    <input
+                  <div className="mt-2 ">
+                    <select
                       id="tabs"
                       name="tabs"
-                      type="text"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.tabs}
-                      autoComplete="name"
-                      className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                    />
+                      autoComplete="tabs"
+                      value={formDeptOption}
+                      onChange={handleFormDept}
+                      className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      {/* form departments */}
+                      {galleryTabs.map((item, i) => (
+                        <option value={item} key={i * 10}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -308,7 +346,10 @@ export default function Form() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                <div
+                  className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+                  style={{ backdropFilter: "blur(10px)" }}
+                />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-hidden">
@@ -324,7 +365,7 @@ export default function Form() {
                       leaveTo="translate-x-full"
                     >
                       <Dialog.Panel className="pointer-events-auto w-screen max-w-5xl">
-                        <div className="flex h-full flex-col overflow-hidden bg-white rounded-xl mt-2 mr-9 shadow-xl">
+                        <div className="flex h-full flex-col overflow-hidden bg-gray-200  rounded-xl mt-2 mr-9 shadow-xl">
                           <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className=" ml-8 mt-2 text-xl text-gray-900 antialiased tracking-normal font-sans font-medium  leading-[1.3]">
@@ -348,7 +389,7 @@ export default function Form() {
 
                             <div className="mt-8">
                               <div className="flow-root">
-                                <div className="bg-white">
+                                <div className="bg-gray-200 ">
                                   <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                                     <h2 className="sr-only">Images</h2>
 
@@ -359,21 +400,21 @@ export default function Form() {
                                       >
                                         <div>
                                           <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-500">
-                                            {selectedTab}{" "}
+                                            Tabs
                                             <ChevronDownIcon
                                               className="-mr-1 ml-2 h-5 w-5"
                                               aria-hidden="true"
                                             />
                                           </Menu.Button>
                                         </div>
-                                        <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-xl bg-white shadow-lg border">
+                                        <Menu.Items className="absolute left-0 z-10 mt-2 w-80 origin-top-right rounded-xl bg-white shadow-lg border">
                                           <div className="py-1">
-                                            {tabs.map((tab) => (
-                                              <Menu.Item key={tab}>
+                                            {galleryTabs.map((item) => (
+                                              <Menu.Item key={item.id}>
                                                 {({ active }) => (
                                                   <a
                                                     className={classNames(
-                                                      selectedTab === tab
+                                                      selectedTab === item
                                                         ? "font-medium text-navy-900"
                                                         : "text-navy-900 cursor-pointer",
                                                       active
@@ -382,10 +423,10 @@ export default function Form() {
                                                       "block px-4 py-2 text-sm"
                                                     )}
                                                     onClick={() =>
-                                                      handleTabClick(tab)
+                                                      handleTabClick(item)
                                                     }
                                                   >
-                                                    {tab}
+                                                    {item}
                                                   </a>
                                                 )}
                                               </Menu.Item>
@@ -395,8 +436,8 @@ export default function Form() {
                                       </Menu>
                                     </div>
 
-                                    <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                                      {filterArray.map((item) => (
+                                    <div className=" mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                                      {filteredImages.map((item, index) => (
                                         <div
                                           key={item.id}
                                           className="relative group"
@@ -408,11 +449,12 @@ export default function Form() {
                                           <a href={item.href} className="group">
                                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                                               <img
-                                                className="object-cover w-12 h-12 rounded-full"
+                                                key={item.id}
                                                 src={`${
                                                   image_url + item.fileUrl
                                                 }`}
-                                                alt=""
+                                                alt={`${item.event}_${index}`}
+                                                className="w-full h-full object-cover cursor-pointer rounded-md "
                                               />
                                             </div>
                                           </a>

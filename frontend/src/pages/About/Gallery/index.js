@@ -5,158 +5,30 @@ import { IoClose } from "react-icons/io5";
 import Navbar from "../../../components/Navbar/navbar";
 import Banner from "../../../assets/images/Banner/iptimage1.jpg";
 import Footer from "../../../components/Footer/index";
-import IPTIMAGE1 from "../../../assets/images/section/Gallery/iptimage1.jpg";
-import IPTIMAGE2 from "../../../assets/images/section/Gallery/iptimage2.jpg";
-import IPTIMAGE3 from "../../../assets/images/section/Gallery/iptimage3.jpg";
-import IPTIMAGE4 from "../../../assets/images/section/Gallery/iptimage4.jpg";
-import IPTIMAGE5 from "../../../assets/images/section/Gallery/iptimage5.jpg";
-import IPTIMAGE6 from "../../../assets/images/section/Gallery/iptimage6.jpg";
-import IPTIMAGE7 from "../../../assets/images/section/Gallery/iptimage7.jpg";
-import IPTIMAGE8 from "../../../assets/images/section/Gallery/iptimage8.jpg";
-import IPTIMAGE9 from "../../../assets/images/section/Gallery/iptimage9.png";
-import IPTIMAGE10 from "../../../assets/images/section/Gallery/iptimage10.jpg";
-import IPTIMAGE11 from "../../../assets/images/section/Gallery/iptimage11.jpg";
-import IPTIMAGE12 from "../../../assets/images/section/Gallery/iptimage12.jpg";
-import IPTIMAGE13 from "../../../assets/images/section/Gallery/iptimage13.jpg";
-import IPTIMAGE14 from "../../../assets/images/section/Gallery/iptimage14.jpg";
-import IPTIMAGE15 from "../../../assets/images/section/Gallery/iptimage15.jpg";
-import IPTIMAGE16 from "../../../assets/images/section/Gallery/iptimage16.jpg";
-import IPTIMAGE17 from "../../../assets/images/section/Gallery/iptimage17.jpg";
-import IPTIMAGE18 from "../../../assets/images/section/Gallery/iptimage18.jpeg";
-import IPTIMAGE19 from "../../../assets/images/section/Gallery/iptimage19.jpg";
-import IPTIMAGE20 from "../../../assets/images/section/Gallery/iptimage20.jpg";
-import IPTIMAGE21 from "../../../assets/images/section/Gallery/iptimage21.jpg";
-import IPTIMAGE22 from "../../../assets/images/section/Gallery/iptimage22.jpg";
-import IPTIMAGE23 from "../../../assets/images/section/Gallery/iptimage23.jpg";
-import IPTIMAGE24 from "../../../assets/images/section/Gallery/iptimage24.jpg";
-import IPTIMAGE25 from "../../../assets/images/section/Gallery/iptimage25.jpg";
+
+// Backend
+import { image_url, FetchRequest } from "../../../utils/agent";
 
 import Card from "./components/Card/index";
 const Gallery = () => {
-  // Sample image URLs
-  const images = [
-    {
-      src: IPTIMAGE1,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE2,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE3,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE4,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE5,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE6,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE7,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE8,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE9,
-      category: "IPT",
-    },
-    {
-      src: IPTIMAGE10,
-      category: "NCC",
-    },
-    {
-      src: IPTIMAGE11,
-      category: "NCC",
-    },
-    {
-      src: IPTIMAGE12,
-      category: "NCC",
-    },
-    {
-      src: IPTIMAGE13,
-      category: "NCC",
-    },
-    {
-      src: IPTIMAGE14,
-      category: "NCC",
-    },
-    {
-      src: IPTIMAGE15,
-      category: "NCC",
-    },
-    {
-      src: IPTIMAGE16,
-      category: "NSS",
-    },
-    {
-      src: IPTIMAGE17,
-      category: "NSS",
-    },
-    {
-      src: IPTIMAGE18,
-      category: "NSS",
-    },
-    {
-      src: IPTIMAGE19,
-      category: "HOSTEL",
-    },
-    {
-      src: IPTIMAGE20,
-      category: "AUDITORIUM",
-    },
-    {
-      src: IPTIMAGE21,
-      category: "CANTEEN",
-    },
-    {
-      src: IPTIMAGE22,
-      category: "WORKSHOP",
-    },
-    {
-      src: IPTIMAGE23,
-      category: "ASAP",
-    },
-    {
-      src: IPTIMAGE24,
-      category: "LIBRARY",
-    },
-    {
-      src: IPTIMAGE25,
-      category: "SEMINAR HALL",
-    },
-
-    // Add more image URLs here
-  ];
-
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [filteredImages, setFilteredImages] = useState(images);
+  const [selectedTabs, setSelectedTabs] = useState("All");
+  const [filteredImages, setFilteredImages] = useState([]);
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+  const handleTabsSelect = (tabs) => {
+    setSelectedTabs(tabs);
 
-    if (category === "All") {
-      setFilteredImages(images);
+    if (tabs === "All") {
+      setFilteredImages(gallerys);
     } else {
-      const filtered = images.filter((image) => image.category === category);
+      const filtered = gallerys.filter((items) => items.tabs === tabs);
       setFilteredImages(filtered);
     }
   };
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
+  const handleImageClick = (items) => {
+    setSelectedImage(items);
   };
 
   const handleCloseModal = () => {
@@ -166,7 +38,7 @@ const Gallery = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-
+  const [gallerys, setgallerys] = useState([]);
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -182,10 +54,26 @@ const Gallery = () => {
 
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
+    fetchImage();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  function fetchImage() {
+    FetchRequest("/gallery/")
+      .then((res) => {
+        // console.log(res.data);
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+          setgallerys(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden ">
@@ -228,143 +116,147 @@ const Gallery = () => {
             <div className="gallery-buttons flex flex-row justify-center items-center gap-4 ">
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "All"
+                  selectedTabs === "All"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("All")}
+                onClick={() => handleTabsSelect("All")}
               >
                 All
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "IPT"
+                  selectedTabs === "CAMPUS"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("IPT")}
+                onClick={() => handleTabsSelect("CAMPUS")}
               >
-                IPT
+                CAMPUS
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "NCC"
+                  selectedTabs === "NCC"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("NCC")}
+                onClick={() => handleTabsSelect("NCC")}
               >
                 NCC
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "NSS"
+                  selectedTabs === "NSS"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("NSS")}
+                onClick={() => handleTabsSelect("NSS")}
               >
                 NSS
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "HOSTEL"
+                  selectedTabs === "HOSTEL"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("HOSTEL")}
+                onClick={() => handleTabsSelect("HOSTEL")}
               >
                 HOSTEL
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "AUDITORIUM"
+                  selectedTabs === "AUDITORIUM"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("AUDITORIUM")}
+                onClick={() => handleTabsSelect("AUDITORIUM")}
               >
                 AUDITORIUM
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "CANTEEN"
+                  selectedTabs === "CANTEEN"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("CANTEEN")}
+                onClick={() => handleTabsSelect("CANTEEN")}
               >
                 CANTEEN
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "WORKSHOP"
+                  selectedTabs === "WORKSHOP"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("WORKSHOP")}
+                onClick={() => handleTabsSelect("WORKSHOP")}
               >
                 WORKSHOP
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "ASAP"
+                  selectedTabs === "ASAP"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("ASAP")}
+                onClick={() => handleTabsSelect("ASAP")}
               >
                 ASAP
               </button>
               <button
                 className={`gallery-button transition ${
-                  selectedCategory === "LIBRARY"
+                  selectedTabs === "LIBRARY"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("LIBRARY")}
+                onClick={() => handleTabsSelect("LIBRARY")}
               >
                 LIBRARY
               </button>
               <button
                 className={`gallery-button transition  ${
-                  selectedCategory === "SEMINAR HALL"
+                  selectedTabs === "SEMINAR HALL"
                     ? "bg-gray-900 text-sm  text-white rounded-full px-5 py-2 antialiased tracking-normal font-sans  font-semibold leading-[1.3]  mb-3"
                     : "bg-transparent rounded-full text-sm scale-125 text-gray-900 px-5 py-2 antialiased tracking-normal font-sans font-semibold leading-[1.3]  mb-3"
                 }`}
-                onClick={() => handleCategorySelect("SEMINAR HALL")}
+                onClick={() => handleTabsSelect("SEMINAR HALL")}
               >
                 SEMINAR HALL
               </button>
             </div>
           </Card>
           <div className="grid grid-cols-1 lg:grid-cols-6 gap-2 relative -top-[8rem] px-10  ">
-            {filteredImages.map((image, index) => (
+            {filteredImages.map((item, index) => (
               <img
-                key={index}
-                src={image.src}
-                alt={`${index + 1}`}
+                key={item.id}
+                src={`${image_url + item.fileUrl}`}
+                alt={`${item.event}_${index}`}
                 className="w-full h-full object-cover cursor-pointer rounded-md "
-                onClick={() => handleImageClick(image.src)}
+                onClick={() => handleImageClick(`${image_url + item.fileUrl}`)}
               />
             ))}
           </div>
 
           {selectedImage && (
-            <div className="fixed -top-[5rem]  left-0 w-full h-full mt-[5rem] scale-75 flex justify-center items-center z-50 0 ">
-              <div className="max-w-4xl max-h-4xl relative  ">
+            <div className="fixed -top-[5rem]  left-0 w-full h-full mt-[5rem]  flex justify-center items-center z-50 0 ">
+              <div
+                className="fixed h-full w-full inset-0 hidden transition-opacity bg-gray-400 bg-opacity-75 md:block"
+                style={{ backdropFilter: "blur(8px)" }}
+              />
+              <div className="max-w-4xl max-h-4xl relative shadow-lg ">
                 <img
                   src={selectedImage}
                   alt="Selected"
                   className="w-full h-full object-contain"
                 />
-                <button
-                  onClick={handleCloseModal}
-                  className="absolute top-5 right-5 text-gray-800 cursor-pointer bg-transparent scale-150 h-8 w-8 p-2 bg-white shadow-lg rounded-primary  "
-                >
-                  <IoClose />
-                </button>
               </div>
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-10 right-10 text-gray-800 cursor-pointer bg-transparent scale-150 h-8 w-8 p-2 bg-white shadow-lg rounded-primary  "
+              >
+                <IoClose />
+              </button>
             </div>
           )}
         </div>

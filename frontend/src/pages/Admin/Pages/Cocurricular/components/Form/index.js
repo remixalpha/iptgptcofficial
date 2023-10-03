@@ -21,7 +21,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Form({ clubNames }) {
+export default function Form({ clubName }) {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
@@ -37,9 +37,7 @@ export default function Form({ clubNames }) {
   // Backend
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [formDeptOption, setFormDeptOption] = useState(
-    "64bad26c578e4a044eb886a1"
-  );
+  const [formDeptOption, setFormDeptOption] = useState("iedc");
 
   // function filterArrayById(deptId) {
   //   console.log(staffs);
@@ -91,7 +89,7 @@ export default function Form({ clubNames }) {
 
   // Fetching HOD data
   function fetchStaff() {
-    FetchRequest("/cocu/")
+    FetchRequest("/cocu/", { clubName: "iedc" })
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
@@ -111,7 +109,7 @@ export default function Form({ clubNames }) {
 
   return (
     <Formik
-      initialValues={{ name: "", position: "" }}
+      initialValues={{ name: "" }}
       // validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
@@ -120,7 +118,7 @@ export default function Form({ clubNames }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("dept", formDeptOption);
+        formData.append("clubName", formDeptOption);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
@@ -230,7 +228,7 @@ export default function Form({ clubNames }) {
                         />
                       </div>
                     </div>
-                    {/* Position */}
+                    {/* Position
                     <div className="m:col-span-1">
                       <label
                         htmlFor="name"
@@ -250,29 +248,29 @@ export default function Form({ clubNames }) {
                           className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         />
                       </div>
-                    </div>
+                    </div> */}
 
-                    {/* Departments */}
+                    {/* Club Name */}
                     <div className="sm:col-span-1">
                       <label
-                        htmlFor="departments"
+                        htmlFor="clubName"
                         className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                       >
                         Club Name
                       </label>
-                      <div className="mt-2 ">
+                      <div className="mt-2">
                         <select
-                          id="departments"
-                          name="departments"
-                          autoComplete="country-name"
-                          value={formDeptOption}
-                          onChange={handleFormDept}
+                          id="clubName"
+                          name="clubName"
+                          autoComplete="clubName"
+                          value={selectedDepartment}
+                          onChange={handleDepartmentChange}
                           className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                           {/* form departments */}
-                          {clubNames.map((item, i) => (
-                            <option value={item._id} key={i * 10}>
-                              {item.name}
+                          {clubName?.map((item, i) => (
+                            <option value={item.clubName} key={i * 10}>
+                              {item.clubName}
                             </option>
                           ))}
                         </select>
@@ -587,8 +585,8 @@ export default function Form({ clubNames }) {
                                 {/* Update Departments */}
                                 <div className="sm:col-span-1">
                                   <label
-                                    htmlFor="departments"
-                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                    htmlFor="clubName"
+                                    className="block mb-4 text-sm text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                                   >
                                     Club Name
                                   </label>
@@ -599,19 +597,18 @@ export default function Form({ clubNames }) {
                                       autoComplete="clubName"
                                       value={selectedDepartment}
                                       onChange={handleDepartmentChange}
-                                      className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                      className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
-                                      {/* <option>Electronics Department</option>
-                                      <option>Computer Department</option>
-                                      <option>Printing Department</option>
-                                      <option>General Department</option>
-                                      <option>Mechanical Department</option>
-                                      <option>Office</option> */}
-                                      {clubNames.map((item, i) => (
-                                        <option value={item.id} key={i * 10}>
-                                          {item.name}
-                                        </option>
-                                      ))}
+                                      {/* form departments */}
+                                      {clubName &&
+                                        clubName.map((item, i) => (
+                                          <option
+                                            value={item.clubName}
+                                            key={i * 10}
+                                          >
+                                            {item.clubName}
+                                          </option>
+                                        ))}
                                     </select>
                                   </div>
                                 </div>

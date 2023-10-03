@@ -18,6 +18,7 @@ export const createData = async (req, res, next) => {
 
     let requests = await req.body;
     if (!tabs.includes(requests.tabs)) {
+      console.log({ Req: requests.tabs });
       res.status(400).json({ status: false, doc: "check the tabs" });
     } else {
       console.log({ req: requests });

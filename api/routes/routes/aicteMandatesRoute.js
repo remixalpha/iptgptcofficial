@@ -9,14 +9,9 @@ import verify from "../controller/verifyToken";
 
 router.get("/", aictemandatesController.getData);
 router.post("/sort", aictemandatesController.getDataOne);
-router.post(
-  "/create",
-  verify,
-  singleImageUploader,
-  aictemandatesController.createData
-);
+router.post("/create", singleImageUploader, aictemandatesController.createData);
 router.post("/put", verify, aictemandatesController.updateData);
-router.post("/del/:id", verify, aictemandatesController.deleteData);
+router.post("/del/:id", aictemandatesController.deleteData);
 // router.post("/:id", aictemandatesController.getParams);
 
 export default router;

@@ -11,8 +11,6 @@ import {
 } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 
-
-
 //backend
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -21,7 +19,6 @@ import {
   image_url,
   postLogin,
 } from "../../../../../../utils/agent";
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

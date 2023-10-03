@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Librarys from "../../../../../assets/images/language-removebg-preview.png";
-import InstructorImage from "../../../../../assets/images/section/Departments/Printing/Staff/Praveen.jpg";
+// import InstructorImage from "../../../../../assets/images/section/Departments/Printing/Staff/Praveen.jpg";
 import { FiChevronRight } from "react-icons/fi";
-
+// Backend
+import { image_url, FetchRequest } from "../../../../../utils/agent";
 const Intro = [
   {
     Title: "Introduction",
@@ -25,17 +26,43 @@ const Organization = [
     Image: Librarys,
   },
 ];
-const OFFICER = [
-  {
-    name: "Praveen",
-    Post: "PROGRAMME OFFICER",
-    imageSrc: InstructorImage,
-    imageAlt: "NSS",
-    href: "#",
-  },
-];
+// const OFFICER = [
+//   {
+//     name: "Praveen",
+//     Post: "PROGRAMME OFFICER",
+//     imageSrc: InstructorImage,
+//     imageAlt: "NSS",
+//     href: "#",
+//   },
+// ];
+
+// Fetching HOD data
 
 export default function Introduction() {
+  const [staffs, setStaffs] = useState([]);
+
+  function fetchStaff() {
+    FetchRequest("/cocu/")
+      .then((res) => {
+        // console.log(res.data);
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+          const nssStaffs = res.data.doc.filter(
+            (item) => item.clubName === "nss"
+          );
+          setStaffs(nssStaffs);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
+
+  useEffect(() => {
+    fetchStaff();
+  }, []);
+
   return (
     <div
       className={
@@ -59,7 +86,7 @@ export default function Introduction() {
             </div>
             <div className="space-y-10 ">
               <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
-                {item.Des}{" "}
+                {item.Des}
               </p>
               <div className="flex flex-row ">
                 <button
@@ -105,15 +132,14 @@ export default function Introduction() {
         ))}
 
         <div>
-          {OFFICER.map((item) => (
+          {staffs.map((item) => (
             <div
-              key={item.name}
+              key={item.id}
               className="group relative ml-[15rem] justify-center items-center top-8 -left-[12rem]  lg:scale-90 scale-95 "
             >
               <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-lg bg-white sm:aspect-h-1  group-hover:scale-105 group-hover:shadow-lg transition-all duration-300">
-                {" "}
                 <img
-                  src={item.imageSrc}
+                  src={`${image_url + item.fileUrl}`}
                   alt={item.imageAlt}
                   className="h-full w-full object-cover object-center"
                 />
@@ -131,7 +157,7 @@ export default function Introduction() {
                 className="mt-1 text-xl text-gray-500"
                 style={{ textAlign: "center" }}
               >
-                {item.Post}
+                PROGRAM OFFICER
               </p>
             </div>
           ))}
@@ -152,7 +178,7 @@ export default function Introduction() {
             <div className="mx-auto grid max-w-[110rem] grid-cols-1 items-center  sm:max-w-[100rem]  sm:grid-cols-1    md:max-w-[110rem]  md:grid-cols-1   lg:max-w-[110rem] lg:grid-cols-2  xl:max-w-[110rem]  xl:grid-cols-2  ">
               <div className="space-y-10 ">
                 <p className="mt-4 text-justify text-gray-900 leading-8 text-xl  py-10 scale-110 sm:px-10 sm:py-10 ">
-                  {item.Des}{" "}
+                  {item.Des}
                 </p>
               </div>
               <div className=" relative  ">
