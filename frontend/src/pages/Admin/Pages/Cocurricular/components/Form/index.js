@@ -36,8 +36,8 @@ export default function Form({ clubName }) {
 
   // Backend
   const [Myfile, setMyfile] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [formDeptOption, setFormDeptOption] = useState("iedc");
+  const options = ["ncc", "asap", "iedc", "nss"];
+  const [selectedDepartment, setSelectedDepartment] = useState("ncc");
 
   // function filterArrayById(deptId) {
   //   console.log(staffs);
@@ -51,9 +51,23 @@ export default function Form({ clubName }) {
     setOpen(true);
   };
 
-  const handleDeleteItem = (itemId) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  };
+  function handleDeleteItem(id) {
+    postLogin(`/cocu/del/${id}`)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          console.log(res.data);
+          window.location.reload();
+        } else {
+          console.log("No response found");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.info("API CALL");
+      });
+  }
 
   // Function to handle upload success
   // const handleUploadSuccess = () => {
@@ -64,11 +78,6 @@ export default function Form({ clubName }) {
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
     console.log({ selectedDepartment: selectedDepartment });
-  };
-
-  const handleFormDept = (e) => {
-    setFormDeptOption(e.target.value);
-    console.log({ Selected: formDeptOption });
   };
 
   // Update the imgHandler function to handle image uploading
@@ -109,7 +118,7 @@ export default function Form({ clubName }) {
 
   return (
     <Formik
-      initialValues={{ name: "" }}
+      initialValues={{ name: "", position: "" }}
       // validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
@@ -118,13 +127,13 @@ export default function Form({ clubName }) {
         for (let value in values) {
           formData.append(value, values[value]);
         }
-        formData.append("clubName", formDeptOption);
+        formData.append("clubName", selectedDepartment);
         Object.values(Myfile).forEach((file) => {
           formData.append("fileUrl", file);
         });
 
         console.log({ formData: formData });
-        postLogin("/staff/create", formData)
+        postLogin("/cocu/create", formData)
           .then(async (res) => {
             console.log({ res: res });
             if (res?.statusText === "Created") {
@@ -169,6 +178,7 @@ export default function Form({ clubName }) {
                         key={fileInputKey}
                         className="sr-only"
                         onChange={imgHandler}
+                        required
                       />
                       <label
                         htmlFor="fileInput"
@@ -249,7 +259,27 @@ export default function Form({ clubName }) {
                         />
                       </div>
                     </div> */}
-
+                    {/* Name */}
+                    <div className="m:col-span-1">
+                      <label
+                        htmlFor="position"
+                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                      >
+                        Position
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="position"
+                          name="position"
+                          type="text"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.position}
+                          autoComplete="name"
+                          className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
                     {/* Club Name */}
                     <div className="sm:col-span-1">
                       <label
@@ -268,9 +298,9 @@ export default function Form({ clubName }) {
                           className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
                           {/* form departments */}
-                          {clubName?.map((item, i) => (
-                            <option value={item.clubName} key={i * 10}>
-                              {item.clubName}
+                          {options?.map((item, i) => (
+                            <option value={item} key={i * 10}>
+                              {item}
                             </option>
                           ))}
                         </select>
@@ -383,10 +413,10 @@ export default function Form({ clubName }) {
                                 alt=""
                               />
                             ) : (
-                              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-300">
+                              <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
-                                  className="h-6 w-6 text-gray-600"
+                                  className="w-6 h-6 text-gray-600"
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
@@ -421,7 +451,7 @@ export default function Form({ clubName }) {
                             </div>
                             <div className=" fixed flex  items-center justify-center text-sm  space-x-[4rem]  mt-10 ">
                               <div className="flex flex-col justify-end cursor-pointer group">
-                                <div
+                                {/* <div
                                   type="button"
                                   className="fixed"
                                   onClick={handleToggleEditDialog}
@@ -434,12 +464,12 @@ export default function Form({ clubName }) {
                                   <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px] font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
                                     Edit
                                   </a>
-                                </div>
+                                </div> */}
                               </div>
                               <div className="flex flex-col justify-end cursor-pointer group">
                                 <div
                                   className="fixed"
-                                  onClick={() => handleDeleteItem(item.id)}
+                                  onClick={() => handleDeleteItem(item._id)}
                                 >
                                   <PiTrashSimpleLight
                                     type="submit"
@@ -461,7 +491,7 @@ export default function Form({ clubName }) {
               </div>
             </div>
           </div>
-
+          {/* 
           <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={setOpen}>
               <Transition.Child
@@ -492,10 +522,10 @@ export default function Form({ clubName }) {
                   >
                     <Dialog.Panel className="flex w-full text-base text-left transition transform md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                       <div className="relative flex items-center w-full px-4 pb-8 overflow-hidden shadow-2xl pt-14 sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                        <div className="fixed inset-0 z-50 flex items-center justify-center  top-8">
+                        <div className="fixed inset-0 z-50 flex items-center justify-center top-8">
                           <div className="p-8 bg-white shadow-lg rounded-xl ">
                             <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-2">
-                              {/* Update Image */}
+                             
                               <div className="flex justify-center col-2 ">
                                 <div className="relative inline-block ">
                                   <input
@@ -503,10 +533,10 @@ export default function Form({ clubName }) {
                                     type="file"
                                     key={fileInputKey}
                                     className="sr-only"
-                                    // onChange={(e) => {
-                                    //   setFileInputKey((prev) => prev + 1);
-                                    //   handleFileChange(e);
-                                    // }}
+                                    onChange={(e) => {
+                                      setFileInputKey((prev) => prev + 1);
+                                      handleFileChange(e);
+                                    }}
                                     onChange={imgHandler}
                                   />
                                   <label
@@ -546,7 +576,7 @@ export default function Form({ clubName }) {
                                 </div>
                               </div>
                               <div className="space-y-10">
-                                {/* Update name */}
+                           
                                 <div className="m:col-span-1">
                                   <label
                                     htmlFor="name"
@@ -564,7 +594,7 @@ export default function Form({ clubName }) {
                                     />
                                   </div>
                                 </div>
-                                {/* Update Position */}
+                        
                                 <div className="m:col-span-1">
                                   <label
                                     htmlFor="name"
@@ -582,7 +612,7 @@ export default function Form({ clubName }) {
                                     />
                                   </div>
                                 </div>
-                                {/* Update Departments */}
+                               
                                 <div className="sm:col-span-1">
                                   <label
                                     htmlFor="clubName"
@@ -599,7 +629,7 @@ export default function Form({ clubName }) {
                                       onChange={handleDepartmentChange}
                                       className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                     >
-                                      {/* form departments */}
+                                      
                                       {clubName &&
                                         clubName.map((item, i) => (
                                           <option
@@ -612,11 +642,11 @@ export default function Form({ clubName }) {
                                     </select>
                                   </div>
                                 </div>
-                                {/* Upload button for update */}
+                            
                                 <button
                                   type="submit"
                                   disabled={isSubmitting}
-                                  className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                                  className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                                 >
                                   <PiUploadSimpleThin
                                     type="submit"
@@ -647,7 +677,7 @@ export default function Form({ clubName }) {
                 </div>
               </div>
             </Dialog>
-          </Transition.Root>
+          </Transition.Root> */}
         </form>
       )}
     </Formik>

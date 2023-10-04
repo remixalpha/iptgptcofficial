@@ -24,3 +24,4 @@ export const departments = [
     name: "Office",
   },
 ];
+

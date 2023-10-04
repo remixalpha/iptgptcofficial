@@ -59,7 +59,7 @@ export default function CoCurricular() {
       <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300  bg-white ">
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed z-50 p-2 text-white scale-150 bg-blue-500 rounded-full cursor-pointer bottom-10 right-10 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />
@@ -67,7 +67,7 @@ export default function CoCurricular() {
         )}
 
         <div className=" mb-[15rem] scale-105 ">
-          <Form clubName={clubName} />
+          <Form />
         </div>
       </div>
     </div>
