@@ -20,7 +20,8 @@ import { image_url, postLogin } from "../../../../../../utils/agent";
 
 export default function Form({ Certificates }) {
   const [open, setOpen] = useState(true);
-
+  const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
+  const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
   //backend
   const [Myfile, setMyfile] = useState([]);
   //For file handling
@@ -125,41 +126,55 @@ export default function Form({ Certificates }) {
         <form onSubmit={handleSubmit}>
           <div className="space-y-12">
             <div className="mt-10 grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] mx-[20rem] px-20 py-28 gap-x-20  ">
-              <div className="">
-                <label
-                  htmlFor="cover-photo"
-                  className="block mb-4 text-sm antialiased tracking-normal font-sans font-normal leading-[1.3] text-gray-900"
-                >
-                  Upload PDF
-                </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              <label
+                htmlFor="file-upload"
+                className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
+              >
+                <div className="flex justify-center px-6 py-20 mt-2 border border-dashed rounded-lg border-gray-900/25">
                   <div className="text-center">
-                    <PhotoIcon
-                      className="mx-auto h-12 w-12 text-gray-300"
-                      aria-hidden="true"
-                    />
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                      <label
-                        htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                      >
-                        <span>Upload a PDF</span>
-                        <input
-                          id="file-upload"
-                          name="file-upload"
-                          type="file"
-                          className="sr-only"
-                          onChange={imgHandler}
-                        />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
+                    {fileSelected ? (
+                      <lord-icon
+                        src="https://cdn.lordicon.com/yqzmiobz.json"
+                        trigger="loop"
+                        delay="1000"
+                        colors="primary:#66ee78"
+                        state="morph-check-in"
+                        style={{ width: "60px", height: "60px" }}
+                      ></lord-icon>
+                    ) : (
+                      <BsFileEarmarkPdf
+                        className="w-12 h-12 mx-auto text-gray-300"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <div className="flex mt-4 text-sm font-medium leading-6 text-gray-600">
+                      {fileSelected ? (
+                        <span>File selected</span>
+                      ) : (
+                        <span>Upload a file</span>
+                      )}
+                      <input
+                        id="file-upload"
+                        name="fileUrl"
+                        type="file"
+                        className="sr-only"
+                        onChange={(event) => {
+                          imgHandler(event);
+                          setFileSelected(true); // Set to true when a file is selected
+                          setSelectedFile(event.target.files[0]); // Save the selected file
+                        }}
+                      />
                     </div>
-                    <p className="text-xs leading-5 text-gray-600">
-                      PDF up to 700MB
-                    </p>
+                    {fileSelected ? (
+                      <p className="text-xs leading-5 text-gray-600"></p>
+                    ) : (
+                      <p className="text-xs leading-5 text-gray-600">
+                        PDF up to 900MB
+                      </p>
+                    )}
                   </div>
                 </div>
-              </div>
+              </label>
 
               <div className="mt-10 grid xl:grid-cols-2 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1  ">
                 {/* name */}
@@ -219,7 +234,7 @@ export default function Form({ Certificates }) {
                       aria-hidden="true"
                     />
                     <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                      Delete
+                      Edit
                     </span>
                   </button>
 
@@ -231,6 +246,8 @@ export default function Form({ Certificates }) {
                     className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                     onClick={() => {
                       resetForm(); // Call resetForm to clear the form fields
+                      setFileSelected(false); // Reset the file selection state
+                      setSelectedFile(null); // Reset the selected file
                     }}
                   >
                     <PiXLight

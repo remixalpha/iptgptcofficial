@@ -63,17 +63,11 @@ export default function Form({ departments }) {
   //   console.log({ FilterArray: filtered });
   // }
 
-  const handleToggleDeleteDialog = () => {
-    setOpen(!open);
-  };
-
+  // Open edit option
   const handleToggleEditDialog = () => {
     setOpen(true);
   };
 
-  const handleDeleteItem = (itemId) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  };
 
   // Function to handle upload success
   const handleUploadSuccess = () => {

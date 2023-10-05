@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+
 //icons
-import { PhotoIcon } from "@heroicons/react/24/solid";
 import {
   PiUploadSimpleThin,
   PiXLight,
@@ -12,22 +12,22 @@ import { AiOutlineLink } from "react-icons/ai";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 // backend
-import { Formik, useFormikContext } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-
 import { image_url, postLogin } from "../../../../../../utils/agent";
-
-const notificationSchema = Yup.object().shape({
-  message: Yup.string().required("Required"),
-});
 
 export default function Form({ Notifications }) {
   const [open, setOpen] = useState(true);
-  const [selectedOption, setSelectedOption] = useState("file");
+  const [selectedOption, setSelectedOption] = useState("file"); // For selection box
   const [values, setFieldValue] = useState([]);
-  console.log({ NOT: Notifications });
+
+  const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
+  const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
+
   //backend
   const [Myfile, setMyfile] = useState([]);
+  console.log({ NOT: Notifications });
+
   //For file handling
   const imgHandler = (event) => {
     setMyfile(event.target.files);
@@ -39,6 +39,12 @@ export default function Form({ Notifications }) {
     setOpen(!open);
   };
 
+  // validation
+  const notificationSchema = Yup.object().shape({
+    message: Yup.string().required("Required"),
+  });
+
+  // Get file name
   function getFileName(fullFileName) {
     // Remove date-time information and "Blank" from the file name
     const fileNameMatch = fullFileName.match(/([^/]+)$/);
@@ -53,6 +59,7 @@ export default function Form({ Notifications }) {
     return fileName;
   }
 
+  // Delete the  notification
   function DeleteNotification(id) {
     postLogin(`/notification/del/${id}`)
       .then((res) => {
@@ -70,6 +77,7 @@ export default function Form({ Notifications }) {
         console.info("API CALL");
       });
   }
+
   return (
     <Formik
       initialValues={{ message: "", link: "", selectedType: "file" }}
@@ -122,7 +130,9 @@ export default function Form({ Notifications }) {
               </div>
               <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-1">
                 <div className="col-1">
+                  {/* Seletion box */}
                   <div className="flex space-x-2 mt-2 relative -top-[2rem] ">
+                    {/* File */}
                     <label
                       htmlFor="file-option"
                       className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer ${
@@ -145,6 +155,7 @@ export default function Form({ Notifications }) {
                       />
                       <BsFileEarmarkPdf />
                     </label>
+                    {/* Link */}
                     <label
                       htmlFor="link-option"
                       className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer  ${
@@ -177,35 +188,55 @@ export default function Form({ Notifications }) {
                   />
 
                   {selectedOption === "file" && (
-                    <div>
+                    <label
+                      htmlFor="file-upload"
+                      className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
+                    >
                       <div className="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg border-gray-900/25">
                         <div className="text-center">
-                          <PhotoIcon
-                            className="w-12 h-12 mx-auto text-gray-300"
-                            aria-hidden="true"
-                          />
-                          <div className="flex mt-4 text-sm leading-6 text-gray-600">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative font-semibold text-black bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                            >
+                          {fileSelected ? (
+                            <lord-icon
+                              src="https://cdn.lordicon.com/yqzmiobz.json"
+                              trigger="loop"
+                              delay="1000"
+                              colors="primary:#66ee78"
+                              state="morph-check-in"
+                              style={{ width: "60px", height: "60px" }}
+                            ></lord-icon>
+                          ) : (
+                            <BsFileEarmarkPdf
+                              className="w-12 h-12 mx-auto text-gray-300"
+                              aria-hidden="true"
+                            />
+                          )}
+                          <div className="flex mt-4 text-sm font-medium leading-6 text-gray-600">
+                            {fileSelected ? (
+                              <span>File selected</span>
+                            ) : (
                               <span>Upload a file</span>
-                              <input
-                                id="file-upload"
-                                name="fileUrl"
-                                type="file"
-                                className="sr-only"
-                                onChange={imgHandler}
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
+                            )}
+                            <input
+                              id="file-upload"
+                              name="fileUrl"
+                              type="file"
+                              className="sr-only"
+                              onChange={(event) => {
+                                imgHandler(event);
+                                setFileSelected(true); // Set to true when a file is selected
+                                setSelectedFile(event.target.files[0]); // Save the selected file
+                              }}
+                            />
                           </div>
-                          <p className="text-xs leading-5 text-gray-600">
-                            PDF up to 700MB
-                          </p>
+                          {fileSelected ? (
+                            <p className="text-xs leading-5 text-gray-600"></p>
+                          ) : (
+                            <p className="text-xs leading-5 text-gray-600">
+                              PDF up to 900MB
+                            </p>
+                          )}
                         </div>
                       </div>
-                    </div>
+                    </label>
                   )}
                 </div>
                 {selectedOption === "link" && (
@@ -236,7 +267,7 @@ export default function Form({ Notifications }) {
             <div className="">
               <div className="col-span-full">
                 <label
-                  htmlFor="about"
+                  htmlFor="message"
                   className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
                 >
                   Notification
@@ -270,7 +301,7 @@ export default function Form({ Notifications }) {
                   aria-hidden="true"
                 />
                 <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                  Delete
+                  Edit
                 </span>
               </button>
               {/* cancel button */}
@@ -280,6 +311,8 @@ export default function Form({ Notifications }) {
                 className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                 onClick={() => {
                   resetForm(); // Call resetForm to clear the form fields
+                  setFileSelected(false); // Reset the file selection state
+                  setSelectedFile(null); // Reset the selected file
                 }}
               >
                 <PiXLight
@@ -324,7 +357,7 @@ export default function Form({ Notifications }) {
                 <div
                   className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
                   style={{ backdropFilter: "blur(10px)" }}
-                  />
+                />
               </Transition.Child>
 
               <div className="fixed inset-0 overflow-hidden">

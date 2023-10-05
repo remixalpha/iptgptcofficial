@@ -11,8 +11,6 @@ import {
 } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
 
-
-
 // Backend
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -28,11 +26,15 @@ export default function Form({ departments }) {
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
+
+  // Image upload and reset state
   const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [SelectedImage, setSelectedImage] = useState(null);
+
   const [staffs, setStaffs] = useState([]);
 
   const [FilteredArray, setFilteredArray] = useState([]);
-  const [items, setItems] = useState([]);
+
   // Success and error messages
   const [isUploadSuccess, setIsUploadSuccess] = useState(false);
 
@@ -42,7 +44,6 @@ export default function Form({ departments }) {
   const [formDeptOption, setFormDeptOption] = useState(
     "64bad26c578e4a044eb886a1"
   );
-  const [EditItem, setEditItem] = useState({});
 
   //
   const handleFileChange = (e) => {
@@ -63,16 +64,9 @@ export default function Form({ departments }) {
     console.log({ FilterArray: filtered });
   }
 
-  const handleToggleDeleteDialog = () => {
-    setOpen(!open);
-  };
-
+  // Open edit option
   const handleToggleEditDialog = () => {
     setOpen(true);
-  };
-
-  const handleDeleteItem = (itemId) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
   // Function to handle upload success
@@ -122,6 +116,7 @@ export default function Form({ departments }) {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
+
   function DeleteStaff(id) {
     postLogin(`/staff/del/${id}`)
       .then((res) => {
@@ -141,7 +136,6 @@ export default function Form({ departments }) {
   }
   useEffect(() => {
     fetchStaff();
-    DeleteStaff();
   }, []);
 
   return (
@@ -205,7 +199,11 @@ export default function Form({ departments }) {
                         type="file"
                         key={fileInputKey}
                         className="sr-only"
-                        onChange={imgHandler}
+                        onChange={(event) => {
+                          imgHandler(event);
+                          setIsImageUploaded(true); // Set to true when a file is selected
+                          setSelectedImage(event.target.files[0]); // Save the selected file
+                        }}
                       />
                       <label
                         htmlFor="fileInput"
@@ -323,6 +321,8 @@ export default function Form({ departments }) {
                         className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                         onClick={() => {
                           resetForm(); // Call resetForm to clear the form fields
+                          setIsImageUploaded(false);
+                          setSelectedImage(null);
                         }}
                       >
                         <PiXLight

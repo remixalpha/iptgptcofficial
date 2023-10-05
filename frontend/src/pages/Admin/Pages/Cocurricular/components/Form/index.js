@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { useEffect, useState } from "react";
 
 //icons
 import { LuEdit2 } from "react-icons/lu";
@@ -30,7 +29,7 @@ export default function Form({ clubName }) {
   const [staffs, setStaffs] = useState([]);
 
   // const [FilteredArray, setFilteredArray] = useState([]);
-  const [items, setItems] = useState([]);
+
   // Success and error messages
   // const [isUploadSuccess, setIsUploadSuccess] = useState(false);
 
@@ -47,11 +46,7 @@ export default function Form({ clubName }) {
   //   console.log({ FilterArray: filtered });
   // }
 
-  const handleToggleEditDialog = () => {
-    setOpen(true);
-  };
-
-  function handleDeleteItem(id) {
+  function DeleteStaff(id) {
     postLogin(`/cocu/del/${id}`)
       .then((res) => {
         if (res.statusText === "OK") {
@@ -469,7 +464,7 @@ export default function Form({ clubName }) {
                               <div className="flex flex-col justify-end cursor-pointer group">
                                 <div
                                   className="fixed"
-                                  onClick={() => handleDeleteItem(item._id)}
+                                  onClick={() => DeleteStaff(item._id)}
                                 >
                                   <PiTrashSimpleLight
                                     type="submit"
