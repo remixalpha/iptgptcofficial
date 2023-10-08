@@ -16,6 +16,10 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { image_url, postLogin } from "../../../../../../utils/agent";
 
+// validation
+const notificationSchema = Yup.object().shape({
+  message: Yup.string().required("Message is Required"),
+});
 export default function Form({ Notifications }) {
   const [open, setOpen] = useState(true);
   const [selectedOption, setSelectedOption] = useState("file"); // For selection box
@@ -23,7 +27,9 @@ export default function Form({ Notifications }) {
 
   const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
   const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
-
+  // view all are submitted
+  const [isContentVisible, setIsContentVisible] = useState(true);
+  const [showTickMark, setShowTickMark] = useState(false);
   //backend
   const [Myfile, setMyfile] = useState([]);
   console.log({ NOT: Notifications });
@@ -38,11 +44,6 @@ export default function Form({ Notifications }) {
   const handleToggleDeleteDialog = () => {
     setOpen(!open);
   };
-
-  // validation
-  const notificationSchema = Yup.object().shape({
-    message: Yup.string().required("Required"),
-  });
 
   // Get file name
   function getFileName(fullFileName) {
@@ -98,9 +99,9 @@ export default function Form({ Notifications }) {
           .then((res) => {
             if (res.statusText === "OK") {
               console.log("created");
-              window.location.reload();
+              // window.location.reload();
             } else {
-              window.location.reload();
+              // window.location.reload();
               console.log("not get response");
             }
           })
@@ -109,6 +110,12 @@ export default function Form({ Notifications }) {
           })
           .finally(() => {
             console.info("API CALL");
+            setIsContentVisible(false);
+            setShowTickMark(true);
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
           });
       }}
     >
@@ -124,221 +131,242 @@ export default function Form({ Notifications }) {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[70rem] space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-200 px-20 py-10 relative -top-6 ">
-            <div className="">
-              <div className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-semibold leading-[1.3] ">
-                Choose option
-              </div>
-              <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-1">
-                <div className="col-1">
-                  {/* Seletion box */}
-                  <div className="flex space-x-2 mt-2 relative -top-[2rem] ">
-                    {/* File */}
-                    <label
-                      htmlFor="file-option"
-                      className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer ${
-                        selectedOption === "file"
-                          ? "text-black ring-2 ring-black ring-offset-2"
-                          : ""
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        id="file-option"
-                        name="option"
-                        value="file"
-                        checked={selectedOption === "file"}
-                        onChange={() => {
-                          setSelectedOption("file");
-                          setFieldValue("selectedType", "file");
-                        }}
-                        className="sr-only"
-                      />
-                      <BsFileEarmarkPdf />
-                    </label>
-                    {/* Link */}
-                    <label
-                      htmlFor="link-option"
-                      className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer  ${
-                        selectedOption === "link"
-                          ? "text-black ring-2 ring-black ring-offset-2"
-                          : ""
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        id="link-option"
-                        name="option"
-                        value="link"
-                        checked={selectedOption === "link"}
-                        onChange={() => {
-                          setSelectedOption("link");
-                          setFieldValue("selectedType", "link");
-                        }}
-                        className="sr-only"
-                      />
-                      <AiOutlineLink />
-                    </label>
+            {isContentVisible ? (
+              <div className="flex flex-col space-y-10 ">
+                {/* File or link */}
+                <div className="">
+                  <div className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-semibold leading-[1.3] ">
+                    Choose option
                   </div>
+                  <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-1">
+                    <div className="col-1">
+                      {/* Seletion box */}
+                      <div className="flex space-x-2 mt-2 relative -top-[2rem] ">
+                        {/* File */}
+                        <label
+                          htmlFor="file-option"
+                          className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer ${
+                            selectedOption === "file"
+                              ? "text-black ring-2 ring-black ring-offset-2"
+                              : ""
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            id="file-option"
+                            name="option"
+                            value="file"
+                            checked={selectedOption === "file"}
+                            onChange={() => {
+                              setSelectedOption("file");
+                              setFieldValue("selectedType", "file");
+                            }}
+                            className="sr-only"
+                          />
+                          <BsFileEarmarkPdf />
+                        </label>
+                        {/* Link */}
+                        <label
+                          htmlFor="link-option"
+                          className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer  ${
+                            selectedOption === "link"
+                              ? "text-black ring-2 ring-black ring-offset-2"
+                              : ""
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            id="link-option"
+                            name="option"
+                            value="link"
+                            checked={selectedOption === "link"}
+                            onChange={() => {
+                              setSelectedOption("link");
+                              setFieldValue("selectedType", "link");
+                            }}
+                            className="sr-only"
+                          />
+                          <AiOutlineLink />
+                        </label>
+                      </div>
 
-                  <input
-                    type="hidden"
-                    id="selectedType"
-                    name="selectedType"
-                    value={values.selectedType}
-                  />
+                      <input
+                        type="hidden"
+                        id="selectedType"
+                        name="selectedType"
+                        value={values.selectedType}
+                      />
 
-                  {selectedOption === "file" && (
-                    <label
-                      htmlFor="file-upload"
-                      className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
-                    >
-                      <div className="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg border-gray-900/25">
-                        <div className="text-center">
-                          {fileSelected ? (
-                            <lord-icon
-                              src="https://cdn.lordicon.com/yqzmiobz.json"
-                              trigger="loop"
-                              delay="1000"
-                              colors="primary:#66ee78"
-                              state="morph-check-in"
-                              style={{ width: "60px", height: "60px" }}
-                            ></lord-icon>
-                          ) : (
-                            <BsFileEarmarkPdf
-                              className="w-12 h-12 mx-auto text-gray-300"
-                              aria-hidden="true"
-                            />
-                          )}
-                          <div className="flex mt-4 text-sm font-medium leading-6 text-gray-600">
-                            {fileSelected ? (
-                              <span>File selected</span>
-                            ) : (
-                              <span>Upload a file</span>
-                            )}
-                            <input
-                              id="file-upload"
-                              name="fileUrl"
-                              type="file"
-                              className="sr-only"
-                              onChange={(event) => {
-                                imgHandler(event);
-                                setFileSelected(true); // Set to true when a file is selected
-                                setSelectedFile(event.target.files[0]); // Save the selected file
-                              }}
-                            />
+                      {selectedOption === "file" && (
+                        <label
+                          htmlFor="file-upload"
+                          className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
+                        >
+                          <div className="flex justify-center px-6 py-10 mt-2 border border-dashed rounded-lg border-gray-900/25">
+                            <div className="text-center">
+                              {fileSelected ? (
+                                <lord-icon
+                                  src="https://cdn.lordicon.com/yqzmiobz.json"
+                                  trigger="loop"
+                                  delay="1000"
+                                  colors="primary:#66ee78"
+                                  state="morph-check-in"
+                                  style={{ width: "60px", height: "60px" }}
+                                ></lord-icon>
+                              ) : (
+                                <BsFileEarmarkPdf
+                                  className="w-12 h-12 mx-auto text-gray-800"
+                                  aria-hidden="true"
+                                />
+                              )}
+                              <div className="flex mt-4 text-sm font-medium leading-6 text-gray-600">
+                                {fileSelected ? (
+                                  <span>File selected</span>
+                                ) : (
+                                  <span>Upload a file</span>
+                                )}
+                                <input
+                                  id="file-upload"
+                                  name="fileUrl"
+                                  type="file"
+                                  className="sr-only"
+                                  onChange={(event) => {
+                                    imgHandler(event);
+                                    setFileSelected(true); // Set to true when a file is selected
+                                    setSelectedFile(event.target.files[0]); // Save the selected file
+                                  }}
+                                />
+                              </div>
+                              {fileSelected ? (
+                                <p className="text-xs leading-5 text-gray-600"></p>
+                              ) : (
+                                <p className="text-xs leading-5 text-gray-600">
+                                  PDF up to 900MB
+                                </p>
+                              )}
+                            </div>
                           </div>
-                          {fileSelected ? (
-                            <p className="text-xs leading-5 text-gray-600"></p>
-                          ) : (
-                            <p className="text-xs leading-5 text-gray-600">
-                              PDF up to 900MB
-                            </p>
-                          )}
+                        </label>
+                      )}
+                    </div>
+                    {selectedOption === "link" && (
+                      <div className="">
+                        <label
+                          htmlFor="link"
+                          className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
+                        >
+                          Paste the Link
+                        </label>
+                        <div className="mt-2">
+                          <input
+                            id="link"
+                            name="link"
+                            type="link"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.link}
+                            autoComplete="link"
+                            className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                          />
                         </div>
                       </div>
-                    </label>
-                  )}
-                </div>
-                {selectedOption === "link" && (
-                  <div className="">
-                    <label
-                      htmlFor="link"
-                      className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
-                    >
-                      Paste the Link
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="link"
-                        name="link"
-                        type="link"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.link}
-                        autoComplete="link"
-                        className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
-                      />
-                    </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
+                {/* Notification */}
+                <div className="col-span-full">
+                  <label
+                    htmlFor="message"
+                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
+                  >
+                    Notification
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="message"
+                      name="message"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.message}
+                      placeholder="Enter the notification message here"
+                      rows={3}
+                      className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                    />
+                    {errors.message && touched.message && (
+                      <div className="error text-red-500 text-sm font-normal mt-1">
+                        {errors.message}
+                      </div>
+                    )}
+                  </div>
+                </div>
 
-            <div className="">
-              <div className="col-span-full">
-                <label
-                  htmlFor="message"
-                  className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
-                >
-                  Notification
-                </label>
-                <div className="mt-2">
-                  <textarea
-                    id="message"
-                    name="message"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.message}
-                    placeholder="Enter the notification message here"
-                    rows={3}
-                    className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                  />
+                {/* buttons */}
+                <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 ">
+                  {/* Delete button */}
+                  <button
+                    type="button"
+                    // disabled={isSubmitting}
+                    onClick={handleToggleDeleteDialog}
+                    className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                  >
+                    <PiTrashSimpleLight
+                      type="submit"
+                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                      aria-hidden="true"
+                    />
+                    <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                      Edit
+                    </span>
+                  </button>
+                  {/* cancel button */}
+                  <button
+                    type="button"
+                    // disabled={isSubmitting}
+                    className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                    onClick={() => {
+                      resetForm(); // Call resetForm to clear the form fields
+                      setFileSelected(false); // Reset the file selection state
+                      setSelectedFile(null); // Reset the selected file
+                    }}
+                  >
+                    <PiXLight
+                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                      aria-hidden="true"
+                    />
+                    <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
+                      Cancel
+                    </span>
+                  </button>
+                  {/* Upload button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
+                  >
+                    <PiUploadSimpleThin
+                      type="submit"
+                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                      aria-hidden="true"
+                    />
+                    <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                      Upload
+                    </span>
+                  </button>
                 </div>
               </div>
-            </div>
-            {/* buttons */}
-            <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 ">
-              {/* Delete button */}
-              <button
-                type="button"
-                // disabled={isSubmitting}
-                onClick={handleToggleDeleteDialog}
-                className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
-              >
-                <PiTrashSimpleLight
-                  type="submit"
-                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
-                  aria-hidden="true"
-                />
-                <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                  Edit
-                </span>
-              </button>
-              {/* cancel button */}
-              <button
-                type="button"
-                disabled={isSubmitting}
-                className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
-                onClick={() => {
-                  resetForm(); // Call resetForm to clear the form fields
-                  setFileSelected(false); // Reset the file selection state
-                  setSelectedFile(null); // Reset the selected file
-                }}
-              >
-                <PiXLight
-                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
-                  aria-hidden="true"
-                />
-                <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
-                  Cancel
-                </span>
-              </button>
-              {/* Upload button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
-              >
-                <PiUploadSimpleThin
-                  type="submit"
-                  className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
-                  aria-hidden="true"
-                />
-                <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                  Upload
-                </span>
-              </button>
-            </div>
+            ) : showTickMark ? (
+              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+                <lord-icon
+                  src="https://cdn.lordicon.com/yqzmiobz.json"
+                  trigger="loop"
+                  delay="1000"
+                  colors="primary:#66ee78"
+                  state="morph-check-in"
+                  style={{ width: "100px", height: "100px" }}
+                ></lord-icon>
+                <span className="mt-2">Uploaded Successful </span>
+              </div>
+            ) : null}
           </div>
 
           {/* sideForm */}

@@ -65,7 +65,7 @@ export default function Hod() {
         )}
         {/* Circles with opacity */}
 
-        <div className=" mb-[15rem] scale-105 ">
+        <div className="scale-105 min-h-screen">
           <Form departments={departments} />
         </div>
       </div>

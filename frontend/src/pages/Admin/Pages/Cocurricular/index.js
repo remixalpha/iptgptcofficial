@@ -66,7 +66,7 @@ export default function CoCurricular() {
           </div>
         )}
 
-        <div className=" mb-[15rem] scale-105 ">
+        <div className="scale-105 min-h-screen">
           <Form />
         </div>
       </div>

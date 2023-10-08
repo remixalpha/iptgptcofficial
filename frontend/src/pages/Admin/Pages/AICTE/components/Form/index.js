@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 //icons
-import { PhotoIcon } from "@heroicons/react/24/solid";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiOutlineLink } from "react-icons/ai";
 import {
@@ -18,10 +17,19 @@ import * as Yup from "yup";
 
 import { image_url, postLogin } from "../../../../../../utils/agent";
 
+// Validation
+const notificationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  year: Yup.string().required("Year is required"),
+});
+
 export default function Form({ Certificates }) {
   const [open, setOpen] = useState(true);
   const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
   const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
+  // view all are submitted
+  const [isContentVisible, setIsContentVisible] = useState(true);
+  const [showTickMark, setShowTickMark] = useState(false);
   //backend
   const [Myfile, setMyfile] = useState([]);
   //For file handling
@@ -60,6 +68,7 @@ export default function Form({ Certificates }) {
     return fileName;
   }
 
+  // Deleting Certificate data
   function DeleteCertificate(id) {
     postLogin(`/aicte/del/${id}`)
       .then((res) => {
@@ -81,7 +90,7 @@ export default function Form({ Certificates }) {
   return (
     <Formik
       initialValues={{ name: "", year: "" }}
-      // validationSchema={notificationSchema}
+      validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
         const formData = new FormData();
@@ -99,9 +108,9 @@ export default function Form({ Certificates }) {
           .then((res) => {
             if (res.statusText === "Created") {
               console.log("created");
-              window.location.reload();
+              // window.location.reload();
             } else {
-              window.location.reload();
+              // window.location.reload();
               console.log("not get response");
             }
           })
@@ -110,6 +119,12 @@ export default function Form({ Certificates }) {
           })
           .finally(() => {
             console.info("API CALL");
+            setIsContentVisible(false);
+            setShowTickMark(true);
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
           });
       }}
     >
@@ -124,158 +139,182 @@ export default function Form({ Certificates }) {
         resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
-          <div className="space-y-12">
-            <div className="mt-10 grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] mx-[20rem] px-20 py-28 gap-x-20  ">
-              <label
-                htmlFor="file-upload"
-                className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
-              >
-                <div className="flex justify-center px-6 py-20 mt-2 border border-dashed rounded-lg border-gray-900/25">
-                  <div className="text-center">
-                    {fileSelected ? (
-                      <lord-icon
-                        src="https://cdn.lordicon.com/yqzmiobz.json"
-                        trigger="loop"
-                        delay="1000"
-                        colors="primary:#66ee78"
-                        state="morph-check-in"
-                        style={{ width: "60px", height: "60px" }}
-                      ></lord-icon>
-                    ) : (
-                      <BsFileEarmarkPdf
-                        className="w-12 h-12 mx-auto text-gray-300"
+          <div className="mt-10  shadow-lg rounded-3xl bg-white border border-gray-300 relative  mx-[20rem] px-20 py-28   ">
+            {isContentVisible ? (
+              <div className="grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 gap-x-20">
+                <label
+                  htmlFor="file-upload"
+                  className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
+                >
+                  <div className="flex justify-center px-6 py-20 mt-2 border border-dashed rounded-lg border-gray-900/25">
+                    <div className="text-center">
+                      {fileSelected ? (
+                        <lord-icon
+                          src="https://cdn.lordicon.com/yqzmiobz.json"
+                          trigger="loop"
+                          delay="1000"
+                          colors="primary:#66ee78"
+                          state="morph-check-in"
+                          style={{ width: "60px", height: "60px" }}
+                        ></lord-icon>
+                      ) : (
+                        <BsFileEarmarkPdf
+                          className="w-12 h-12 mx-auto text-gray-800"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <div className="flex mt-4 text-sm font-medium leading-6 text-gray-600">
+                        {fileSelected ? (
+                          <span>File selected</span>
+                        ) : (
+                          <span>Upload a file</span>
+                        )}
+                        <input
+                          id="file-upload"
+                          name="fileUrl"
+                          type="file"
+                          className="sr-only"
+                          onChange={(event) => {
+                            imgHandler(event);
+                            setFileSelected(true); // Set to true when a file is selected
+                            setSelectedFile(event.target.files[0]); // Save the selected file
+                          }}
+                        />
+                      </div>
+                      {fileSelected ? (
+                        <p className="text-xs leading-5 text-gray-600"></p>
+                      ) : (
+                        <p className="text-xs leading-5 text-gray-600">
+                          PDF up to 900MB
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </label>
+
+                <div className="mt-10 grid xl:grid-cols-2 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1  ">
+                  {/* name */}
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="name"
+                      className="block mb-4 text-sm antialiased tracking-normal font-sans font-normal leading-[1.3] text-gray-900"
+                    >
+                      Name
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.name}
+                        autoComplete="given-name"
+                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                      />
+                      {errors.name && touched.name && (
+                        <div className="error text-red-500 text-sm font-normal mt-1">
+                          {errors.name}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {/* year */}
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="year"
+                      className="block mb-4 text-sm antialiased tracking-normal font-sans font-normal leading-[1.3] text-gray-900"
+                    >
+                      Year
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        name="year"
+                        id="year"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.year}
+                        autoComplete="given-year"
+                        className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                      />
+                      {errors.year && touched.year && (
+                        <div className="error text-red-500 text-sm font-normal mt-1">
+                          {errors.year}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {/* buttons */}
+                  <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] left-[7rem] ">
+                    {/* Delete button */}
+                    <button
+                      type="button"
+                      // disabled={isSubmitting}
+                      onClick={handleToggleDeleteDialog}
+                      className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                    >
+                      <PiTrashSimpleLight
+                        type="submit"
+                        className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                         aria-hidden="true"
                       />
-                    )}
-                    <div className="flex mt-4 text-sm font-medium leading-6 text-gray-600">
-                      {fileSelected ? (
-                        <span>File selected</span>
-                      ) : (
-                        <span>Upload a file</span>
-                      )}
-                      <input
-                        id="file-upload"
-                        name="fileUrl"
-                        type="file"
-                        className="sr-only"
-                        onChange={(event) => {
-                          imgHandler(event);
-                          setFileSelected(true); // Set to true when a file is selected
-                          setSelectedFile(event.target.files[0]); // Save the selected file
-                        }}
+                      <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        Edit
+                      </span>
+                    </button>
+
+                    {/* cancel button */}
+
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                      onClick={() => {
+                        resetForm(); // Call resetForm to clear the form fields
+                        setFileSelected(false); // Reset the file selection state
+                        setSelectedFile(null); // Reset the selected file
+                      }}
+                    >
+                      <PiXLight
+                        className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                        aria-hidden="true"
                       />
-                    </div>
-                    {fileSelected ? (
-                      <p className="text-xs leading-5 text-gray-600"></p>
-                    ) : (
-                      <p className="text-xs leading-5 text-gray-600">
-                        PDF up to 900MB
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </label>
-
-              <div className="mt-10 grid xl:grid-cols-2 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1  ">
-                {/* name */}
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="first-name"
-                    className="block mb-4 text-sm antialiased tracking-normal font-sans font-normal leading-[1.3] text-gray-900"
-                  >
-                    Name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.name}
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                {/* year */}
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="first-name"
-                    className="block mb-4 text-sm antialiased tracking-normal font-sans font-normal leading-[1.3] text-gray-900"
-                  >
-                    Year
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="year"
-                      id="year"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.year}
-                      autoComplete="given-year"
-                      className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                {/* buttons */}
-                <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] left-[7rem] ">
-                  {/* Delete button */}
-                  <button
-                    type="button"
-                    // disabled={isSubmitting}
-                    onClick={handleToggleDeleteDialog}
-                    className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
-                  >
-                    <PiTrashSimpleLight
+                      <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
+                        Cancel
+                      </span>
+                    </button>
+                    {/* Upload button */}
+                    <button
                       type="submit"
-                      className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
-                      aria-hidden="true"
-                    />
-                    <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                      Edit
-                    </span>
-                  </button>
-
-                  {/* cancel button */}
-
-                  <button
-                    type="button"
-                    disabled={isSubmitting}
-                    className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
-                    onClick={() => {
-                      resetForm(); // Call resetForm to clear the form fields
-                      setFileSelected(false); // Reset the file selection state
-                      setSelectedFile(null); // Reset the selected file
-                    }}
-                  >
-                    <PiXLight
-                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
-                      aria-hidden="true"
-                    />
-                    <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
-                      Cancel
-                    </span>
-                  </button>
-                  {/* Upload button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
-                  >
-                    <PiUploadSimpleThin
-                      type="submit"
-                      className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
-                      aria-hidden="true"
-                    />
-                    <span className=" relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                      Upload
-                    </span>
-                  </button>
+                      disabled={isSubmitting}
+                      className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                    >
+                      <PiUploadSimpleThin
+                        type="submit"
+                        className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                        aria-hidden="true"
+                      />
+                      <span className=" relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                        Upload
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : showTickMark ? (
+              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+                <lord-icon
+                  src="https://cdn.lordicon.com/yqzmiobz.json"
+                  trigger="loop"
+                  delay="1000"
+                  colors="primary:#66ee78"
+                  state="morph-check-in"
+                  style={{ width: "100px", height: "100px" }}
+                ></lord-icon>
+                <span className="mt-2">Uploaded Successful </span>
+              </div>
+            ) : null}
           </div>
 
           {/* sideForm */}

@@ -61,7 +61,7 @@ export default function Principal() {
         )}
         {/* Circles with opacity */}
 
-        <div className=" mb-[10rem] scale-105 ">
+        <div className=" scale-105 min-h-screen ">
           <Form Principals={Principals} />
         </div>
       </div>

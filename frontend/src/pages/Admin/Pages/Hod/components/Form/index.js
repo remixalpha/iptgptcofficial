@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Menu, Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 
 //icons
 import { LuEdit2 } from "react-icons/lu";
@@ -9,7 +9,7 @@ import {
   PiXLight,
   PiTrashSimpleLight,
 } from "react-icons/pi";
-import { IoImageOutline } from "react-icons/io5";
+import { BiImageAdd } from "react-icons/bi";
 
 //backend
 import { Formik } from "formik";
@@ -24,20 +24,29 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+// Validation
+const notificationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  Qualification: Yup.string().required("Qualification is required"),
+  departments: Yup.string().required("Department is required"),
+});
+
 export default function Form({ departments }) {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
+  // Form submit for image is selected or not validation
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  // Image upload and reset state
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [hods, setHods] = useState([]);
-
-  // const [FilteredArray, setFilteredArray] = useState([]);
-  const [items, setItems] = useState([]);
-  // Success and error messages
-  const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+  const [SelectedImage, setSelectedImage] = useState(null);
+  // view all are submitted
+  const [isContentVisible, setIsContentVisible] = useState(true);
+  const [showTickMark, setShowTickMark] = useState(false);
 
   // Backend
+  const [hods, setHods] = useState([]);
   const [Myfile, setMyfile] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [formDeptOption, setFormDeptOption] = useState(
@@ -45,15 +54,15 @@ export default function Form({ departments }) {
   );
 
   //
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImage(reader.result);
-      setIsImageUploaded(true);
-    };
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     setImage(reader.result);
+  //     setIsImageUploaded(true);
+  //   };
+  // };
   //filter the department and show it in the uploaded part
   // function filterArrayById(deptId) {
   //   console.log(hods);
@@ -66,12 +75,6 @@ export default function Form({ departments }) {
   // Open edit option
   const handleToggleEditDialog = () => {
     setOpen(true);
-  };
-
-
-  // Function to handle upload success
-  const handleUploadSuccess = () => {
-    setIsUploadSuccess(true);
   };
 
   // Backend
@@ -116,6 +119,8 @@ export default function Form({ departments }) {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
+
+  // Deleting HOD data
   function DeleteHod(id) {
     postLogin(`/hod/del/${id}`)
       .then((res) => {
@@ -139,8 +144,12 @@ export default function Form({ departments }) {
 
   return (
     <Formik
-      initialValues={{ name: "", Qualification: "" }}
-      // validationSchema={notificationSchema}
+      initialValues={{
+        name: "",
+        Qualification: "",
+        departments: formDeptOption,
+      }}
+      validationSchema={notificationSchema}
       onSubmit={(values) => {
         console.log({ values: values });
         const formData = new FormData();
@@ -156,10 +165,11 @@ export default function Form({ departments }) {
         console.log({ formData: formData });
         postLogin("/hod/create", formData)
           .then(async (res) => {
-            if (res?.statusText === "OK") {
+            if (res.statusText === "OK") {
+              console.log({ res: res });
+              console.log("created");
               // console.log(res.data);
-              handleUploadSuccess();
-              window.location.reload();
+              // window.location.reload();
             } else {
               console.log("not get response");
             }
@@ -169,6 +179,12 @@ export default function Form({ departments }) {
           })
           .finally(() => {
             console.info("API CALL");
+            setIsContentVisible(false);
+            setShowTickMark(true);
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
           });
       }}
     >
@@ -184,176 +200,197 @@ export default function Form({ departments }) {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="xl:w-[110rem] px-20 py-20 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl  bg-white border border-gray-200 relative -top-[2rem] ">
-            <div className="grid items-center grid-cols-2 gap-y-8 ">
-              {/* photo and name and Qualification, department */}
-              {isEdit ? (
-                <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
-                  {/* imageUpload */}
-                  <div className="flex justify-center cursor-pointer col-2 ">
-                    <div className="relative inline-block ">
-                      <input
-                        id="fileInput"
-                        name="fileUrl"
-                        type="file"
-                        key={fileInputKey}
-                        className="sr-only"
-                        onChange={imgHandler}
-                      />
-                      <label
-                        htmlFor="fileInput"
-                        className="relative flex items-center justify-center border-2 border-gray-400 border-dashed cursor-pointer w-96 h-96 rounded-xl"
-                      >
-                        {isImageUploaded ? (
-                          <img
-                            className="object-cover w-full h-full rounded-xl"
-                            alt="Uploaded"
-                            src={image}
-                          />
-                        ) : (
-                          <div className="flex flex-col items-center">
-                            <IoImageOutline
-                              className="w-1/2 mb-2 text-gray-300 h-1/2 "
-                              src=""
-                              alt="Placeholder"
+            {isContentVisible ? (
+              <div className="grid items-center grid-cols-2 gap-y-8 ">
+                {/* photo and name and Qualification, department */}
+                {isEdit ? (
+                  <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
+                    {/* imageUpload */}
+                    <div className="flex justify-center cursor-pointer col-2 ">
+                      <div className="relative inline-block ">
+                        <input
+                          id="fileInput"
+                          name="fileUrl"
+                          type="file"
+                          key={fileInputKey}
+                          className="sr-only"
+                          onChange={(event) => {
+                            imgHandler(event);
+                            setIsImageUploaded(true); // Set to true when a file is selected
+                            setSelectedImage(event.target.files[0]); // Save the selected file
+                          }}
+                        />
+                        <label
+                          htmlFor="fileInput"
+                          className="relative flex items-center justify-center border-2 border-gray-400 border-dashed cursor-pointer w-96 h-96 rounded-xl"
+                        >
+                          {isImageUploaded ? (
+                            <img
+                              className="object-cover w-full h-full rounded-xl"
+                              alt="Uploaded"
+                              src={image}
                             />
-                            <span className="text-gray-500">
-                              Upload an image
-                            </span>
+                          ) : (
+                            <div className="flex flex-col items-center">
+                              <BiImageAdd
+                                className="w-1/2 mb-2 text-gray-800 h-1/2 "
+                                src=""
+                                alt="Placeholder"
+                              />
+                              <span className="text-gray-500">
+                                Upload an image
+                              </span>
+                            </div>
+                          )}
+                        </label>
+                        <label
+                          htmlFor="fileInput"
+                          className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                        >
+                          <div className="flex flex-col justify-end ">
+                            <LuEdit2
+                              className="w-10 h-10 p-1 text-black "
+                              aria-hidden="true"
+                            />
                           </div>
-                        )}
-                      </label>
-                      <label
-                        htmlFor="fileInput"
-                        className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
-                      >
-                        <div className="flex flex-col justify-end ">
-                          <LuEdit2
-                            className="w-10 h-10 p-1 text-navy-900 "
+                        </label>
+                      </div>
+                    </div>
+                    {!isImageUploaded && isFormSubmitted && (
+                      <div className="fixed text-red-500 font-normal bottom-28 ">
+                        Please upload an image.
+                      </div>
+                    )}
+                    <div className="space-y-10">
+                      {/* Name */}
+                      <div className="m:col-span-1">
+                        <label
+                          htmlFor="name"
+                          className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        >
+                          Name
+                        </label>
+                        <div className="mt-2 cursor-pointer ">
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                            autoComplete="name"
+                            className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                          />
+                          {errors.name && touched.name && (
+                            <div className="error text-red-500 font-normal mt-1">
+                              {errors.name}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {/* Qualification */}
+                      <div className="m:col-span-1">
+                        <label
+                          htmlFor="Qualification"
+                          className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        >
+                          Qualification
+                        </label>
+                        <div className="mt-2 cursor-pointer">
+                          <input
+                            type="text"
+                            id="Qualification"
+                            name="Qualification"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.Qualification}
+                            autoComplete="Qualification"
+                            className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                          />
+                          {errors.Qualification && touched.Qualification && (
+                            <div className="error text-red-500 font-normal mt-1">
+                              {errors.Qualification}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {/* Departments */}
+                      <div className="sm:col-span-1">
+                        <label
+                          htmlFor="departments"
+                          className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
+                        >
+                          Departments
+                        </label>
+                        <div className="mt-2 ">
+                          <select
+                            id="departments"
+                            name="departments"
+                            autoComplete="departmentss"
+                            value={values.departments}
+                            onChange={handleFormDept}
+                            className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                          >
+                            {/* form departments */}
+                            {departments.map((item, i) => (
+                              <option value={item._id} key={i * 10}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.departments && touched.departments && (
+                            <div className="error text-red-500 font-normal mt-1">
+                              {errors.departments}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {/* buttons */}
+                      <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] ">
+                        {/* cancel button */}
+                        <button
+                          type="button"
+                          className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
+                          onClick={() => {
+                            resetForm(); // Call resetForm to clear the form fields
+                            setIsImageUploaded(false);
+                            setSelectedImage(null);
+                            setIsFormSubmitted(false);
+                          }}
+                        >
+                          <PiXLight
+                            className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                             aria-hidden="true"
                           />
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="space-y-10">
-                    {/* Name */}
-                    <div className="m:col-span-1">
-                      <label
-                        htmlFor="name"
-                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
-                      >
-                        Name
-                      </label>
-                      <div className="mt-2 cursor-pointer ">
-                        <input
-                          id="name"
-                          name="name"
-                          type="text"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.name}
-                          autoComplete="name"
-                          className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-                    {/* Qualification */}
-                    <div className="m:col-span-1">
-                      <label
-                        htmlFor="name"
-                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
-                      >
-                        Qualification
-                      </label>
-                      <div className="mt-2 cursor-pointer">
-                        <input
-                          id="Qualification"
-                          name="Qualification"
-                          type="text"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.Qualification}
-                          autoComplete="name"
-                          className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </div>
-                    {/* Departments */}
-                    <div className="sm:col-span-1">
-                      <label
-                        htmlFor="departments"
-                        className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
-                      >
-                        Departments
-                      </label>
-                      <div className="mt-2 ">
-                        <select
-                          id="departments"
-                          name="departments"
-                          autoComplete="country-name"
-                          value={formDeptOption}
-                          onChange={handleFormDept}
-                          className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                          <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
+                            Cancel
+                          </span>
+                        </button>
+                        {/* Upload button */}
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          onClick={() => {
+                            setIsFormSubmitted(true);
+                          }}
+                          className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                         >
-                          {/* form departments */}
-                          {departments.map((item, i) => (
-                            <option value={item._id} key={i * 10}>
-                              {item.name}
-                            </option>
-                          ))}
-                        </select>
+                          <PiUploadSimpleThin
+                            className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
+                            aria-hidden="true"
+                          />
+                          <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
+                            Update
+                          </span>
+                        </button>
                       </div>
                     </div>
-                    {/* buttons */}
-                    <div className=" flex items-center justify-end gap-x-6 relative top-[2rem] ">
-                      {/* cancel button */}
-
-                      <button
-                        type="button"
-                        disabled={isSubmitting}
-                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
-                        onClick={() => {
-                          resetForm(); // Call resetForm to clear the form fields
-                        }}
-                      >
-                        <PiXLight
-                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
-                          aria-hidden="true"
-                        />
-                        <span className="relative antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3]">
-                          Cancel
-                        </span>
-                      </button>
-                      {/* Upload button */}
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
-                      >
-                        <PiUploadSimpleThin
-                          className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1 "
-                          aria-hidden="true"
-                        />
-                        <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
-                          Update
-                        </span>
-                      </button>
-                    </div>
                   </div>
-                  {isUploadSuccess && (
-                    <div className="px-4 py-2 mt-4 text-green-700 bg-green-100 border border-green-400 rounded ">
-                      Data uploaded successfully!{" "}
-                      <button onClick={() => window.location.reload()}>
-                        OK
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : null}
+                ) : null}
 
-              {/* all ready uploaded */}
-              <div>
-                {/* <Menu
+                {/* all ready uploaded */}
+                <div>
+                  {/* <Menu
                   as="div"
                   className="relative inline-block text-left -right-[37rem] "
                 >
@@ -403,101 +440,114 @@ export default function Form({ departments }) {
                     </Menu.Items>
                   </Transition>
                 </Menu> */}
-                <div className="max-h-[400px] overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
-                  <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
-                    {hods.map((item) => (
-                      <li
-                        key={item.id}
-                        className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
-                      >
-                        <div className="flex items-center space-x-4">
-                          {/* Dp */}
-                          <div className="flex-shrink-0">
-                            {item.fileUrl ? (
-                              <img
-                                className="object-cover w-12 h-12 rounded-full"
-                                src={`${image_url + item.fileUrl}`}
-                                alt=""
-                              />
-                            ) : (
-                              <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="w-6 h-6 text-gray-600"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M12 4a4 4 0 100 8 4 4 0 000-8z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M20 10v2a8 8 0 01-8 8h0a8 8 0 01-8-8v-2"
-                                  />
-                                </svg>
-                              </div>
-                            )}
-                          </div>
-                          <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
-                            <div className="justify-between flex-1">
-                              <p className="text-[20px] font-bold text-gray-900">
-                                {item.name}
-                              </p>
-                              <p className="text-sm font-medium text-gray-700 truncate ">
-                                {item.department}
-                              </p>
-                              <p className="text-sm font-medium text-gray-700 truncate ">
-                                {item.Qualification}
-                              </p>
+                  <div className="max-h-[400px] overflow-hidden  hover:overflow-scroll hover:overflow-x-hidden ml-[4rem] mt-5 max-w-2xl p-4  ">
+                    <ul className=" space-y-6  ml-[4rem]  max-w-lg max-h-screen  ">
+                      {hods.map((item) => (
+                        <li
+                          key={item.id}
+                          className="px-4 py-5 pb-3 transition-all duration-300 scale-100 border border-gray-400 rounded-xl hover:shadow-md sm:pb-4"
+                        >
+                          <div className="flex items-center space-x-4">
+                            {/* Dp */}
+                            <div className="flex-shrink-0">
+                              {item.fileUrl ? (
+                                <img
+                                  className="object-cover w-12 h-12 rounded-full"
+                                  src={`${image_url + item.fileUrl}`}
+                                  alt=""
+                                />
+                              ) : (
+                                <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6 text-gray-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M12 4a4 4 0 100 8 4 4 0 000-8z"
+                                    />
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M20 10v2a8 8 0 01-8 8h0a8 8 0 01-8-8v-2"
+                                    />
+                                  </svg>
+                                </div>
+                              )}
                             </div>
-                            <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
-                              <div className="flex flex-col justify-end cursor-pointer group">
-                                <button
-                                  type="button"
-                                  className="fixed"
-                                  onClick={handleToggleEditDialog}
-                                >
-                                  <LuEdit2
+                            <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
+                              <div className="justify-between flex-1">
+                                <p className="text-[20px] font-bold text-gray-900 capitalize">
+                                  {item.name}
+                                </p>
+                                <p className="text-sm font-medium text-gray-700 truncate capitalize">
+                                  {item.Qualification}
+                                </p>
+                                {/* <p className="text-sm font-medium text-gray-700 truncate ">
+                                  {item.department}
+                                </p> */}
+                              </div>
+                              <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
+                                <div className="flex flex-col justify-end cursor-pointer group">
+                                  <button
                                     type="button"
-                                    className="w-6 h-6 p-1 text-gray-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
-                                    aria-hidden="true"
-                                  />
-                                  <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px] font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-                                    Edit
-                                  </a>
-                                </button>
-                              </div>
-                              <div className="flex flex-col justify-end cursor-pointer group">
-                                <button
-                                  type="button"
-                                  className="fixed"
-                                  onClick={() => DeleteHod(item._id)}
-                                >
-                                  <PiTrashSimpleLight
-                                    type="submit"
-                                    className="p-1 transition-transform duration-300 ease-in-out transform h-7 w-7 text-navy-900 group-hover:-translate-y-4"
-                                    aria-hidden="true"
-                                  />
-                                  <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px]  font-bold text-orange-300 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-                                    Delete
-                                  </a>
-                                </button>
+                                    className="fixed"
+                                    onClick={handleToggleEditDialog}
+                                  >
+                                    <LuEdit2
+                                      type="button"
+                                      className="w-6 h-6 p-1 text-gray-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
+                                      aria-hidden="true"
+                                    />
+                                    <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px] font-bold text-gray-700 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
+                                      Edit
+                                    </a>
+                                  </button>
+                                </div>
+                                <div className="flex flex-col justify-end cursor-pointer group">
+                                  <button
+                                    type="button"
+                                    className="fixed"
+                                    onClick={() => DeleteHod(item._id)}
+                                  >
+                                    <PiTrashSimpleLight
+                                      type="submit"
+                                      className="p-1 transition-transform duration-300 ease-in-out transform h-7 w-7 text-navy-900 group-hover:-translate-y-4"
+                                      aria-hidden="true"
+                                    />
+                                    <a className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-[12px]  font-bold text-gray-700 transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100">
+                                      Delete
+                                    </a>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : showTickMark ? (
+              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+                <lord-icon
+                  src="https://cdn.lordicon.com/yqzmiobz.json"
+                  trigger="loop"
+                  delay="1000"
+                  colors="primary:#66ee78"
+                  state="morph-check-in"
+                  style={{ width: "100px", height: "100px" }}
+                ></lord-icon>
+                <span className="mt-2">Uploaded Successful </span>
+              </div>
+            ) : null}
           </div>
 
           {/* Update Form */}
@@ -539,9 +589,14 @@ export default function Form({ departments }) {
                                     type="file"
                                     key={fileInputKey}
                                     className="sr-only"
-                                    onChange={(e) => {
-                                      setFileInputKey((prev) => prev + 1);
-                                      handleFileChange(e);
+                                    // onChange={(e) => {
+                                    //   setFileInputKey((prev) => prev + 1);
+                                    //   handleFileChange(e);
+                                    // }}
+                                    onChange={(event) => {
+                                      imgHandler(event);
+                                      setIsImageUploaded(true); // Set to true when a file is selected
+                                      setSelectedImage(event.target.files[0]); // Save the selected file
                                     }}
                                   />
                                   <label
@@ -556,7 +611,7 @@ export default function Form({ departments }) {
                                       />
                                     ) : (
                                       <div className="flex flex-col items-center">
-                                        <IoImageOutline
+                                        <BiImageAdd
                                           className="w-1/2 mb-2 text-gray-300 h-1/2 "
                                           src=""
                                           alt="Placeholder"
@@ -569,11 +624,11 @@ export default function Form({ departments }) {
                                   </label>
                                   <label
                                     htmlFor="fileInput"
-                                    className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                                    className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
                                   >
                                     <div className="flex flex-col justify-end ">
                                       <LuEdit2
-                                        className="w-10 h-10 p-1 text-navy-900 "
+                                        className="w-10 h-10 p-1 text-black"
                                         aria-hidden="true"
                                       />
                                     </div>

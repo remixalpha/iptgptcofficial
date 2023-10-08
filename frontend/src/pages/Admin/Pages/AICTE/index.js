@@ -59,7 +59,7 @@ export default function Aicte() {
           </div>
         )}
 
-        <div className="mb-[15rem] scale-125 ">
+        <div className=" scale-125 min-h-screen">
           <Form Certificates={Certificates} />
         </div>
       </div>
