@@ -26,12 +26,14 @@ function classNames(...classes) {
 const notificationSchema = Yup.object().shape({
   event: Yup.string().required("Event is required"),
 });
-
+const initialTabs = "Tabs";
 export default function Form() {
   const [open, setOpen] = useState(true);
   const [isEdit, setIsEdit] = useState(true);
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
+  // Sort option name change
+  const [selectedSortOption, setSelectedSortOption] = useState(initialTabs);
   // Form submit for image is selected or not validation
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   // Image upload and reset state
@@ -52,7 +54,7 @@ export default function Form() {
   const [tabs, setTabs] = useState([]); // To store all tabs
   const [selectedTab, setSelectedTab] = useState(""); // To store the selected tab for the current image
   const [filteredImages, setFilteredImages] = useState([]); // Initialize as an empty array
-  const [selectedDepartment, setSelectedDepartment] = useState("");
+  // const [selectedDepartment, setSelectedDepartment] = useState("");
   const [formDeptOption, setFormDeptOption] = useState("CAMPUS");
   //
 
@@ -474,7 +476,7 @@ export default function Form() {
                                       >
                                         <div>
                                           <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-500">
-                                            Tabs
+                                            {selectedSortOption}
                                             <ChevronDownIcon
                                               className="-mr-1 ml-2 h-5 w-5"
                                               aria-hidden="true"
@@ -496,9 +498,12 @@ export default function Form() {
                                                         : "m-2",
                                                       "block px-4 py-2 text-sm"
                                                     )}
-                                                    onClick={() =>
-                                                      handleTabClick(item)
-                                                    }
+                                                    onClick={() => {
+                                                      handleTabClick(item);
+                                                      setSelectedSortOption(
+                                                        item
+                                                      );
+                                                    }}
                                                   >
                                                     {item}
                                                   </a>
@@ -533,15 +538,18 @@ export default function Form() {
                                             </div>
                                           </a>
                                           {hoveredProduct === item && (
-                                            <div className="absolute inset-0 flex items-center justify-center rounded-lg cursor-pointer  text-white bg-gray-500 bg-opacity-80 transition-opacity duration-300 opacity-0 group-hover:opacity-100 ">
+                                            <button
+                                              onClick={() =>
+                                                DeleteImage(item._id)
+                                              }
+                                              type="button"
+                                              className="absolute inset-0 flex items-center justify-center rounded-lg cursor-pointer  text-white bg-gray-500 bg-opacity-80 transition-opacity duration-300 opacity-0 group-hover:opacity-100 "
+                                            >
                                               <PiTrashSimpleLight
                                                 className="w-6 h-6 "
                                                 aria-hidden="true"
-                                                onClick={() =>
-                                                  DeleteImage(item.id)
-                                                }
                                               />
-                                            </div>
+                                            </button>
                                           )}
                                         </div>
                                       ))}

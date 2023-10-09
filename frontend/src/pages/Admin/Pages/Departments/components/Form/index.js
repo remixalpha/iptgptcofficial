@@ -32,6 +32,11 @@ const notificationSchema = Yup.object().shape({
   departments: Yup.string().required("Department is required"),
 });
 
+// To show the fetched data first the computer
+
+const initialDepartment = "Sort"; // Initialize with Computer Department
+const defaultDepartment = "650fdb2e7658ed7a4b67b48d"; // Set the default department ID
+
 export default function Form({ departments }) {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(true);
@@ -43,7 +48,8 @@ export default function Form({ departments }) {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [SelectedImage, setSelectedImage] = useState(null);
   // Sort option name change
-  const [selectedSortOption, setSelectedSortOption] = useState("Sort");
+  const [selectedSortOption, setSelectedSortOption] =
+    useState(initialDepartment);
   // view all are submitted
   const [isContentVisible, setIsContentVisible] = useState(true);
   const [showTickMark, setShowTickMark] = useState(false);
@@ -68,11 +74,13 @@ export default function Form({ departments }) {
   //   };
   // };
 
+  // Filter the data and show the according to their department
   function filterArrayById(deptId) {
     console.log(staffs);
     console.log({ id: deptId });
     const filtered = staffs.filter((item) => item.dept === deptId);
     setFilteredArray(filtered);
+    setSelectedSortOption(deptId);
     console.log({ FilterArray: filtered });
   }
 
