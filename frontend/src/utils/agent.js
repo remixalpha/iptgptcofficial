@@ -19,7 +19,7 @@ export const postLogin = async (url, body) => {
 export const getRequest = async (url) => {
   try {
     console.log(`${base_url}${url}`);
-    const response = await axios.post(`${base_url}${url}`);
+    const response = await axios.get(`${base_url}${url}`);
     return response;
   } catch (err) {
     console.log(err);

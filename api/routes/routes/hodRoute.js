@@ -7,7 +7,7 @@ import singleImageUploader from "../controller/imageController";
 // requests
 
 router.get("/", hodController.getData);
-router.post("/sort/:dept", hodController.getDataOne);
+router.get("/sort/:dept", hodController.getDataOne);
 router.post("/create", singleImageUploader, hodController.createData);
 router.post("/put", hodController.updateData);
 router.post("/del/:id", hodController.deleteData);

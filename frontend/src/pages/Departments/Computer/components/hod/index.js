@@ -29,19 +29,22 @@ export default function Hod() {
   // Backend
   // Fetching HOD data
   function fetchHod() {
-    FetchRequest("/hod/")
+    FetchRequest(`/hod/sort/${deptId}`)
       .then((res) => {
-        console.log("hod res");
-        console.log({ HOD: res.data });
+        if (res.statusText == "OK") {
+          setHods(res.data.doc);
+        } else {
+          console.log("hod not found");
+        }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
       .finally(() => console.log("API REQUEST"));
   }
 
   useEffect(() => {
     fetchHod();
   }, []);
-  const filteredHod = hods.filter((item) => item.dept === deptId);
+
   return (
     <div className="relative flex flex-col-reverse items-center max-w-2xl px-4 mx-auto mb-20 lg:mb-auto gap-x-2 sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
       {Content.map((items) => (
@@ -79,38 +82,37 @@ export default function Hod() {
         }}
       >
         <div className="pattern" />
-        {filteredHod.map((item) => (
-          <div key={item.id} className="relative group -top-20 ">
-            <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
-              <img
-                className="object-cover object-center w-full h-full"
-                src={`${image_url + item.fileUrl}`}
-                alt=""
-              />
-            </div>
-            <h1
-              className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
-              style={{ textAlign: "center" }}
-            >
-              <a href={item.href}>
-                <span className="absolute inset-0" />
-                {item.name}
-              </a>
-            </h1>
-            <p
-              className="block font-sans text-2xl antialiased font-normal text-gray-800 "
-              style={{ textAlign: "center" }}
-            >
-              HOD
-            </p>
-            <p
-              className="block font-sans text-lg antialiased font-normal text-gray-700"
-              style={{ textAlign: "center" }}
-            >
-              {item.Qualification}
-            </p>
+
+        <div key={hods._id} className="relative group -top-20 ">
+          <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
+            <img
+              className="object-cover object-center w-full h-full"
+              src={`${image_url + hods.fileUrl}`}
+              alt=""
+            />
           </div>
-        ))}
+          <h1
+            className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
+            style={{ textAlign: "center" }}
+          >
+            <a href={hods.href}>
+              <span className="absolute inset-0" />
+              {hods.name}
+            </a>
+          </h1>
+          <p
+            className="block font-sans text-2xl antialiased font-normal text-gray-800 "
+            style={{ textAlign: "center" }}
+          >
+            HOD
+          </p>
+          <p
+            className="block font-sans text-lg antialiased font-normal text-gray-700"
+            style={{ textAlign: "center" }}
+          >
+            {hods.Qualification}
+          </p>
+        </div>
       </div>
     </div>
   );
