@@ -15,11 +15,7 @@ import { BiImageAdd } from "react-icons/bi";
 // Backend
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {
-  image_url,
-  postLogin,
-  getRequest,
-} from "../../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../../utils/agent";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -118,7 +114,7 @@ export default function Form({ departments }) {
 
   // Fetching Staffs data
   function fetchStaff() {
-    getRequest("/staff/")
+    postLogin("/staff/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {

@@ -6,7 +6,7 @@ import Header from "../../components/sidebar";
 import Form from "./components/Form";
 
 //backend
-import { getRequest } from "../../../../utils/agent";
+import { postLogin } from "../../../../utils/agent";
 
 export default function Hod() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -35,7 +35,7 @@ export default function Hod() {
   const [departments, setDepartments] = useState([]);
 
   function fetchApi() {
-    getRequest("/admin/getdept")
+    postLogin("/admin/getdept")
       .then(async (res) => {
         if (res) {
           console.log(res.data.doNotTrack);

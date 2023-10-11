@@ -86,7 +86,7 @@ export default function Hod() {
             <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
               {item.fileUrl ? (
                 <img
-                  className="h-full w-full object-cover object-center"
+                  className="h-full w-full object-cover object-center "
                   src={`${image_url + item.fileUrl}`}
                   alt=""
                 />
@@ -109,7 +109,7 @@ export default function Hod() {
               )}
             </div>
             <h1
-              className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
+              className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3] capitalize "
               style={{ textAlign: "center" }}
             >
               <a href={item.href}>
@@ -124,7 +124,7 @@ export default function Hod() {
               HOD
             </p>
             <p
-              className="block antialiased font-sans text-lg font-normal  text-gray-700"
+              className="block antialiased font-sans text-lg font-normal  text-gray-700 capitalize "
               style={{ textAlign: "center" }}
             >
               {item.Qualification}

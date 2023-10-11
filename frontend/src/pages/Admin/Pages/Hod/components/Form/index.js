@@ -20,9 +20,9 @@ import {
   postLogin,
 } from "../../../../../../utils/agent";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 // Validation
 const notificationSchema = Yup.object().shape({
@@ -481,19 +481,19 @@ export default function Form({ departments }) {
                                 </div>
                               )}
                             </div>
-                            <div className="flex flex-1 flex-col-1 space-x-[18rem] ">
+                            <div className="flex flex-1 flex-col-1  ">
                               <div className="justify-between flex-1">
-                                <p className="text-[20px] font-bold text-gray-900 capitalize">
+                                <p className="text-[20px] font-bold text-gray-900 capitalize  mx-auto ">
                                   {item.name}
                                 </p>
                                 <p className="text-sm font-medium text-gray-700 truncate capitalize">
                                   {item.Qualification}
                                 </p>
                                 {/* <p className="text-sm font-medium text-gray-700 truncate ">
-                                  {item.department}
+                                  {item.dept}
                                 </p> */}
                               </div>
-                              <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] relative right-[7rem] mb-2">
+                              <div className="flex flex-1  items-end justify-end text-sm  space-x-[3rem] mx-10 mb-2 ">
                                 <div className="flex flex-col justify-end cursor-pointer group">
                                   <button
                                     type="button"

@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-import { image_url, getRequest } from "../../../../../utils/agent";
+import { image_url, postLogin } from "../../../../../utils/agent";
 
 export function Faculty() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -24,7 +24,7 @@ export function Faculty() {
   // Backend
   // Fetching HOD data
   function fetchStaff() {
-    getRequest("/staff/")
+    postLogin("/staff/")
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {

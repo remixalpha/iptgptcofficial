@@ -45,6 +45,7 @@ export default function Hod() {
     fetchHod();
   }, []);
 
+  
   return (
     <div className="relative flex flex-col-reverse items-center max-w-2xl px-4 mx-auto mb-20 lg:mb-auto gap-x-2 sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
       {Content.map((items) => (
@@ -92,7 +93,7 @@ export default function Hod() {
             />
           </div>
           <h1
-            className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
+            className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3] capitalize"
             style={{ textAlign: "center" }}
           >
             <a href={hods.href}>
@@ -107,7 +108,7 @@ export default function Hod() {
             HOD
           </p>
           <p
-            className="block font-sans text-lg antialiased font-normal text-gray-700"
+            className="block font-sans text-lg antialiased font-normal text-gray-700 capitalize "
             style={{ textAlign: "center" }}
           >
             {hods.Qualification}

@@ -4,6 +4,7 @@ import "./style.css";
 import Banner1 from "../../../../assets/images/Banner/ipt banner 2.jpeg";
 import Banner2 from "../../../../assets/images/Banner/ipt banner 3.jpeg";
 import Banner3 from "../../../../assets/images/Banner/iptimage1.jpg";
+import Placed from "../../../../assets/images/PlacedStudents/Placed Students.jpeg";
 import Logo from "../../../../assets/images/logos/iptlogomin.png";
 
 //icons
@@ -11,9 +12,21 @@ import Logo from "../../../../assets/images/logos/iptlogomin.png";
 import Opening from "../Open-Close";
 
 //Backend
-import { image_url, getRequest } from "../../../../utils/agent";
+import { image_url, postLogin } from "../../../../utils/agent";
+
+// Slider
+import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const banners = [Banner1, Banner2, Banner3];
+
 const BannerSlider = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [scrollY, setScrollY] = useState(0);
@@ -21,7 +34,7 @@ const BannerSlider = () => {
   const [Notifications, setNotifications] = useState([]);
   //fetch data
   function fetchNotification() {
-    getRequest("/notification/")
+    postLogin("/notification/")
       .then(async (res) => {
         if (res.statusText === "OK") {
           // console.log(res.data.doNotTrack);
@@ -78,83 +91,94 @@ const BannerSlider = () => {
           />
         </div>
       </div>
-      <div className="absolute inset-0 grid grid-cols-2 z-50 ">
-        <div
-          className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[18rem]  xl:right-[26rem] mx-4  "
-          style={{ transform: `translateY(-${animationDistance}px)` }}
-        >
-          <Opening />
-        </div>
+      <div className="absolute inset-0 grid grid-cols-2  ">
         {/* notification */}
+
         <div
-          className=" w-[40rem] mx-0 transition-all duration-300 "
+          className=" w-[40rem] mx-0 transition-all duration-300 z-50 "
           style={{ transform: `translateY(-${animationDistance}px)` }}
         >
-          <div className="relative scale-75 ">
-            {/* Notification */}
-            <div className="flex flex-col space-y-10 px-10 py-8  ">
-              {Notifications.map((item) => (
-                <div
-                  key={item._id}
-                  className="group bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start text-justify space-x-6 antialiased tracking-normal font-sans  font-semibold leading-[1.3] "
-                >
-                  <div className="flex-shrink-0 ">
-                    <img
-                      className="object-cover w-16 h-16 rounded-full"
-                      src={Logo}
-                      alt=""
-                    />
-                  </div>
-
-                  <span className="text-md text-balck antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize  cursor-pointer ">
-                    {item.fileUrl ? (
-                      <a
-                        href={`${image_url + item.fileUrl}`}
-                        target="_blank"
-                        className="text-xl font-base "
-                      >
-                        {item.message}
-                      </a>
-                    ) : (
-                      <a
-                        className="text-xl cursor-pointer font-base "
-                        onClick={() => {
-                          // Check if it's a link before opening
-                          if (item.link) {
-                            window.open(item.link, "_blank");
-                          }
-                        }}
-                      >
-                        {item.message}
-                      </a>
-                    )}
-                  </span>
-                  {/* {item.fileUrl && (
-                    <button
-                      className="relative z-50 flex items-center justify-center w-20 h-20 p-6 text-4xl text-white transition-all duration-300 bg-red-400 rounded-full cursor-pointer top-10 left-10 group-hover:scale-110"
-                      onClick={() =>
-                        handleFileDownload(`${image_url + item.fileUrl}`)
-                      }
-                    >
-                      <div className="w-full h-full">
-                        <MdArrowOutward />
-                      </div>
-                    </button>
-                  )} */}
+          {/* Notification */}
+          <div className="relative scale-75 flex flex-col space-y-10 px-10 py-8">
+            {Notifications.map((item) => (
+              <div
+                key={item._id}
+                className="group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 "
+              >
+                <div className="flex-shrink-0 ">
+                  <img
+                    className="object-cover w-16 h-16 rounded-full"
+                    src={Logo}
+                    alt=""
+                  />
                 </div>
-              ))}
-            </div>
+
+                <span className="text-md text-balck antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize  cursor-pointer text-justify ">
+                  {item.fileUrl ? (
+                    <a
+                      href={`${image_url + item.fileUrl}`}
+                      target="_blank"
+                      className="text-xl font-base "
+                    >
+                      {item.message}
+                    </a>
+                  ) : (
+                    <a
+                      className="text-xl cursor-pointer font-base "
+                      onClick={() => {
+                        // Check if it's a link before opening
+                        if (item.link) {
+                          window.open(item.link, "_blank");
+                        }
+                      }}
+                    >
+                      {item.message}
+                    </a>
+                  )}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
+
         {/* Title */}
-        <div
-          className="absolute right-[18rem] top-40 items-center justify-center p-10 transition-all duration-300  "
-          style={{ transform: `translateY(-${animationDistance}px)` }}
+        <Swiper
+          // Install Swiper modules
+          modules={[Navigation, Pagination, A11y, Autoplay]}
+          spaceBetween={0}
+          slidesPerView={1}
+          autoplay={{
+            delay: 4000,
+          }}
+          navigation
+          onSwiper={(swiper) => console.log(swiper)}
+          className=" max-w-screen-4xl max-h-[40rem] right-[58rem] top-14 "
         >
-          <h1 className="text-white opacity-50  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem]  ">
-            IPT GPTC
-          </h1>
-        </div>
+          <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300  z-50  ">
+              <div
+                className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[15rem]  xl:right-[26rem] mx-4  "
+                style={{ transform: `translateY(-${animationDistance}px)` }}
+              >
+                <Opening />
+              </div>
+              <h1 className="text-white opacity-50 antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem] text-center ">
+                IPT GPTC
+              </h1>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 scale-150  z-50 ">
+              <div className=" -ml-12  p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
+                <img
+                  className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+                  src={Placed}
+                  alt=""
+                />
+              </div>
+            </div>
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   );
