@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import General from "../../../../../assets/images/section/Departments/General.jpg";
+import React, { useState, useEffect } from "react";
+// import General from "../../../../../assets/images/section/Departments/General.jpg";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { image_url, FetchRequest } from "../../../../../utils/agent";
 
 const Content = [
   {
@@ -11,6 +12,8 @@ const Content = [
 
 export default function Contents() {
   const [expandedSubjects, setExpandedSubjects] = useState([]);
+  const [hods, setHods] = useState([]);
+  const [deptId, setDeptId] = useState("650fdb2e7658ed7a4b67b48d");
 
   const toggleDescription = (id) => {
     if (expandedSubjects.includes(id)) {
@@ -20,15 +23,38 @@ export default function Contents() {
     }
   };
 
+  // Backend
+  // Fetching HOD data
+  function fetchHod() {
+    FetchRequest("/hod/")
+      .then((res) => {
+        // console.log(res.data);
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+          setHods(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
+
+  useEffect(() => {
+    fetchHod();
+  }, []);
+
+  const filteredHod = hods.filter((item) => item.dept === deptId);
+
   return (
-    <div className="relative grid grid-cols-1 space-y-10  h-auto w-auto mb-8  mx-auto  max-w-2xl  items-center  gap-x-2 px-4  sm:py-10 lg:max-w-7xl lg:grid-cols-2">
-      <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-[3rem] bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300">
+    <div className="relative flex flex-col-reverse items-center max-w-2xl px-4 mx-auto mb-20 lg:mb-auto gap-x-2 sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
+      {/* <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-[3rem] bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300">
         <img
           src={General}
           alt="General"
           className="h-full w-full object-cover object-center"
         />
-      </div>
+      </div> */}
       {Content.map((items) => (
         <div key={items.id}>
           <p className="mt-4 text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800  border rounded-primary p-8  ">
@@ -55,6 +81,48 @@ export default function Contents() {
           )}
         </div>
       ))}
+      <div
+        className=" lg:grid lg:grid-cols-3 lg:gap-x-4 lg:space-y-0 bg-gray-100 rounded-primary relative h-[40rem] scale-75  sm:scale-90 lg:scale-100  "
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div className="pattern" />
+        {filteredHod.map((item) => (
+          <div key={item.id} className="relative group -top-20 ">
+            <div className="relative h-[35rem] w-[30rem] overflow-hidden rounded-primary bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:scale-105 group-hover:shadow-lg transition-all duration-300  ">
+              <img
+                className="object-cover object-center w-full h-full"
+                src={`${image_url + item.fileUrl}`}
+                alt=""
+              />
+            </div>
+            <h1
+              className="mt-5 text-4xl font-semibold text-gray-900 antialiased tracking-normal font-sans  leading-[1.3]"
+              style={{ textAlign: "center" }}
+            >
+              <a href={item.href}>
+                <span className="absolute inset-0" />
+                {item.name}
+              </a>
+            </h1>
+            <p
+              className="block font-sans text-2xl antialiased font-normal text-gray-800 "
+              style={{ textAlign: "center" }}
+            >
+              HOD
+            </p>
+            <p
+              className="block font-sans text-lg antialiased font-normal text-gray-700"
+              style={{ textAlign: "center" }}
+            >
+              {item.Qualification}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

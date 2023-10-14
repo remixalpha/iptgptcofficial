@@ -1,6 +1,5 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-
 //icons
 import {
   PiUploadSimpleThin,
@@ -8,8 +7,10 @@ import {
   PiTrashSimpleLight,
 } from "react-icons/pi";
 import { BsFileEarmarkPdf } from "react-icons/bs";
-import { AiOutlineLink } from "react-icons/ai";
+import { AiOutlineLink, AiOutlineFileImage } from "react-icons/ai";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { LuEdit2 } from "react-icons/lu";
+import { BiImageAdd } from "react-icons/bi";
 
 // backend
 import { Formik } from "formik";
@@ -27,6 +28,14 @@ export default function Form({ Notifications }) {
 
   const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
   const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
+
+  //  Image
+  const [image, setImage] = useState("https://via.placeholder.com/150");
+  const [fileInputKey, setFileInputKey] = useState(0);
+  // Image upload and reset state
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [SelectedImage, setSelectedImage] = useState(null);
+
   // view all are submitted
   const [isContentVisible, setIsContentVisible] = useState(true);
   const [showTickMark, setShowTickMark] = useState(false);
@@ -35,9 +44,20 @@ export default function Form({ Notifications }) {
   console.log({ NOT: Notifications });
 
   //For file handling
+  // Update the imgHandler function to handle image uploading
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    const selectedImage = event.target.files[0];
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+
+      reader.onload = () => {
+        setImage(reader.result);
+        setIsImageUploaded(true);
+      };
+    }
   };
 
   // Handle the sideFrame open
@@ -134,69 +154,116 @@ export default function Form({ Notifications }) {
             {isContentVisible ? (
               <div className="flex flex-col space-y-10 ">
                 {/* File or link */}
-                <div className="">
-                  <div className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-semibold leading-[1.3] ">
-                    Choose option
-                  </div>
-                  <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 xl:grid-cols-1">
-                    <div className="col-1">
-                      {/* Seletion box */}
-                      <div className="flex space-x-2 mt-2 relative -top-[2rem] ">
-                        {/* File */}
-                        <label
-                          htmlFor="file-option"
-                          className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer ${
-                            selectedOption === "file"
-                              ? "text-black ring-2 ring-black ring-offset-2"
-                              : ""
-                          }`}
+                <div className="block text-sm mb-2 text-gray-900 antialiased tracking-normal font-sans font-semibold leading-[1.3] ">
+                  Choose option
+                </div>
+                <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-1 xl:grid-cols-1">
+                  {/* Seletion box */}
+                  <div className="flex flex-row space-x-2 max-w-[20rem]  relative -top-[2rem]  ">
+                    {/* File */}
+                    <label
+                      htmlFor="file-option"
+                      className={`relative font-semibold text-black ring-1 ring-black rounded-xl px-4 py-2 cursor-pointer transition-all duration-300 ${
+                        selectedOption === "file"
+                          ? " px-4 py-2  text-white bg-black"
+                          : ""
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        id="file-option"
+                        name="option"
+                        value="file"
+                        checked={selectedOption === "file"}
+                        onChange={() => {
+                          setSelectedOption("file");
+                          setFieldValue("selectedType", "file");
+                        }}
+                        className="sr-only"
+                      />
+                      <div className="flex flex-rows space-x-2 ">
+                        <BsFileEarmarkPdf />
+                        <h1
+                          id="file-title"
+                          className="text-xs font-medium antialiased tracking-tight "
                         >
-                          <input
-                            type="radio"
-                            id="file-option"
-                            name="option"
-                            value="file"
-                            checked={selectedOption === "file"}
-                            onChange={() => {
-                              setSelectedOption("file");
-                              setFieldValue("selectedType", "file");
-                            }}
-                            className="sr-only"
-                          />
-                          <BsFileEarmarkPdf />
-                        </label>
-                        {/* Link */}
-                        <label
-                          htmlFor="link-option"
-                          className={`relative font-semibold text-black rounded-lg p-4 cursor-pointer  ${
-                            selectedOption === "link"
-                              ? "text-black ring-2 ring-black ring-offset-2"
-                              : ""
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            id="link-option"
-                            name="option"
-                            value="link"
-                            checked={selectedOption === "link"}
-                            onChange={() => {
-                              setSelectedOption("link");
-                              setFieldValue("selectedType", "link");
-                            }}
-                            className="sr-only"
-                          />
-                          <AiOutlineLink />
-                        </label>
+                          Files
+                        </h1>
                       </div>
-
+                    </label>
+                    {/* Link */}
+                    <label
+                      htmlFor="link-option"
+                      className={`relative font-semibold text-black ring-1 ring-black rounded-xl  px-4 py-2 cursor-pointer transition-all duration-300 ${
+                        selectedOption === "link"
+                          ? "  px-4 py-2 text-white bg-black"
+                          : ""
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        id="link-option"
+                        name="option"
+                        value="link"
+                        checked={selectedOption === "link"}
+                        onChange={() => {
+                          setSelectedOption("link");
+                          setFieldValue("selectedType", "link");
+                        }}
+                        className="sr-only"
+                      />
+                      <div className="flex flex-rows space-x-2 ">
+                        <AiOutlineLink />
+                        <h1
+                          id="link-title"
+                          className="text-xs font-medium antialiased tracking-tight "
+                        >
+                          Link
+                        </h1>
+                      </div>
+                    </label>
+                    {/* Placed */}
+                    <label
+                      htmlFor="placed-option"
+                      className={`relative font-semibold text-black ring-1 ring-black rounded-xl  px-4 py-2 cursor-pointer transition-all duration-300 ${
+                        selectedOption === "placed"
+                          ? "  px-4 py-2 text-white bg-black"
+                          : ""
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        id="placed-option"
+                        name="option"
+                        value="placed"
+                        checked={selectedOption === "placed"}
+                        onChange={() => {
+                          setSelectedOption("placed");
+                          setFieldValue("selectedType", "placed");
+                        }}
+                        className="sr-only"
+                      />
+                      <div className="flex flex-rows space-x-2 ">
+                        <AiOutlineFileImage />
+                        <h1
+                          id="placed-title"
+                          className="text-xs font-medium antialiased tracking-tight "
+                        >
+                          Placed Students
+                        </h1>
+                      </div>
+                    </label>
+                  </div>
+                  {/* data insert fields */}
+                  <div className="flex flex-col gap-y-4 ">
+                    <div className="">
                       <input
                         type="hidden"
                         id="selectedType"
                         name="selectedType"
                         value={values.selectedType}
                       />
-
+                      {/* File */}
                       {selectedOption === "file" && (
                         <label
                           htmlFor="file-upload"
@@ -248,58 +315,124 @@ export default function Form({ Notifications }) {
                           </div>
                         </label>
                       )}
+                      {/* Link */}
+                      {selectedOption === "link" && (
+                        <div className="">
+                          <label
+                            htmlFor="link"
+                            className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
+                          >
+                            Paste the Link
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="link"
+                              name="link"
+                              type="link"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.link}
+                              autoComplete="link"
+                              className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {/* Placed */}
+                      {selectedOption === "placed" && (
+                        <div className="">
+                          <label
+                            htmlFor="placed-input"
+                            className="block text-sm text-gray-900 antialiased tracking-normal font-sans font-normal mb-4 ml-8 "
+                          >
+                            Placed Students Image
+                          </label>
+                          {/* imageUpload */}
+                          <div className="flex justify-center cursor-pointer col-2">
+                            <div className="relative inline-block ">
+                              <input
+                                id="fileInput"
+                                name="fileUrl"
+                                type="file"
+                                key={fileInputKey}
+                                className="sr-only"
+                                onChange={(event) => {
+                                  imgHandler(event);
+                                  setIsImageUploaded(true);
+                                  setSelectedImage(event.target.files[0]);
+                                }}
+                              />
+                              <label
+                                htmlFor="fileInput"
+                                className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-[55rem] h-96 rounded-xl border-navy-300"
+                              >
+                                {isImageUploaded ? (
+                                  <img
+                                    className=" object-contain w-full h-full rounded-xl"
+                                    alt="Uploaded"
+                                    src={image}
+                                  />
+                                ) : (
+                                  <div className="flex flex-col items-center">
+                                    <BiImageAdd
+                                      className="w-1/2 mb-2 text-gray-800 h-1/2 "
+                                      src=""
+                                      alt="Placeholder"
+                                    />
+                                    <span className="text-gray-500">
+                                      Upload an image
+                                    </span>
+                                  </div>
+                                )}
+                              </label>
+                              <label
+                                htmlFor="fileInput"
+                                className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                              >
+                                <div className="flex flex-col justify-end ">
+                                  <LuEdit2
+                                    className="w-10 h-10 p-1 text-black"
+                                    aria-hidden="true"
+                                  />
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    {selectedOption === "link" && (
-                      <div className="">
+
+                    {/* Notification */}
+                    {selectedOption !== "placed" && (
+                      // Notification section
+                      <div className="col-span-full">
                         <label
-                          htmlFor="link"
-                          className="block text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
+                          htmlFor="message"
+                          className="block mb-4 text-sm text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                         >
-                          Paste the Link
+                          Notification
                         </label>
                         <div className="mt-2">
-                          <input
-                            id="link"
-                            name="link"
-                            type="link"
+                          <textarea
+                            id="message"
+                            name="message"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.link}
-                            autoComplete="link"
-                            className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-black sm:text-sm sm:leading-6"
+                            value={values.message}
+                            placeholder="Enter the notification message here"
+                            rows={3}
+                            className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                           />
+                          {errors.message && touched.message && (
+                            <div className="error text-red-500 text-sm font-normal mt-1">
+                              {errors.message}
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
                   </div>
                 </div>
-                {/* Notification */}
-                <div className="col-span-full">
-                  <label
-                    htmlFor="message"
-                    className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3] "
-                  >
-                    Notification
-                  </label>
-                  <div className="mt-2">
-                    <textarea
-                      id="message"
-                      name="message"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.message}
-                      placeholder="Enter the notification message here"
-                      rows={3}
-                      className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                    />
-                    {errors.message && touched.message && (
-                      <div className="error text-red-500 text-sm font-normal mt-1">
-                        {errors.message}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
                 {/* buttons */}
                 <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 ">
                   {/* Delete button */}
@@ -433,7 +566,9 @@ export default function Form({ Notifications }) {
                                     >
                                       <div className="flex-shrink-0 w-6 h-6 overflow-hidden rounded-md">
                                         {item.fileUrl ? (
-                                          <BsFileEarmarkPdf className="object-cover object-center w-full h-full text-black " />
+                                          <BsFileEarmarkPdf className="object-cover object-center w-full h-full text-black" />
+                                        ) : item.isImage ? (
+                                          <AiOutlineFileImage className="object-cover object-center w-full h-full" />
                                         ) : (
                                           <AiOutlineLink className="object-cover object-center w-full h-full" />
                                         )}

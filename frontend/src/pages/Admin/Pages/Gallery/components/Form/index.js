@@ -224,7 +224,7 @@ export default function Form() {
       }) => (
         <form onSubmit={handleSubmit}>
           {isEdit ? (
-            <div className=" xl:w-[55rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] px-20 py-10  ">
+            <div className=" xl:w-[90rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] px-20 py-10  ">
               {isContentVisible ? (
                 <div>
                   <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2 ">
@@ -245,7 +245,7 @@ export default function Form() {
                         />
                         <label
                           htmlFor="fileInput"
-                          className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-96 h-96 rounded-xl border-navy-300"
+                          className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-[40rem] h-96 rounded-xl border-navy-300"
                         >
                           {isImageUploaded ? (
                             <img

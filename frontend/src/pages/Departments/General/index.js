@@ -4,7 +4,7 @@ import { IoIosArrowUp } from "react-icons/io";
 
 import Navbar from "../../../components/Navbar/navbar";
 import Banners from "./components/Banner";
-import Content from "./components/Content/index";
+import Hod from "./components/hod/index";
 import Subjects from "./components/Subjects/index";
 import Lab from "./components/Lab/index";
 import Staff from "./components/Staff-card";
@@ -53,7 +53,7 @@ const Computer = () => {
           </div>
         )}
         <div className="relative -top-[10rem]">
-          <Content />
+          <Hod />
         </div>
         <div>
           <Subjects />
