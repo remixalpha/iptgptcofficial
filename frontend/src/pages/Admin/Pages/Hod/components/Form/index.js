@@ -165,9 +165,11 @@ export default function Form({ departments }) {
         console.log({ formData: formData });
         postLogin("/hod/create", formData)
           .then(async (res) => {
-            if (res.statusText === "OK") {
+            if (res.statusText === "Created") {
               console.log({ res: res });
               console.log("created");
+              setShowTickMark(true);
+
               // console.log(res.data);
               // window.location.reload();
             } else {
@@ -180,7 +182,6 @@ export default function Form({ departments }) {
           .finally(() => {
             console.info("API CALL");
             setIsContentVisible(false);
-            setShowTickMark(true);
 
             setTimeout(() => {
               window.location.reload();
@@ -245,7 +246,7 @@ export default function Form({ departments }) {
                         </label>
                         <label
                           htmlFor="fileInput"
-                          className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                          className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                         >
                           <div className="flex flex-col justify-end ">
                             <LuEdit2
@@ -257,7 +258,7 @@ export default function Form({ departments }) {
                       </div>
                     </div>
                     {!isImageUploaded && isFormSubmitted && (
-                      <div className="fixed text-red-500 font-normal bottom-28 ">
+                      <div className="fixed font-normal text-red-500 bottom-28 ">
                         Please upload an image.
                       </div>
                     )}
@@ -282,7 +283,7 @@ export default function Form({ departments }) {
                             className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.name && touched.name && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.name}
                             </div>
                           )}
@@ -308,7 +309,7 @@ export default function Form({ departments }) {
                             className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.Qualification && touched.Qualification && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.Qualification}
                             </div>
                           )}
@@ -339,7 +340,7 @@ export default function Form({ departments }) {
                             ))}
                           </select>
                           {errors.departments && touched.departments && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.departments}
                             </div>
                           )}
@@ -481,12 +482,12 @@ export default function Form({ departments }) {
                                 </div>
                               )}
                             </div>
-                            <div className="flex flex-1 flex-col-1  ">
+                            <div className="flex flex-1 flex-col-1 ">
                               <div className="justify-between flex-1">
                                 <p className="text-[20px] font-bold text-gray-900 capitalize  mx-auto ">
                                   {item.name}
                                 </p>
-                                <p className="text-sm font-medium text-gray-700 truncate capitalize">
+                                <p className="text-sm font-medium text-gray-700 capitalize truncate">
                                   {item.Qualification}
                                 </p>
                                 {/* <p className="text-sm font-medium text-gray-700 truncate ">
@@ -536,7 +537,7 @@ export default function Form({ departments }) {
                 </div>
               </div>
             ) : showTickMark ? (
-              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+              <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                 <lord-icon
                   src="https://cdn.lordicon.com/yqzmiobz.json"
                   trigger="loop"
@@ -624,7 +625,7 @@ export default function Form({ departments }) {
                                   </label>
                                   <label
                                     htmlFor="fileInput"
-                                    className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                                    className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                                   >
                                     <div className="flex flex-col justify-end ">
                                       <LuEdit2

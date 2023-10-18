@@ -82,6 +82,7 @@ export default function Form({ Principals }) {
         console.log({ formData: formData });
         postLogin("/principal/put", formData)
           .then(async (res) => {
+            console.log({ MSG: res.statusText });
             if (res?.statusText === "OK") {
               console.log(res.data);
               // window.location.reload();
@@ -119,7 +120,7 @@ export default function Form({ Principals }) {
               <div>
                 {/* Content */}
                 <div className="grid grid-cols-2  gap-x-[8rem] gap-y-8 ">
-                  <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2">
+                  <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2">
                     {/* imageUpload */}
                     <div className="flex justify-center cursor-pointer col-2">
                       <div className="relative inline-block ">
@@ -156,11 +157,11 @@ export default function Form({ Principals }) {
                         </label>
                         <label
                           htmlFor="fileInput"
-                          className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                          className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                         >
                           <div className="flex flex-col justify-end ">
                             <LuEdit2
-                              className="w-10 h-10 p-1 text-black  "
+                              className="w-10 h-10 p-1 text-black "
                               aria-hidden="true"
                             />
                           </div>
@@ -168,7 +169,7 @@ export default function Form({ Principals }) {
                       </div>
                     </div>
                     {!isImageUploaded && isFormSubmitted && (
-                      <div className="fixed text-red-500 font-normal bottom-44 ">
+                      <div className="fixed font-normal text-red-500 bottom-44 ">
                         Please upload an image.
                       </div>
                     )}
@@ -194,7 +195,7 @@ export default function Form({ Principals }) {
                             className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.name && touched.name && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.name}
                             </div>
                           )}
@@ -220,7 +221,7 @@ export default function Form({ Principals }) {
                             className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.Qualification && touched.Qualification && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.Qualification}
                             </div>
                           )}
@@ -230,7 +231,7 @@ export default function Form({ Principals }) {
                   </div>
                   <div className="space-y-10 ">
                     {/* Quote */}
-                    <div className=" ">
+                    <div className="">
                       <div className="col-span-full">
                         <label
                           htmlFor="quote"
@@ -251,7 +252,7 @@ export default function Form({ Principals }) {
                             defaultValue={""}
                           />
                           {errors.quote && touched.quote && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.quote}
                             </div>
                           )}
@@ -259,7 +260,7 @@ export default function Form({ Principals }) {
                       </div>
                     </div>
                     {/* author */}
-                    <div className=" ">
+                    <div className="">
                       <div className="col-span-full">
                         <label
                           htmlFor="quote"
@@ -280,7 +281,7 @@ export default function Form({ Principals }) {
                             defaultValue={""}
                           />
                           {errors.author && touched.author && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.author}
                             </div>
                           )}
@@ -310,7 +311,7 @@ export default function Form({ Principals }) {
                             defaultValue={""}
                           />
                           {errors.message && touched.message && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.message}
                             </div>
                           )}
@@ -321,7 +322,7 @@ export default function Form({ Principals }) {
                 </div>
 
                 {/* buttons */}
-                <div className="mt-6 flex items-center justify-end gap-x-6 mb-28 ">
+                <div className="flex items-center justify-end mt-6 gap-x-6 mb-28 ">
                   {/* cancel button */}
                   <button
                     type="button"
@@ -348,7 +349,7 @@ export default function Form({ Principals }) {
                     onClick={() => {
                       setIsFormSubmitted(true);
                     }}
-                    className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                    className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                   >
                     <PiUploadSimpleThin
                       type="submit"
@@ -362,7 +363,7 @@ export default function Form({ Principals }) {
                 </div>
               </div>
             ) : showTickMark ? (
-              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+              <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                 <lord-icon
                   src="https://cdn.lordicon.com/yqzmiobz.json"
                   trigger="loop"

@@ -9,6 +9,7 @@ import galleryModel from "./gallery";
 import aictemandatesModel from "./aictemandates";
 import principalModel from "./pricipal";
 import cocurricularModel from "./cocurricular";
+import heroImgModel from "./heroimg";
 export {
   demoModel,
   adminModel,
@@ -21,4 +22,5 @@ export {
   aictemandatesModel,
   principalModel,
   cocurricularModel,
+  heroImgModel,
 };

@@ -8,6 +8,7 @@ import GalleryRoute from "./galleryRoute";
 import AicteMandatesRoute from "./aicteMandatesRoute";
 import PricipalRoute from "./pricipalRoute";
 import cocurricularRoute from "./CocurricularRoute";
+import heroImgRoute from "./heroimgRoute";
 export {
   demoRoute,
   indexRoute,
@@ -19,4 +20,5 @@ export {
   AicteMandatesRoute,
   PricipalRoute,
   cocurricularRoute,
+  heroImgRoute,
 };

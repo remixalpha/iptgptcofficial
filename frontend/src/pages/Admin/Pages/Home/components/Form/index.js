@@ -84,6 +84,7 @@ export default function Form({ Notifications }) {
   function DeleteNotification(id) {
     postLogin(`/notification/del/${id}`)
       .then((res) => {
+        console.log({ MSG: res.statusText });
         if (res.statusText === "OK") {
           console.log(res.data);
           window.location.reload();
@@ -117,8 +118,9 @@ export default function Form({ Notifications }) {
         console.log({ formData: formData });
         postLogin("/notification/create", formData)
           .then((res) => {
-            if (res.statusText === "OK") {
+            if (res.statusText === "Created") {
               console.log("created");
+              setShowTickMark(true);
               // window.location.reload();
             } else {
               // window.location.reload();
@@ -131,11 +133,9 @@ export default function Form({ Notifications }) {
           .finally(() => {
             console.info("API CALL");
             setIsContentVisible(false);
-            setShowTickMark(true);
-
             setTimeout(() => {
               window.location.reload();
-            }, 5000);
+            }, 2000);
           });
       }}
     >
@@ -181,11 +181,11 @@ export default function Form({ Notifications }) {
                         }}
                         className="sr-only"
                       />
-                      <div className="flex flex-rows space-x-2 ">
+                      <div className="flex space-x-2 flex-rows ">
                         <BsFileEarmarkPdf />
                         <h1
                           id="file-title"
-                          className="text-xs font-medium antialiased tracking-tight "
+                          className="text-xs antialiased font-medium tracking-tight "
                         >
                           Files
                         </h1>
@@ -212,11 +212,11 @@ export default function Form({ Notifications }) {
                         }}
                         className="sr-only"
                       />
-                      <div className="flex flex-rows space-x-2 ">
+                      <div className="flex space-x-2 flex-rows ">
                         <AiOutlineLink />
                         <h1
                           id="link-title"
-                          className="text-xs font-medium antialiased tracking-tight "
+                          className="text-xs antialiased font-medium tracking-tight "
                         >
                           Link
                         </h1>
@@ -243,11 +243,11 @@ export default function Form({ Notifications }) {
                         }}
                         className="sr-only"
                       />
-                      <div className="flex flex-rows space-x-2 ">
+                      <div className="flex space-x-2 flex-rows ">
                         <AiOutlineFileImage />
                         <h1
                           id="placed-title"
-                          className="text-xs font-medium antialiased tracking-tight "
+                          className="text-xs antialiased font-medium tracking-tight "
                         >
                           Placed Students
                         </h1>
@@ -343,7 +343,7 @@ export default function Form({ Notifications }) {
                         <div className="">
                           <label
                             htmlFor="placed-input"
-                            className="block text-sm text-gray-900 antialiased tracking-normal font-sans font-normal mb-4 ml-8 "
+                            className="block mb-4 ml-8 font-sans text-sm antialiased font-normal tracking-normal text-gray-900 "
                           >
                             Placed Students Image
                           </label>
@@ -368,7 +368,7 @@ export default function Form({ Notifications }) {
                               >
                                 {isImageUploaded ? (
                                   <img
-                                    className=" object-contain w-full h-full rounded-xl"
+                                    className="object-contain w-full h-full rounded-xl"
                                     alt="Uploaded"
                                     src={image}
                                   />
@@ -387,7 +387,7 @@ export default function Form({ Notifications }) {
                               </label>
                               <label
                                 htmlFor="fileInput"
-                                className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                                className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                               >
                                 <div className="flex flex-col justify-end ">
                                   <LuEdit2
@@ -424,7 +424,7 @@ export default function Form({ Notifications }) {
                             className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                           />
                           {errors.message && touched.message && (
-                            <div className="error text-red-500 text-sm font-normal mt-1">
+                            <div className="mt-1 text-sm font-normal text-red-500 error">
                               {errors.message}
                             </div>
                           )}
@@ -488,7 +488,7 @@ export default function Form({ Notifications }) {
                 </div>
               </div>
             ) : showTickMark ? (
-              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+              <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                 <lord-icon
                   src="https://cdn.lordicon.com/yqzmiobz.json"
                   trigger="loop"
@@ -562,7 +562,7 @@ export default function Form({ Notifications }) {
                                   {Notifications.map((item) => (
                                     <li
                                       key={item._id}
-                                      className="flex p-8 mt-5 transition-all duration-300 bg-white rounded-xl hover:shadow-lg  "
+                                      className="flex p-8 mt-5 transition-all duration-300 bg-white rounded-xl hover:shadow-lg "
                                     >
                                       <div className="flex-shrink-0 w-6 h-6 overflow-hidden rounded-md">
                                         {item.fileUrl ? (
