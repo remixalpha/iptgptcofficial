@@ -33,6 +33,7 @@ import AdminHOD from "./pages/Admin/Pages/Hod";
 import AdminCocurricular from "./pages/Admin/Pages/Cocurricular";
 import AdminAICTE from "./pages/Admin/Pages/AICTE";
 import AdminGallery from "./pages/Admin/Pages/Gallery";
+import AdminPlaced from "./pages/Admin/Pages/Placed";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -59,6 +60,7 @@ function App() {
             <Route path="/admincocurricular" element={<AdminCocurricular />} />
             <Route path="/adminaicte" element={<AdminAICTE />} />
             <Route path="/admingalery" element={<AdminGallery />} />
+            <Route path="/adminplaced" element={<AdminPlaced />} />
           </>
         ) : (
           <>

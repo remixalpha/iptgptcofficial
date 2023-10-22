@@ -327,7 +327,7 @@ export default function Form({ departments }) {
                           <select
                             id="departments"
                             name="departments"
-                            autoComplete="departmentss"
+                            autoComplete="departments"
                             value={values.departments}
                             onChange={handleFormDept}
                             className="cursor-pointer block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"

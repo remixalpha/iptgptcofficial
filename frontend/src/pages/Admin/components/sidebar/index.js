@@ -7,12 +7,18 @@ import Logo from "../../../../assets/images/logos/ipt.png";
 import User from "../../../../assets/images/section/Departments/computer/Staff/Saani.jpg";
 
 import { CiUser, CiLogout } from "react-icons/ci";
-import { IoIosToday } from "react-icons/io";
+
 import { BsPersonAdd, BsPerson } from "react-icons/bs";
 import { PiCertificate } from "react-icons/pi";
 import { TbPhotoEdit } from "react-icons/tb";
 import { GoHome } from "react-icons/go";
 import { IoSettingsOutline } from "react-icons/io5";
+import { FaRegFileImage } from "react-icons/fa6";
+
+import {
+  MdOutlineAddPhotoAlternate,
+  MdOutlinePhotoSizeSelectLarge,
+} from "react-icons/md";
 
 const user = {
   name: "",
@@ -85,8 +91,15 @@ const navigation = {
     {
       id: "gallery",
       name: "Gallery",
-      icon: TbPhotoEdit,
+      icon: MdOutlineAddPhotoAlternate,
       href: "/admingalery",
+      current: true,
+    },
+    {
+      id: "placed",
+      name: "Placed Students",
+      icon: MdOutlinePhotoSizeSelectLarge,
+      href: "/adminplaced",
       current: true,
     },
   ],
@@ -113,13 +126,13 @@ export default function Sidebar() {
   };
 
   return (
-    <header className="bg-black">
+    <header className="bg-black ">
       <nav
-        className="xl:mx-auto sm:mx-2 mx-2 flex max-w-7xl items-center justify-between p-8 lg:px-8  rounded-primary "
+        className=" sm:mx-2 mx-2 flex max-w-7xl items-center justify-between p-8 "
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <div className=" rounded-xl p-6 h-[4rem] w-[15rem] flex items-center relative right-[15rem] ">
+          <div className=" rounded-xl p-6 h-[4rem] w-[15rem] flex items-start relative ">
             <a href="/adminhome" className="-m-5 p-1.5">
               <span className="sr-only">IPT & GPTC Shoranur</span>
               <img
@@ -142,13 +155,13 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <Popover.Group className="hidden lg:flex lg:gap-x-10">
+        <Popover.Group className="hidden lg:flex lg:flex-row ml-24 ">
           {navigation.categories.map((categories) => (
             <div
               key={categories.name}
-              className="relative group flex flex-row  "
+              className="relative group flex flex-row items-center p-2 w-[10rem] "
             >
-              <div className="relative -left-3">
+              <div>
                 <categories.icon
                   className={
                     activeItem === categories.id
@@ -162,20 +175,14 @@ export default function Sidebar() {
                 <a
                   href={categories.href}
                   onClick={() => handleItemClick(categories.name)}
-                  className={classNames(
-                    activeItem === categories.name
-                      ? "text-gray-900  text-lg  font-bold   transition-all duration-300 ease-in-out "
-                      : "text-white   text-lg  font-bold   hover:text-md  ",
-                    "rounded-full font-bold    py-2 text-sm  transition-all duration-300 ease-in-out "
-                  )}
+                  className=" flex-grow w-[8rem] rounded-full text-white font-medium p-1 text-sm transition-all duration-300 ease-in-out"
                   aria-current={categories.current ? "page" : undefined}
                 >
                   {categories.name}
                 </a>
-
                 <span
                   className={classNames(
-                    " bottombar absolute bottom-0 top-6 left-6  h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
+                    "bottombar absolute bottom-0 top-8 left-9 h-1 bg-white rounded-xl transform w-0 transition-all duration-300",
                     "group-hover:w-10"
                   )}
                 />
@@ -190,7 +197,7 @@ export default function Sidebar() {
               {/* Profile dropdown */}
 
               <Popover className="relative">
-                <Popover.Button className="inline-flex items-center relative -right-[5rem] text-sm font-semibold leading-6 text-gray-900">
+                <Popover.Button className="inline-flex items-center text-sm font-semibold leading-6 text-gray-900">
                   <div>
                     <div
                       className="relative flex max-w-xs items-center rounded-full
@@ -222,7 +229,7 @@ export default function Sidebar() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <Popover.Panel className="absolute left-1/2 z-10 mt-10  flex w-screen max-w-sm -translate-x-1/2 px-4">
+                  <Popover.Panel className="absolute -right-[14rem] z-10 mt-10  flex w-screen max-w-sm -translate-x-1/2 px-4">
                     <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                       <div className="p-4">
                         {userNavigation.map((item) => (

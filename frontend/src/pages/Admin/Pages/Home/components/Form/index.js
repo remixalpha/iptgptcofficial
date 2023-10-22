@@ -21,6 +21,7 @@ import { image_url, postLogin } from "../../../../../../utils/agent";
 const notificationSchema = Yup.object().shape({
   message: Yup.string().required("Message is Required"),
 });
+
 export default function Form({ Notifications }) {
   // Uploaded data
   const [open, setOpen] = useState(true);
@@ -32,12 +33,12 @@ export default function Form({ Notifications }) {
   const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
   const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
 
-  // Image upload handling  and reset state
-  const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [SelectedImage, setSelectedImage] = useState(
-    "https://via.placeholder.com/150"
-  );
-  const [fileInputKey, setFileInputKey] = useState(0);
+  // // Image upload handling  and reset state
+  // const [isImageUploaded, setIsImageUploaded] = useState(false);
+  // const [SelectedImage, setSelectedImage] = useState(
+  //   "https://via.placeholder.com/150"
+  // );
+  // const [fileInputKey, setFileInputKey] = useState(0);
 
   // view all are submitted
   const [isContentVisible, setIsContentVisible] = useState(true);
@@ -67,21 +68,21 @@ export default function Form({ Notifications }) {
       };
     }
   };
-  // Image handling
-  const imgHandler = (event) => {
-    setMyImage(event.target.files);
-    const selectedImage = event.target.files[0];
+  // // Image handling
+  // const imgHandler = (event) => {
+  //   setMyImage(event.target.files);
+  //   const selectedImage = event.target.files[0];
 
-    if (selectedImage) {
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedImage);
+  //   if (selectedImage) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(selectedImage);
 
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-        setIsImageUploaded(true);
-      };
-    }
-  };
+  //     reader.onload = () => {
+  //       setSelectedImage(reader.result);
+  //       setIsImageUploaded(true);
+  //     };
+  //   }
+  // };
   // Get file name
   function getFileName(fullFileName) {
     // Remove date-time information and "Blank" from the file name
@@ -243,7 +244,7 @@ export default function Form({ Notifications }) {
                       </div>
                     </label>
                     {/* Placed */}
-                    <label
+                    {/* <label
                       htmlFor="placed-option"
                       className={`relative font-semibold text-black ring-1 ring-black rounded-xl  px-4 py-2 cursor-pointer transition-all duration-300 ${
                         selectedOption === "placed"
@@ -259,7 +260,6 @@ export default function Form({ Notifications }) {
                         checked={selectedOption === "placed"}
                         onChange={() => {
                           setSelectedOption("placed");
-                          setFieldValue("selectedType", "placed");
                         }}
                         className="sr-only"
                       />
@@ -272,7 +272,7 @@ export default function Form({ Notifications }) {
                           Placed Students
                         </h1>
                       </div>
-                    </label>
+                    </label> */}
                   </div>
                   {/* data insert fields */}
                   <div className="flex flex-col gap-y-4 ">
@@ -358,68 +358,6 @@ export default function Form({ Notifications }) {
                           </div>
                         </div>
                       )}
-                      {/* Placed */}
-                      {selectedOption === "placed" && (
-                        <div className="">
-                          <label
-                            htmlFor="placed-input"
-                            className="block mb-4 ml-8 font-sans text-sm antialiased font-normal tracking-normal text-gray-900 "
-                          >
-                            Placed Students Image
-                          </label>
-                          {/* imageUpload */}
-                          <div className="flex justify-center cursor-pointer col-2">
-                            <div className="relative inline-block ">
-                              <input
-                                id="fileInput"
-                                name="fileUrl"
-                                type="file"
-                                key={fileInputKey}
-                                className="sr-only"
-                                onChange={(event) => {
-                                  imgHandler(event);
-                                  setIsImageUploaded(true);
-                                  setSelectedImage(event.target.files[0]);
-                                }}
-                              />
-                              <label
-                                htmlFor="fileInput"
-                                className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-[55rem] h-96 rounded-xl border-navy-300"
-                              >
-                                {isImageUploaded ? (
-                                  <img
-                                    className="object-contain w-full h-full rounded-xl"
-                                    alt="Uploaded"
-                                    src={SelectedImage}
-                                  />
-                                ) : (
-                                  <div className="flex flex-col items-center">
-                                    <BiImageAdd
-                                      className="w-1/2 mb-2 text-gray-800 h-1/2 "
-                                      src=""
-                                      alt="Placeholder"
-                                    />
-                                    <span className="text-gray-500">
-                                      Upload an image
-                                    </span>
-                                  </div>
-                                )}
-                              </label>
-                              <label
-                                htmlFor="fileInput"
-                                className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
-                              >
-                                <div className="flex flex-col justify-end ">
-                                  <LuEdit2
-                                    className="w-10 h-10 p-1 text-black"
-                                    aria-hidden="true"
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
 
                     {/* Notification */}
@@ -480,6 +418,7 @@ export default function Form({ Notifications }) {
                       resetForm(); // Call resetForm to clear the form fields
                       setFileSelected(false); // Reset the file selection state
                       setSelectedFile(null); // Reset the selected file
+                      // setSelectedImage(null); // Reset the selected file
                     }}
                   >
                     <PiXLight

@@ -12,7 +12,7 @@ import Logo from "../../../../assets/images/logos/iptlogomin.png";
 import Opening from "../Open-Close";
 
 //Backend
-import { image_url, postLogin } from "../../../../utils/agent";
+import { image_url, postLogin, FetchRequest } from "../../../../utils/agent";
 
 // Slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -32,6 +32,7 @@ const BannerSlider = () => {
   const [scrollY, setScrollY] = useState(0);
 
   const [Notifications, setNotifications] = useState([]);
+  const [Gallerys, setGallerys] = useState([]);
   //fetch data
   function fetchNotification() {
     postLogin("/notification/")
@@ -46,12 +47,28 @@ const BannerSlider = () => {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
+  //featching Images data
+  function fetchImage() {
+    FetchRequest("/hero/")
+      .then((res) => {
+        // console.log(res.data);
+        if (res.statusText === "OK") {
+          console.log(res.data.doc);
+          setGallerys(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevIndex) => (prevIndex + 1) % banners.length);
     }, 5000);
     fetchNotification();
+    fetchImage();
     return () => clearInterval(interval);
   }, []);
 
@@ -69,15 +86,6 @@ const BannerSlider = () => {
     };
   }, []);
 
-  //Download pdf
-
-  // const handleFileDownload = (fileUrl, fileName) => {
-  //   const dummyLink = document.createElement("a");
-  //   dummyLink.href = fileUrl;
-  //   dummyLink.download = fileName;
-  //   dummyLink.click();
-  // };
-
   return (
     <div className="relative">
       <div>
@@ -94,16 +102,14 @@ const BannerSlider = () => {
       <div className="absolute inset-0 grid grid-cols-2  ">
         {/* notification */}
 
-        <div
-          className=" w-[40rem] mx-0 transition-all duration-300 z-50 "
-          style={{ transform: `translateY(-${animationDistance}px)` }}
-        >
+        <div className="relative -top-24 w-[40rem] mx-0 transition-all duration-300 z-50">
           {/* Notification */}
-          <div className="relative scale-75 flex flex-col space-y-10 px-10 py-8">
+
+          <div className="relative scale-75 flex flex-col space-y-10 px-10 py-8 ">
             {Notifications.map((item) => (
               <div
                 key={item._id}
-                className="group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 "
+                className="group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 hover:scale-110 transition-all duration-300 "
               >
                 <div className="flex-shrink-0 ">
                   <img
@@ -155,7 +161,7 @@ const BannerSlider = () => {
           className=" max-w-screen-4xl max-h-[40rem] right-[58rem] top-14 "
         >
           <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300  z-50  ">
+            <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 z-30">
               <div
                 className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[15rem]  xl:right-[26rem] mx-4  "
                 style={{ transform: `translateY(-${animationDistance}px)` }}
@@ -168,15 +174,21 @@ const BannerSlider = () => {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 scale-150  z-50 ">
-              <div className=" -ml-12  p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-                <img
-                  className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
-                  src={Placed}
-                  alt=""
-                />
+            {Gallerys.map((item, index) => (
+              <div
+                key={item.id}
+                className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 scale-150  z-50 "
+              >
+                <div className=" -ml-12  p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
+                  <img
+                    className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+                    key={item.id}
+                    src={`${image_url + item.fileUrl}`}
+                    alt={`${item.event}_${index}`}
+                  />
+                </div>
               </div>
-            </div>
+            ))}
           </SwiperSlide>
         </Swiper>
       </div>
