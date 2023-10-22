@@ -22,31 +22,54 @@ const notificationSchema = Yup.object().shape({
   message: Yup.string().required("Message is Required"),
 });
 export default function Form({ Notifications }) {
+  // Uploaded data
   const [open, setOpen] = useState(true);
+  // Selection option
   const [selectedOption, setSelectedOption] = useState("file"); // For selection box
   const [values, setFieldValue] = useState([]);
 
+  // File Handling and reset
   const [fileSelected, setFileSelected] = useState(false); // selecteed success or error
   const [selectedFile, setSelectedFile] = useState(null); // Click cancel button to go default file selection
 
-  //  Image
-  const [image, setImage] = useState("https://via.placeholder.com/150");
-  const [fileInputKey, setFileInputKey] = useState(0);
-  // Image upload and reset state
+  // Image upload handling  and reset state
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [SelectedImage, setSelectedImage] = useState(null);
+  const [SelectedImage, setSelectedImage] = useState(
+    "https://via.placeholder.com/150"
+  );
+  const [fileInputKey, setFileInputKey] = useState(0);
 
   // view all are submitted
   const [isContentVisible, setIsContentVisible] = useState(true);
   const [showTickMark, setShowTickMark] = useState(false);
   //backend
+  // For File
   const [Myfile, setMyfile] = useState([]);
+  const [MyImage, setMyImage] = useState([]);
   console.log({ NOT: Notifications });
 
+  // Handle the sideFrame open
+  const handleToggleDeleteDialog = () => {
+    setOpen(!open);
+  };
   //For file handling
-  // Update the imgHandler function to handle image uploading
-  const imgHandler = (event) => {
+  const fileHandler = (event) => {
     setMyfile(event.target.files);
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+
+      reader.onload = () => {
+        setSelectedFile(reader.result);
+        setFileSelected(true);
+      };
+    }
+  };
+  // Image handling
+  const imgHandler = (event) => {
+    setMyImage(event.target.files);
     const selectedImage = event.target.files[0];
 
     if (selectedImage) {
@@ -54,17 +77,11 @@ export default function Form({ Notifications }) {
       reader.readAsDataURL(selectedImage);
 
       reader.onload = () => {
-        setImage(reader.result);
+        setSelectedImage(reader.result);
         setIsImageUploaded(true);
       };
     }
   };
-
-  // Handle the sideFrame open
-  const handleToggleDeleteDialog = () => {
-    setOpen(!open);
-  };
-
   // Get file name
   function getFileName(fullFileName) {
     // Remove date-time information and "Blank" from the file name
@@ -112,6 +129,9 @@ export default function Form({ Notifications }) {
           formData.append(value, values[value]);
         }
         Object.values(Myfile).forEach((file) => {
+          formData.append("fileUrl", file);
+        });
+        Object.values(MyImage).forEach((file) => {
           formData.append("fileUrl", file);
         });
 
@@ -298,7 +318,7 @@ export default function Form({ Notifications }) {
                                   type="file"
                                   className="sr-only"
                                   onChange={(event) => {
-                                    imgHandler(event);
+                                    fileHandler(event);
                                     setFileSelected(true); // Set to true when a file is selected
                                     setSelectedFile(event.target.files[0]); // Save the selected file
                                   }}
@@ -370,7 +390,7 @@ export default function Form({ Notifications }) {
                                   <img
                                     className="object-contain w-full h-full rounded-xl"
                                     alt="Uploaded"
-                                    src={image}
+                                    src={SelectedImage}
                                   />
                                 ) : (
                                   <div className="flex flex-col items-center">
