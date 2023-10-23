@@ -161,7 +161,7 @@ export default function Form() {
               {isContentVisible ? (
                 <div>
                   {/* imageUpload */}
-                  <div className="flex justify-center cursor-pointer mt-4 ">
+                  <div className="flex justify-center mt-4 cursor-pointer ">
                     <div className="relative inline-block ">
                       <input
                         id="fileInput"
@@ -181,7 +181,7 @@ export default function Form() {
                       >
                         {isImageUploaded ? (
                           <img
-                            className=" object-contain object-center w-full h-full rounded-xl"
+                            className="object-contain object-center w-full h-full  rounded-xl"
                             alt="Uploaded"
                             src={image}
                           />
@@ -200,7 +200,7 @@ export default function Form() {
                       </label>
                       <label
                         htmlFor="fileInput"
-                        className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                        className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                       >
                         <div className="flex flex-col justify-end ">
                           <LuEdit2
@@ -213,15 +213,15 @@ export default function Form() {
                   </div>
 
                   {/* buttons */}
-                  <div className="mt-8 flex items-center justify-end gap-x-6 relative">
+                  <div className="relative flex items-center justify-end mt-8 gap-x-6">
                     {/* Delete button */}
                     <button
                       type="button"
                       onClick={handleToggleDeleteDialog}
-                      className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer  group rounded-xl"
                     >
                       <PiTrashSimpleLight
-                        className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                        className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                         aria-hidden="true"
                       />
                       <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
@@ -254,7 +254,7 @@ export default function Form() {
                       onClick={() => {
                         setIsFormSubmitted(true);
                       }}
-                      className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer  group w-25 rounded-xl"
                     >
                       <PiUploadSimpleThin
                         type="submit"
@@ -268,7 +268,7 @@ export default function Form() {
                   </div>
                 </div>
               ) : showTickMark ? (
-                <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+                <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                   <lord-icon
                     src="https://cdn.lordicon.com/yqzmiobz.json"
                     trigger="loop"
@@ -302,7 +302,7 @@ export default function Form() {
 
               <div className="fixed inset-0 overflow-hidden">
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                  <div className="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
                     <Transition.Child
                       as={Fragment}
                       enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -312,23 +312,23 @@ export default function Form() {
                       leaveFrom="translate-x-0"
                       leaveTo="translate-x-full"
                     >
-                      <Dialog.Panel className="pointer-events-auto w-screen max-w-xl">
-                        <div className="flex h-full flex-col overflow-hidden bg-gray-200  rounded-xl mt-2 mr-9 shadow-xl">
-                          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <Dialog.Panel className="w-screen max-w-xl pointer-events-auto">
+                        <div className="flex flex-col h-full mt-2 overflow-hidden bg-gray-200 shadow-xl rounded-xl mr-9">
+                          <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className=" ml-8 mt-2 text-xl text-gray-900 antialiased tracking-normal font-sans font-medium  leading-[1.3]">
-                                Placed Students
+                                Hero Image
                               </Dialog.Title>
-                              <div className="ml-3 flex h-7 items-center">
+                              <div className="flex items-center ml-3 h-7">
                                 <button
                                   type="button"
-                                  className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                                  className="relative p-2 -m-2 text-gray-400 hover:text-gray-500"
                                   onClick={() => setOpen(false)}
                                 >
                                   <span className="absolute -inset-0.5" />
                                   <span className="sr-only">Close panel</span>
                                   <XMarkIcon
-                                    className="h-6 w-6"
+                                    className="w-6 h-6"
                                     aria-hidden="true"
                                   />
                                 </button>
@@ -338,7 +338,7 @@ export default function Form() {
                             <div className="mt-8">
                               <div className="flow-root">
                                 <div className="bg-gray-200 ">
-                                  <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                                  <div className="max-w-2xl px-4 py-16 mx-auto sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                                     <h2 className="sr-only">Placed Students</h2>
 
                                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 ">
@@ -352,14 +352,14 @@ export default function Form() {
                                           onMouseLeave={handleMouseLeave}
                                         >
                                           <a href={item.href} className="group">
-                                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                                            <div className="w-full overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
                                               <img
                                                 key={item.id}
                                                 src={`${
                                                   image_url + item.fileUrl
                                                 }`}
                                                 alt={`${item.event}_${index}`}
-                                                className="w-full h-full object-cover cursor-pointer rounded-md "
+                                                className="object-cover w-full h-full rounded-md cursor-pointer "
                                               />
                                             </div>
                                           </a>
@@ -369,7 +369,7 @@ export default function Form() {
                                                 DeleteImage(item._id)
                                               }
                                               type="button"
-                                              className="absolute inset-0 flex items-center justify-center rounded-lg cursor-pointer  text-white bg-gray-500 bg-opacity-80 transition-opacity duration-300 opacity-0 group-hover:opacity-100 "
+                                              className="absolute inset-0 flex items-center justify-center text-white transition-opacity duration-300 bg-gray-500 rounded-lg opacity-0 cursor-pointer bg-opacity-80 group-hover:opacity-100 "
                                             >
                                               <PiTrashSimpleLight
                                                 className="w-6 h-6 "

@@ -28,28 +28,28 @@ const Calls = [
 export default function ContactUs() {
   return (
     <div className="relative  bg-gray-50  sm:py-32  rounded-t-[10rem]  ">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="px-6 mx-auto max-w-7xl lg:px-8">
         <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Contact Us
         </h1>
 
-        <div className="grid grid-cols-2 mt-10 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 grid-rows-2 gap-4 mt-10 sm:gap-6 lg:gap-8">
           {Contact.map((Contact) => (
             <Card extra="!flex-row flex-grow items-center w-[30rem] h-[20rem]  ml-20 shadow-md  ">
               <div
                 key={Contact.id}
-                className=" flex flex-col items-center justify-center  "
+                className="flex flex-col items-center justify-center "
               >
-                <div className="text-3xl -mb-4  ">
+                <div className="-mb-4 text-3xl ">
                   <TfiLocationPin />
                 </div>
 
-                <div className="p-8  ">
+                <div className="p-8 ">
                   <h3 className=" text-center   text-gray-900  antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                     <span aria-hidden="true" className="absolute inset-0" />
                     {Contact.Title}
                   </h3>
-                  <p className="mt-1 text-center text-md  block antialiased font-sans font-normal leading-relaxed text-gray-700">
+                  <p className="block mt-1 font-sans antialiased font-normal leading-relaxed text-center text-gray-700 text-md">
                     {Contact.Address}
                   </p>
                 </div>
@@ -57,44 +57,44 @@ export default function ContactUs() {
             </Card>
           ))}
           <div className="flex flex-row gap-10 ">
-            {Email.map((Email) => (
+            {Email.map((Email, i) => (
               <Card extra="!flex-row flex-grow items-center justify-center w-[17rem] h-[15rem] shadow-md ">
                 <div
-                  key={Email.id}
-                  className=" flex flex-col items-center justify-center p-6  "
+                  key={i * 2}
+                  className="flex flex-col items-center justify-center p-6 "
                 >
-                  <div className="text-3xl -mb-4  ">
+                  <div className="-mb-4 text-3xl ">
                     <HiOutlineMail />
                   </div>
 
-                  <div className="p-8  ">
+                  <div className="p-8 ">
                     <h3 className=" text-center   text-gray-900  antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {Email.title}
                     </h3>
-                    <p className="mt-1 text-center text-md  block antialiased font-sans font-normal leading-relaxed text-gray-700">
+                    <p className="block mt-1 font-sans antialiased font-normal leading-relaxed text-center text-gray-700 text-md">
                       {Email.email}
                     </p>
                   </div>
                 </div>
               </Card>
             ))}
-            {Calls.map((Call) => (
+            {Calls.map((Call, i) => (
               <Card extra=" !flex-row flex-grow items-center justify-center w-[15rem] h-[15rem] shadow-md">
                 <div
-                  key={Call.id}
-                  className="  flex flex-col items-center justify-center p-6  "
+                  key={i * 2}
+                  className="flex flex-col items-center justify-center p-6 "
                 >
-                  <div className="text-3xl -mb-4  ">
+                  <div className="-mb-4 text-3xl ">
                     <PiPhoneCallThin />
                   </div>
 
-                  <div className="p-8  ">
+                  <div className="p-8 ">
                     <h3 className="text-center   text-gray-900  antialiased tracking-normal font-sans text-xl font-semibold leading-[1.3]  mb-3">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {Call.title}
                     </h3>
-                    <p className="mt-1 text-center text-md  block antialiased font-sans font-normal leading-relaxed text-gray-700">
+                    <p className="block mt-1 font-sans antialiased font-normal leading-relaxed text-center text-gray-700 text-md">
                       {Call.PhoneNO}
                     </p>
                   </div>
@@ -117,12 +117,12 @@ export default function ContactUs() {
           <Card extra=" !flex-row flex-grow scale-90 -mt-[12rem] -ml-7 items-center justify-center w-[41rem] h-[36rem] shadow-md overflow-hidden hover:scale-100 ">
             <div className="relative w-full h-full -top-[5rem] overflow-hidden ">
               <form id="contact" className="bg-white py-[8rem] px-8  ">
-                <div className="block xl:flex w-full flex-wrap justify-between mb-6">
+                <div className="flex-wrap justify-between block w-full mb-6 xl:flex">
                   <div className="w-2/4 max-w-xs mb-6 xl:mb-0">
                     <div className="flex flex-col">
                       <label
                         htmlFor="full_name"
-                        className=" block text-sm font-medium leading-6 text-gray-900 mb-2 "
+                        className="block mb-2 text-sm font-medium leading-6 text-gray-900 "
                       >
                         Full Name
                       </label>
@@ -131,7 +131,7 @@ export default function ContactUs() {
                         id="first_name"
                         name="first_name"
                         type="text"
-                        className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                        className="flex items-center w-64 h-10 pl-3 text-sm font-normal border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700"
                         placeholder
                       />
                     </div>
@@ -140,7 +140,7 @@ export default function ContactUs() {
                     <div className="flex flex-col">
                       <label
                         htmlFor="Last Name"
-                        className="block text-sm font-medium leading-6 text-gray-900 mb-2"
+                        className="block mb-2 text-sm font-medium leading-6 text-gray-900"
                       >
                         Last Name
                       </label>
@@ -149,18 +149,18 @@ export default function ContactUs() {
                         id="last_name"
                         name="last_name"
                         type="text"
-                        className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                        className="flex items-center w-64 h-10 pl-3 text-sm font-normal border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700"
                         placeholder
                       />
                     </div>
                   </div>
                 </div>
-                <div className="flex w-full flex-wrap">
+                <div className="flex flex-wrap w-full">
                   <div className="w-2/4 max-w-xs">
                     <div className="flex flex-col">
                       <label
                         htmlFor="Email"
-                        className="block text-sm font-medium leading-6 text-gray-900 mb-2"
+                        className="block mb-2 text-sm font-medium leading-6 text-gray-900"
                       >
                         Email
                       </label>
@@ -169,7 +169,7 @@ export default function ContactUs() {
                         id="email"
                         name="email"
                         type="email"
-                        className="focus:outline-none focus:border focus:border-indigo-700 font-normal w-64 h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                        className="flex items-center w-64 h-10 pl-3 text-sm font-normal border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700"
                         placeholder
                       />
                     </div>
@@ -178,7 +178,7 @@ export default function ContactUs() {
                 <div className="w-full mt-6">
                   <div className="flex flex-col">
                     <label
-                      className="block text-sm font-medium leading-6 text-gray-900 mb-2"
+                      className="block mb-2 text-sm font-medium leading-6 text-gray-900"
                       htmlFor="message"
                     >
                       Message
@@ -186,7 +186,7 @@ export default function ContactUs() {
                     <textarea
                       placeholder
                       name="message"
-                      className="border-gray-300 border mb-4 rounded py-2 text-sm outline-none resize-none px-3 focus:border focus:border-indigo-700"
+                      className="px-3 py-2 mb-4 text-sm border border-gray-300 rounded outline-none resize-none focus:border focus:border-indigo-700"
                       rows={8}
                       id="message"
                       defaultValue={""}
@@ -194,7 +194,7 @@ export default function ContactUs() {
                   </div>
                   <button
                     type="submit"
-                    className="focus:outline-none bg-red-400  transition duration-150 ease-in-out hover:bg-gray-800 rounded text-white px-8 py-3 text-sm leading-6"
+                    className="flex items-center justify-center px-8 py-2 text-sm leading-6 text-center text-white transition duration-150 ease-in-out bg-red-400 rounded focus:outline-none hover:bg-gray-800"
                   >
                     Submit
                   </button>

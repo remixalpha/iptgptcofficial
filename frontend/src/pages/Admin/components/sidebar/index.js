@@ -97,7 +97,7 @@ const navigation = {
     },
     {
       id: "placed",
-      name: "Placed Students",
+      name: "Hero Image",
       icon: MdOutlinePhotoSizeSelectLarge,
       href: "/adminplaced",
       current: true,
@@ -128,7 +128,7 @@ export default function Sidebar() {
   return (
     <header className="bg-black ">
       <nav
-        className=" sm:mx-2 mx-2 flex max-w-7xl items-center justify-between p-8 "
+        className="flex items-center justify-between p-8 mx-2 sm:mx-2 max-w-7xl"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -136,7 +136,7 @@ export default function Sidebar() {
             <a href="/adminhome" className="-m-5 p-1.5">
               <span className="sr-only">IPT & GPTC Shoranur</span>
               <img
-                className="h-9 w-auto scale-150 relative left-7"
+                className="relative w-auto scale-150 h-9 left-7"
                 src={Logo}
                 alt=""
               />
@@ -151,11 +151,11 @@ export default function Sidebar() {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <Bars3Icon className="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
 
-        <Popover.Group className="hidden lg:flex lg:flex-row ml-24 ">
+        <Popover.Group className="hidden ml-24 lg:flex lg:flex-row ">
           {navigation.categories.map((categories) => (
             <div
               key={categories.name}
@@ -193,27 +193,22 @@ export default function Sidebar() {
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <div className="hidden md:block">
-            <div className="ml-4 flex items-center md:ml-6">
+            <div className="flex items-center ml-4 md:ml-6">
               {/* Profile dropdown */}
 
               <Popover className="relative">
                 <Popover.Button className="inline-flex items-center text-sm font-semibold leading-6 text-gray-900">
                   <div>
-                    <div
-                      className="relative flex max-w-xs items-center rounded-full
-                    bg-gray-800 text-sm focus:outline-none focus:ring-2
-                    focus:ring-white focus:ring-offset-2
-                    focus:ring-offset-gray-800"
-                    >
+                    <div className="relative flex items-center max-w-xs text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       {/* <img
-                        className="h-12 w-12 rounded-full  "
+                        className="w-12 h-12 rounded-full "
                         src={user.imageUrl}
                         alt=""
                       /> */}
                       <BsPerson
-                        className="h-10 w-10 text-white rounded-full p-2 "
+                        className="w-10 h-10 p-2 text-white rounded-full "
                         aria-hidden="true"
                       />
                     </div>
@@ -230,23 +225,23 @@ export default function Sidebar() {
                   leaveTo="opacity-0 translate-y-1"
                 >
                   <Popover.Panel className="absolute -right-[14rem] z-10 mt-10  flex w-screen max-w-sm -translate-x-1/2 px-4">
-                    <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                    <div className="flex-auto w-screen max-w-md overflow-hidden text-sm leading-6 bg-white shadow-lg rounded-3xl ring-1 ring-gray-900/5">
                       <div className="p-4">
                         {userNavigation.map((item) => (
                           <div
                             key={item.name}
-                            className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50"
+                            className="relative flex p-4 rounded-lg group gap-x-6 hover:bg-gray-50"
                           >
-                            <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center ">
+                            <div className="flex items-center justify-center flex-none mt-1 h-11 w-11 ">
                               <item.icon
-                                className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                                className="w-6 h-6 text-gray-600 group-hover:text-indigo-600"
                                 aria-hidden="true"
                               />
                             </div>
                             <div>
                               <a
                                 href={item.href}
-                                className="font-semibold text-gray-900 relative top-3 "
+                                className="relative font-semibold text-gray-900 top-3 "
                               >
                                 {item.name}
                                 <span className="absolute inset-0 " />
@@ -255,19 +250,19 @@ export default function Sidebar() {
                           </div>
                         ))}
                         <button
-                          className="group relative flex gap-x-6 rounded-lg p-4 w-80  hover:bg-gray-50"
+                          className="relative flex p-4 rounded-lg group gap-x-6 w-80 hover:bg-gray-50"
                           onClick={handleLogout}
                         >
-                          <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center ">
+                          <div className="flex items-center justify-center flex-none mt-1 h-11 w-11 ">
                             <CiLogout
-                              className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                              className="w-6 h-6 text-gray-600 group-hover:text-indigo-600"
                               aria-hidden="true"
                             />
                           </div>
                           <div>
                             <a
                               href="#"
-                              className="font-semibold text-gray-900 relative top-3 "
+                              className="relative font-semibold text-gray-900 top-3 "
                             >
                               Sign Out
                               <span className="absolute inset-0 " />
@@ -292,11 +287,11 @@ export default function Sidebar() {
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full px-6 py-6 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">IPT & GPTC Shoranur</span>
-              <img className="h-8 w-auto" src={Logo} alt="" />
+              <img className="w-auto h-8" src={Logo} alt="" />
             </a>
             <button
               type="button"
@@ -304,51 +299,51 @@ export default function Sidebar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              <XMarkIcon className="w-6 h-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
+          <div className="flow-root mt-6">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
+              <div className="py-6 space-y-2">
                 <a
                   href="/adminhome"
-                  className="-mx-3 block rounded-lg bg-LightWhite px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg bg-LightWhite hover:bg-gray-50"
                 >
                   Home
                 </a>
                 <a
                   href="/admindepartment"
-                  className="-mx-3 block rounded-lg hover:bg-LightWhite px-3 py-2 text-base font-semibold leading-7 text-gray-900 "
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-LightWhite "
                 >
                   Departments
                 </a>
                 <a
                   href="/adminprincipal"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                 >
                   principal
                 </a>
                 <a
                   href="/adminhod"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                 >
                   HOD
                 </a>
                 <a
                   href="/admincocurricular"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                 >
                   Co-Curricular
                 </a>
                 <a
                   href="/adminaicte"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                 >
                   AICTE Certificate
                 </a>
                 <a
                   href="/admingallery"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                 >
                   Gallery
                 </a>
