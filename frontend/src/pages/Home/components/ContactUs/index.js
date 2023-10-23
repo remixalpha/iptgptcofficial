@@ -115,9 +115,9 @@ export default function ContactUs() {
             />
           </Card>
           <Card extra=" !flex-row flex-grow scale-90 -mt-[12rem] -ml-7 items-center justify-center w-[41rem] h-[36rem] shadow-md overflow-hidden hover:scale-100 ">
-            <div className="relative w-full h-full -top-[5rem] overflow-hidden ">
-              <form id="contact" className="bg-white py-[8rem] px-8  ">
-                <div className="flex-wrap justify-between block w-full mb-6 xl:flex">
+            <div className="relative w-full h-full overflow-hidden ">
+              <form id="contact" className=" mt-4 p-8 ">
+                <div className="flex-wrap justify-between block w-full mb-6 xl:flex ">
                   <div className="w-2/4 max-w-xs mb-6 xl:mb-0">
                     <div className="flex flex-col">
                       <label

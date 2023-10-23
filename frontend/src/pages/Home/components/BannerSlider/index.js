@@ -4,26 +4,20 @@ import "./style.css";
 import Banner1 from "../../../../assets/images/Banner/ipt banner 2.jpeg";
 import Banner2 from "../../../../assets/images/Banner/ipt banner 3.jpeg";
 import Banner3 from "../../../../assets/images/Banner/iptimage1.jpg";
-import Placed from "../../../../assets/images/PlacedStudents/Placed Students.jpeg";
 import Logo from "../../../../assets/images/logos/iptlogomin.png";
-
-//icons
 
 import Opening from "../Open-Close";
 
-//Backend
-import { image_url, postLogin, FetchRequest } from "../../../../utils/agent";
-
 // Slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
-
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+
+//Backend
+import { image_url, postLogin, FetchRequest } from "../../../../utils/agent";
 
 const banners = [Banner1, Banner2, Banner3];
 
@@ -31,8 +25,24 @@ const BannerSlider = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [scrollY, setScrollY] = useState(0);
 
-  const [Notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [Gallerys, setGallerys] = useState([]);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const showNextNotification = () => {
+    if (currentIndex < notifications.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  useEffect(() => {
+    const notificationInterval = setInterval(showNextNotification, 500);
+    return () => {
+      clearInterval(notificationInterval);
+    };
+  }, [currentIndex, notifications]);
+
   //fetch data
   function fetchNotification() {
     postLogin("/notification/")
@@ -47,7 +57,7 @@ const BannerSlider = () => {
       .catch((error) => console.log(error))
       .finally(() => console.log("API REQUEST"));
   }
-  //featching Images data
+  //fetching Images data
   function fetchImage() {
     FetchRequest("/hero/")
       .then((res) => {
@@ -100,16 +110,15 @@ const BannerSlider = () => {
         </div>
       </div>
       <div className="absolute inset-0 grid grid-cols-2  ">
-        {/* notification */}
-
-        <div className="relative -top-24 w-[40rem] mx-0 transition-all duration-300 z-50">
-          {/* Notification */}
-
-          <div className="relative scale-75 flex flex-col space-y-10 px-10 py-8 ">
-            {Notifications.map((item) => (
+        {/* Notification */}
+        <div className="relative w-[40rem] min-h-screen -top-24 mx-0 transition-all duration-300 z-40 overflow-hidden overflow-y-scroll container ">
+          <div className="relative flex flex-col space-y-10 px-10 py-4 scale-75">
+            {notifications.slice(0, currentIndex + 1).map((item, index) => (
               <div
                 key={item._id}
-                className="group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 hover:scale-110 transition-all duration-300 "
+                className={`group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 hover:scale-110 transition-all duration-300 notifications ${
+                  index === currentIndex ? "show" : ""
+                }`}
               >
                 <div className="flex-shrink-0 ">
                   <img
@@ -149,7 +158,6 @@ const BannerSlider = () => {
 
         {/* Title */}
         <Swiper
-          // Install Swiper modules
           modules={[Navigation, Pagination, A11y, Autoplay]}
           spaceBetween={0}
           slidesPerView={1}
