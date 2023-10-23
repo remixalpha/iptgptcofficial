@@ -10,13 +10,13 @@ import SYLLABUS from "../../../../assets/images/Links/sylabuss.png";
 
 export default function Reference() {
   return (
-    <div className="relative -top-10 bg-white scale-110 sm:py-32 ">
+    <div className="relative top-10 xl:-top-10 xl:scale-110 sm:py-32 bg-white ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Reference
         </h1>
 
-        <div className="mx-auto mt-10 grid max-w-lg grid-cols-6 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-6 cursor-pointer ">
+        <div className="mx-auto mt-10 grid max-w-lg grid-cols-2 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:gap-x-10 lg:mx-0 lg:max-w-none sm:grid-cols-3 lg:grid-cols-6 cursor-pointer ">
           <Card>
             <div className="flex flex-col items-center justify-center gap-y-2 ">
               <img

@@ -103,7 +103,7 @@ const BannerSlider = () => {
 
         <div className="relative z-0">
           <img
-            className="relative -top-[6rem] max-h-screen w-full object-fill"
+            className="relative -top-[6rem] min-h-screen w-full object-cover object-center"
             src={banners[currentImage]}
             alt=""
           />
@@ -111,8 +111,8 @@ const BannerSlider = () => {
       </div>
       <div className="absolute inset-0 grid grid-cols-2  ">
         {/* Notification */}
-        <div className="relative w-[40rem] min-h-screen -top-24 mx-0 transition-all duration-300 z-40 overflow-hidden overflow-y-scroll container ">
-          <div className="relative flex flex-col space-y-10 px-10 py-4 scale-75">
+        <div className="relative flex items-center justify-center w-[40rem] min-h-screen -top-24 right-[10rem] lg:-left-10 overflow-y-scroll container scale-50 lg:scale-75 transition-all duration-300 z-40">
+          <div className="relative flex flex-col space-y-10 lg:px-2 lg:py-4 ">
             {notifications.slice(0, currentIndex + 1).map((item, index) => (
               <div
                 key={item._id}
@@ -171,12 +171,12 @@ const BannerSlider = () => {
           <SwiperSlide>
             <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 z-30">
               <div
-                className="absolute transition-all duration-300   top-[24rem]  sm:top-[22rem]  sm:right-[5rem]   md:top-[20rem]  md:right-[6rem]   lg:top-[20rem]  lg:right-[3rem]  xl:top-[15rem]  xl:right-[26rem] mx-4  "
+                className="fixed mb-24  transition-all duration-300transition-all duration-300 "
                 style={{ transform: `translateY(-${animationDistance}px)` }}
               >
                 <Opening />
               </div>
-              <h1 className="text-white opacity-50 antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem] text-center ">
+              <h1 className="text-white text-center opacity-50 antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[12rem] xl:text-[15rem] ">
                 IPT GPTC
               </h1>
             </div>
@@ -185,9 +185,9 @@ const BannerSlider = () => {
             {Gallerys.map((item, index) => (
               <div
                 key={item.id}
-                className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 scale-150  z-50 "
+                className="w-full h-full flex justify-center items-center p-10 scale-50 md:scale-150 z-50 transition-all duration-300 "
               >
-                <div className=" -ml-12  p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
+                <div className="p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                   <img
                     className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
                     key={item.id}

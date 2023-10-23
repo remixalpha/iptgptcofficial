@@ -60,13 +60,13 @@ export default function Home() {
           </div>
         )}
 
-        <div className="items-center justify-center ">
+        <div className=" flex items-center justify-center ">
           <AboutUS />
         </div>
         <div>
           <VisionMission />
         </div>
-        <div className=" mt-16 ">
+        <div className="">
           <PrincipalM />
         </div>
         <div>

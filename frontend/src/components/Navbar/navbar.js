@@ -51,11 +51,11 @@ export default function Navbar() {
     <Disclosure as="nav">
       {({ open }) => (
         <>
-          <div className=" flex items-center justify-center relative top-5  transition-all duration-300 ">
-            <div className="h-[6rem] max-w-[125rem] mx-5 left-0 right-0 absolute bg-gray-800 opacity-30 rounded-xl z-20 transition-all duration-300" />
+          <div className="relative top-5 flex items-center justify-center transition-all duration-300 ">
+            <div className=" h-[6rem] max-w-[125rem] mx-10 left-0 right-0 absolute bg-gray-800 opacity-30 rounded-xl z-20 transition-all duration-300" />
 
             <div
-              className="flex h-[6rem] w-[125rem]  items-center justify-between mx-5   z-40 rounded-xl   "
+              className="flex h-[6rem] w-[125rem] items-center justify-between mx-5 z-40 rounded-xl"
               style={{ backdropFilter: "blur(10px)" }}
             >
               {/* Mobile menu button*/}
@@ -84,7 +84,7 @@ export default function Navbar() {
               </div>
 
               {/* Main Navbar */}
-              <div className="hidden  mx-[2rem] p-4  lg:flex lg:flex-wrap lg:justify-items-stretch lg:items-center lg:ml-10 lg:gap-2">
+              <div className="hidden  mx-[2rem] p-4 space-y-2 scale-90 xl:scale-100 lg:justify-items-stretch lg:items-center lg:flex lg:flex-wrap lg:ml-10 lg:gap-2">
                 {/* Home */}
                 <div className="w-full sm:w-auto">
                   {home.map((item) => (

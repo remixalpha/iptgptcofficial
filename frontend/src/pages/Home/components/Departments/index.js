@@ -49,13 +49,13 @@ const Department = [
 ];
 export default function Reference() {
   return (
-    <div className="relative -top-10 scale-110 sm:py-32 ">
+    <div className="relative top-24 xl:-top-10 xl:scale-110 sm:py-32 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Departments
         </h1>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 cursor-pointer">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 cursor-pointer">
           <div className="absolute inset-9 -z-10 overflow-hidden">
             <svg
               className="absolute left-[max(60%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
@@ -90,7 +90,7 @@ export default function Reference() {
           {Department.map((item) => (
             <Card extra={` border border-gray-800 rounded-primary`}>
               <div key={Department.id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden  rounded-primary   bg-white lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-primary bg-white lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                   <img
                     src={item.imageSrc}
                     alt={item.imageAlt}
