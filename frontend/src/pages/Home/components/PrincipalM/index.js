@@ -4,20 +4,18 @@ import "./style.css";
 import { image_url, FetchRequest } from "../../../../utils/agent";
 
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { useInView } from "react-intersection-observer";
 
-const container = {
-  hidden: { opacity: 1, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.5,
-    },
-  },
-};
+// const container = {
+//   hidden: { opacity: 1, scale: 0 },
+//   visible: {
+//     opacity: 1,
+//     scale: 1,
+//     transition: {
+//       delayChildren: 0.5,
+//       staggerChildren: 0.5,
+//     },
+//   },
+// };
 
 const item = {
   hidden: { y: 20, opacity: 0 },
@@ -35,9 +33,8 @@ export default function Principal() {
   function fetchHod() {
     FetchRequest("/principal/")
       .then((res) => {
-        // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setPrincipals(res.data.doc);
         } else {
           console.error("response not found");

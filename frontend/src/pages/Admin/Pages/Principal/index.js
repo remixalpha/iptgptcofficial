@@ -15,7 +15,7 @@ export default function Principal() {
     FetchRequest("/principal/")
       .then(async (res) => {
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setPrincipals(res.data.doc);
         } else {
           console.error("response not found");
@@ -61,7 +61,7 @@ export default function Principal() {
         )}
         {/* Circles with opacity */}
 
-        <div className=" scale-105 min-h-screen ">
+        <div className="min-h-screen scale-105 ">
           <Form Principals={Principals} />
         </div>
       </div>

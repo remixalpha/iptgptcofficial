@@ -65,7 +65,7 @@ const Gallery = () => {
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setgallerys(res.data.doc);
         } else {
           console.error("response not found");
@@ -104,16 +104,16 @@ const Gallery = () => {
       >
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-red-400 p-2 rounded-full text-white z-50 "
+            className="fixed z-50 p-2 text-white scale-150 bg-red-400 rounded-full cursor-pointer bottom-10 right-10 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />
           </div>
         )}
 
-        <div className="gallery-container relative p-5  ">
+        <div className="relative p-5 gallery-container ">
           <Card extra="relative -top-[10rem]  p-6 mb-5 mx-[14rem] ">
-            <div className="gallery-buttons flex flex-row justify-center items-center gap-4 ">
+            <div className="flex flex-row items-center justify-center gap-4 gallery-buttons ">
               <button
                 className={`gallery-button transition ${
                   selectedTabs === "All"
@@ -232,7 +232,7 @@ const Gallery = () => {
                 key={item.id}
                 src={`${image_url + item.fileUrl}`}
                 alt={`${item.event}_${index}`}
-                className="w-full h-full object-cover cursor-pointer rounded-md "
+                className="object-cover w-full h-full rounded-md cursor-pointer "
                 onClick={() => handleImageClick(`${image_url + item.fileUrl}`)}
               />
             ))}
@@ -241,19 +241,19 @@ const Gallery = () => {
           {selectedImage && (
             <div className="fixed -top-[5rem]  left-0 w-full h-full mt-[5rem]  flex justify-center items-center z-50 0 ">
               <div
-                className="fixed h-full w-full inset-0 hidden transition-opacity bg-gray-400 bg-opacity-75 md:block"
+                className="fixed inset-0 hidden w-full h-full transition-opacity bg-gray-400 bg-opacity-75 md:block"
                 style={{ backdropFilter: "blur(8px)" }}
               />
-              <div className="max-w-4xl max-h-4xl relative shadow-lg ">
+              <div className="relative max-w-4xl shadow-lg max-h-4xl ">
                 <img
                   src={selectedImage}
                   alt="Selected"
-                  className="w-full h-full object-contain"
+                  className="object-contain w-full h-full"
                 />
               </div>
               <button
                 onClick={handleCloseModal}
-                className="absolute top-10 right-10 text-gray-800 cursor-pointer bg-transparent scale-150 h-8 w-8 p-2 bg-white shadow-lg rounded-primary  "
+                className="absolute w-8 h-8 p-2 text-gray-800 scale-150 bg-transparent bg-white shadow-lg cursor-pointer top-10 right-10 rounded-primary "
               >
                 <IoClose />
               </button>
@@ -261,7 +261,7 @@ const Gallery = () => {
           )}
         </div>
 
-        <div className=" ">
+        <div className="">
           <Footer />
         </div>
       </div>

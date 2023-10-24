@@ -11,6 +11,8 @@ import Related from "./components/Flyout/Related/flyout";
 import Downloads from "./components/Flyout/Downloadss/flyout";
 
 import { Link } from "react-router-dom";
+import { FetchRequest, image_url } from "../../utils/agent";
+import { useEffect } from "react";
 
 //data
 const home = [{ name: "Home", href: "#", current: true }];
@@ -43,15 +45,31 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [activeItem, setActiveItem] = useState("Home");
-
+  const [disc, setDisc] = useState({});
   const handleItemClick = (name) => {
     setActiveItem(name);
   };
+  function fetchApi() {
+    FetchRequest("/aicte/one")
+      .then(async (res) => {
+        if (res.statusText === "OK") {
+          setDisc(res.data.doc);
+        } else {
+          console.error("response not found");
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => console.log("API REQUEST"));
+  }
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
   return (
     <Disclosure as="nav">
       {({ open }) => (
         <>
-          <div className="relative top-5 flex items-center justify-center transition-all duration-300 ">
+          <div className="relative flex items-center justify-center transition-all duration-300 top-5 ">
             <div className=" h-[6rem] max-w-[125rem] mx-10 left-0 right-0 absolute bg-gray-800 opacity-30 rounded-xl z-20 transition-all duration-300" />
 
             <div
@@ -59,14 +77,14 @@ export default function Navbar() {
               style={{ backdropFilter: "blur(10px)" }}
             >
               {/* Mobile menu button*/}
-              <div className="absolute inset-y-0 mx-4 flex items-center lg:hidden">
-                <Disclosure.Button className="inline-flex  items-center justify-center rounded-md p-2 bg-gray-500 text-white hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+              <div className="absolute inset-y-0 flex items-center mx-4 lg:hidden">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-white bg-gray-500 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    <XMarkIcon className="block w-6 h-6" aria-hidden="true" />
                   ) : (
                     <Bars3Icon
-                      className="block h-6 w-6 z-50"
+                      className="z-50 block w-6 h-6"
                       aria-hidden="true"
                     />
                   )}
@@ -74,7 +92,7 @@ export default function Navbar() {
               </div>
 
               <div className="flex-shrink-0 ml-[8rem] sm:ml-[14rem] md:ml-[20rem]  lg:ml-20  ">
-                <Link to="/" className="flex flex-shrink-0  cursor-pointer ">
+                <Link to="/" className="flex flex-shrink-0 cursor-pointer ">
                   <img
                     className="h-[2rem] sm:h-[3rem] md:h-[4rem] w-auto transition-all duration-300  "
                     src={Logo}
@@ -117,7 +135,7 @@ export default function Navbar() {
                   <CoCurricular />
                 </div>
                 {/* AntiRagging */}
-                <div className=" w-full sm:w-auto">
+                <div className="w-full sm:w-auto">
                   <AntiRagging />
                 </div>
                 {/* DisClosure*/}
@@ -148,23 +166,20 @@ export default function Navbar() {
                   <Related />
                 </div>
                 {/*Mandatory*/}
-                <div className=" w-full sm:w-auto">
-                  {mandatory.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => handleItemClick(item.name)}
-                      className={classNames(
-                        activeItem === item.name
-                          ? "text-Primary bg-white  text-md  font-bold   transition-all duration-300 ease-in-out "
-                          : "text-white text-md  font-bold hover:text-Primary hover:bg-white  hover:text-md  hover:font-bold ",
-                        "rounded-xl font-bold   px-3 py-2 text-sm  transition-all duration-300 ease-in-out "
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+                <div className="w-full sm:w-auto">
+                  <a
+                    href={image_url + disc.fileUrl}
+                    onClick={() => handleItemClick(mandatory.name)}
+                    className={classNames(
+                      activeItem === mandatory.name
+                        ? "text-Primary bg-white  text-md  font-bold   transition-all duration-300 ease-in-out "
+                        : "text-white text-md  font-bold hover:text-Primary hover:bg-white  hover:text-md  hover:font-bold ",
+                      "rounded-xl font-bold   px-3 py-2 text-sm  transition-all duration-300 ease-in-out "
+                    )}
+                    aria-current={mandatory.current ? "page" : undefined}
+                  >
+                    Mandatory Disclosure
+                  </a>
                 </div>
                 {/*Grievance*/}
                 <div className="w-full sm:w-auto">
@@ -214,12 +229,12 @@ export default function Navbar() {
 
           {/* Mobile view */}
 
-          <Disclosure.Panel className="lg:hidden absolute left-1/2  mt-8  bg-opacity-10 max-w-fit -translate-x-1/2  z-50 ">
+          <Disclosure.Panel className="absolute z-50 mt-8 -translate-x-1/2 lg:hidden left-1/2 bg-opacity-10 max-w-fit ">
             <div
-              className="w-screen max-w-lg flex-auto overflow-hidden rounded-xl  text-sm leading-6 shadow-lg  ring-gray-900/5"
+              className="flex-auto w-screen max-w-lg overflow-hidden text-sm leading-6 shadow-lg rounded-xl ring-gray-900/5"
               style={{ backdropFilter: "blur(10px)" }}
             >
-              <div className="space-y-1 px-2 pb-3 pt-2">
+              <div className="px-2 pt-2 pb-3 space-y-1">
                 {home.map((item) => (
                   <Disclosure.Button
                     key={item.name}
@@ -238,22 +253,22 @@ export default function Navbar() {
                 ))}
               </div>
 
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <AboutUS />
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <Department />
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <CoCurricular />
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <AntiRagging />
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <DisClosure />
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2">
+              <div className="px-2 pt-2 pb-3 space-y-1">
                 {feedback.map((item) => (
                   <a
                     key={item.name}
@@ -271,10 +286,10 @@ export default function Navbar() {
                   </a>
                 ))}
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <Related />
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2">
+              <div className="px-2 pt-2 pb-3 space-y-1">
                 {mandatory.map((item) => (
                   <a
                     key={item.name}
@@ -292,7 +307,7 @@ export default function Navbar() {
                   </a>
                 ))}
               </div>
-              <div className="space-y-1 px-2 pb-3 pt-2">
+              <div className="px-2 pt-2 pb-3 space-y-1">
                 {grievance.map((item) => (
                   <a
                     key={item.name}
@@ -311,11 +326,11 @@ export default function Navbar() {
                 ))}
               </div>
 
-              <div className="space-y-1 px-2 pb-3 pt-2 bg-white rounded-md mx-3 my-2 ">
+              <div className="px-2 pt-2 pb-3 mx-3 my-2 space-y-1 bg-white rounded-md ">
                 <Downloads />
               </div>
 
-              <div className="space-y-1 px-2 pb-3 pt-2">
+              <div className="px-2 pt-2 pb-3 space-y-1">
                 {contactus.map((item) => (
                   <a
                     key={item.name}

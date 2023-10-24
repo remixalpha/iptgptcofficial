@@ -46,7 +46,7 @@ export default function Introduction() {
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           const nssStaffs = res.data.doc.filter(
             (item) => item.clubName === "nss"
           );
@@ -74,18 +74,18 @@ export default function Introduction() {
           key={item.Title}
           className="bg-lime-50 shadow-lg rounded-[4rem] p-20 -mx-20 scale-75 space-y-10 "
         >
-          <div className="flex justify-center items-center scale-125  ">
+          <div className="flex items-center justify-center scale-125 ">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
               {item.Title}
             </h1>
           </div>
 
           <div className="mx-auto grid max-w-3xl grid-cols-1 items-center  lg:max-w-[110rem] lg:grid-cols-2  ">
-            <div className=" relative -left-10 ">
-              <img src={item.Image} alt="" className="h-full w-full" />
+            <div className="relative  -left-10">
+              <img src={item.Image} alt="" className="w-full h-full" />
             </div>
             <div className="space-y-10 ">
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
+              <p className="mt-4 text-xl leading-8 text-justify text-gray-900 ">
                 {item.Des}
               </p>
               <div className="flex flex-row ">
@@ -95,7 +95,7 @@ export default function Introduction() {
                 >
                   Go To Gallery
                 </button>{" "}
-                <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer ">
+                <div className="relative w-5 h-5 text-white cursor-pointer top-4 right-8 ">
                   <FiChevronRight />
                 </div>
               </div>
@@ -113,18 +113,18 @@ export default function Introduction() {
             key={item.Title}
             className="bg-lime-50 shadow-lg rounded-[4rem] p-20 -mx-20 scale-75 space-y-10 "
           >
-            <div className="flex justify-center items-center scale-125  ">
+            <div className="flex items-center justify-center scale-125 ">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {item.Title}
               </h1>
             </div>
 
             <div className="mx-auto grid max-w-3xl grid-cols-1 items-center  xl:max-w-[110rem]  ">
-              <div className=" ">
-                <img src={item.Image} alt="" className="h-full w-full" />
+              <div className="">
+                <img src={item.Image} alt="" className="w-full h-full" />
               </div>
 
-              <p className="mt-4 text-justify text-gray-900 leading-8 text-xl ">
+              <p className="mt-4 text-xl leading-8 text-justify text-gray-900 ">
                 {item.Des}{" "}
               </p>
             </div>
@@ -141,7 +141,7 @@ export default function Introduction() {
                 <img
                   src={`${image_url + item.fileUrl}`}
                   alt={item.imageAlt}
-                  className="h-full w-full object-cover object-center"
+                  className="object-cover object-center w-full h-full"
                 />
               </div>
               <h1
@@ -169,7 +169,7 @@ export default function Introduction() {
             key={item.Title}
             className="bg-lime-50 rounded-[4rem] p-20 -mx-20 shadow-lg scale-75   "
           >
-            <div className="flex justify-center items-center scale-125  ">
+            <div className="flex items-center justify-center scale-125 ">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {item.Title}
               </h1>
@@ -177,12 +177,12 @@ export default function Introduction() {
 
             <div className="mx-auto grid max-w-[110rem] grid-cols-1 items-center  sm:max-w-[100rem]  sm:grid-cols-1    md:max-w-[110rem]  md:grid-cols-1   lg:max-w-[110rem] lg:grid-cols-2  xl:max-w-[110rem]  xl:grid-cols-2  ">
               <div className="space-y-10 ">
-                <p className="mt-4 text-justify text-gray-900 leading-8 text-xl  py-10 scale-110 sm:px-10 sm:py-10 ">
+                <p className="py-10 mt-4 text-xl leading-8 text-justify text-gray-900 scale-110 sm:px-10 sm:py-10 ">
                   {item.Des}
                 </p>
               </div>
-              <div className=" relative  ">
-                <img src={item.Image} alt="" className="h-full w-full" />
+              <div className="relative ">
+                <img src={item.Image} alt="" className="w-full h-full" />
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ export const createData = async (req, res, next) => {
       res.status(400).json({ status: false, doNotTrack: "file not found" });
     }
     let requests = await req.body;
-    console.log({ req: requests });
+    // console.log({ req: requests });
     req.body.fileUrl = req.file?.path;
     let doc = await new hodModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });
@@ -28,7 +28,7 @@ export const getDataOne = async (req, res, next) => {
 };
 
 export const getData = async (req, res, next) => {
-  try { 
+  try {
     let doc = await hodModel.find(req.body).populate("dept");
     res.status(200).json({ status: true, doc: doc });
   } catch (err) {

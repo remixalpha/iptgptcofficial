@@ -38,7 +38,7 @@ export default function Hod() {
     postLogin("/admin/getdept")
       .then(async (res) => {
         if (res) {
-          console.log(res.data.doNotTrack);
+          // console.log(res.data.doNotTrack);
           setDepartments(res.data.doNotTrack);
         } else {
           console.error("response not found");
@@ -49,7 +49,7 @@ export default function Hod() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden  bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-black">
       <div className="mx-auto">
         <Header />
       </div>
@@ -57,7 +57,7 @@ export default function Hod() {
       <div className="flex flex-col justify-center items-center  relative top-[4rem] transition-all duration-300 bg-white ">
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed z-50 p-2 text-white scale-150 bg-blue-500 rounded-full cursor-pointer bottom-10 right-10 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />
@@ -65,7 +65,7 @@ export default function Hod() {
         )}
         {/* Circles with opacity */}
 
-        <div className="scale-105 min-h-screen">
+        <div className="min-h-screen scale-105">
           <Form departments={departments} />
         </div>
       </div>

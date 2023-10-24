@@ -98,7 +98,7 @@ export default function Form() {
 
   const handleFormDept = (e) => {
     setFormDeptOption(e.target.value);
-    console.log({ Selected: formDeptOption });
+    // console.log({ Selected: formDeptOption });
   };
 
   // Update the imgHandler function to handle image uploading
@@ -130,7 +130,7 @@ export default function Form() {
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setgallerys(res.data.doc);
         } else {
           console.error("response not found");
@@ -145,7 +145,7 @@ export default function Form() {
     postLogin(`/gallery/del/${id}`)
       .then((res) => {
         if (res.statusText === "OK") {
-          console.log(res.data);
+          // console.log(res.data);
           window.location.reload();
         } else {
           console.log("No response found");
@@ -168,7 +168,7 @@ export default function Form() {
       validationSchema={notificationSchema}
       onSubmit={(values) => {
         // values.tabs = selectedTab;
-        console.log({ values: values });
+        // console.log({ values: values });
         const formData = new FormData();
         // formData.append("admin", "64f86826ea168a20207d0110");
         for (let value in values) {
@@ -181,7 +181,7 @@ export default function Form() {
 
         formData.append("tabs", formDeptOption);
 
-        console.log({ formData: formData });
+        // console.log({ formData: formData });
         postLogin("/gallery/create", formData)
           .then(async (res) => {
             console.log(res.data);

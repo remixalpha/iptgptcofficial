@@ -26,9 +26,8 @@ export function Faculty() {
   function fetchStaff() {
     postLogin("/staff/")
       .then((res) => {
-        // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setStaffs(res.data.doc);
         } else {
           console.error("response not found");
@@ -49,7 +48,7 @@ export function Faculty() {
       <div className="px-4 pt-20 pb-48">
         <div className="container mx-auto overflow-hidden">
           <PageTitle heading="Staff"></PageTitle>
-          <div className="overflow-hidden px-48 py-20  ">
+          <div className="px-48 py-20 overflow-hidden ">
             <Swiper
               modules={[Navigation, Pagination, A11y, Autoplay]}
               spaceBetween={50}

@@ -47,7 +47,7 @@ export default function Form({ Notifications }) {
   // For File
   const [Myfile, setMyfile] = useState([]);
   const [MyImage, setMyImage] = useState([]);
-  console.log({ NOT: Notifications });
+  // console.log({ NOT: Notifications });
 
   // Handle the sideFrame open
   const handleToggleDeleteDialog = () => {
@@ -102,9 +102,9 @@ export default function Form({ Notifications }) {
   function DeleteNotification(id) {
     postLogin(`/notification/del/${id}`)
       .then((res) => {
-        console.log({ MSG: res.statusText });
+        // console.log({ MSG: res.statusText });
         if (res.statusText === "OK") {
-          console.log(res.data);
+          // console.log(res.data);
           window.location.reload();
         } else {
           console.log("No response found");
@@ -123,7 +123,7 @@ export default function Form({ Notifications }) {
       initialValues={{ message: "", link: "", selectedType: "file" }}
       validationSchema={notificationSchema}
       onSubmit={(values) => {
-        console.log({ values: values });
+        // console.log({ values: values });
         const formData = new FormData();
         formData.append("admin", "64f86826ea168a20207d0110");
         for (let value in values) {
@@ -140,7 +140,7 @@ export default function Form({ Notifications }) {
         postLogin("/notification/create", formData)
           .then((res) => {
             if (res.statusText === "Created") {
-              console.log("created");
+              // console.log("created");
               setShowTickMark(true);
               // window.location.reload();
             } else {

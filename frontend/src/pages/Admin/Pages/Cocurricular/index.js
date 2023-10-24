@@ -38,7 +38,7 @@ export default function CoCurricular() {
     FetchRequest("/cocu/")
       .then(async (res) => {
         if (res) {
-          console.log(res.data.doNotTrack);
+          // console.log(res.data.doNotTrack);
           const clubNamesArray = res.data.doNotTrack.map(
             (item) => item.clubName
           );
@@ -66,7 +66,7 @@ export default function CoCurricular() {
           </div>
         )}
 
-        <div className="scale-105 min-h-screen">
+        <div className="min-h-screen scale-105">
           <Form />
         </div>
       </div>

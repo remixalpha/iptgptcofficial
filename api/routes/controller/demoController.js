@@ -3,7 +3,7 @@ import Joi from "joi";
 export const createData = async (req, res, next) => {
   try {
     let requests = await req.body;
-    console.log({ req: requests });
+    // console.log({ req: requests });
     let doc = await new demoModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });
   } catch (err) {

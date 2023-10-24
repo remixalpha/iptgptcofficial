@@ -6,7 +6,7 @@ import crypto from "crypto";
 import { adminModel, departmentModel } from "../../models";
 export const createUser = async (req, res, next) => {
   //joi validation
-  console.log(req.body);
+  // console.log(req.body);
   const schema = Joi.object({
     email: Joi.string().email({
       minDomainSegments: 2,
@@ -134,7 +134,7 @@ export const login = async (req, res, next) => {
 export const createDept = async (req, res, next) => {
   try {
     let requests = await req.body;
-    console.log({ req: requests });
+    // console.log({ req: requests });
     let doc = await new departmentModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });
   } catch (err) {
@@ -144,7 +144,7 @@ export const createDept = async (req, res, next) => {
 export const getDept = async (req, res, next) => {
   try {
     let requests = await req.body;
-    console.log({ req: requests });
+    // console.log({ req: requests });
     let doc = await departmentModel.find(req.body);
     res.status(201).json({ status: true, doNotTrack: doc });
   } catch (err) {

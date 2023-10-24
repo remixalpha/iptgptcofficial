@@ -80,12 +80,12 @@ export default function Form({ departments }) {
   // Backend
   const handleDepartmentChange = (e) => {
     setSelectedDepartment(e.target.value);
-    console.log({ selectedDepartment: selectedDepartment });
+    // console.log({ selectedDepartment: selectedDepartment });
   };
 
   const handleFormDept = (e) => {
     setFormDeptOption(e.target.value);
-    console.log({ Selected: formDeptOption });
+    // console.log({ Selected: formDeptOption });
   };
 
   // Update the imgHandler function to handle image uploading
@@ -110,7 +110,7 @@ export default function Form({ departments }) {
       .then((res) => {
         // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setHods(res.data.doc);
         } else {
           console.error("response not found");
@@ -125,7 +125,7 @@ export default function Form({ departments }) {
     postLogin(`/hod/del/${id}`)
       .then((res) => {
         window.location.reload();
-        console.log(res.data);
+        // console.log(res.data);
         if (res.statusText === "OK") {
         } else {
           console.log("No response found");
@@ -151,7 +151,7 @@ export default function Form({ departments }) {
       }}
       validationSchema={notificationSchema}
       onSubmit={(values) => {
-        console.log({ values: values });
+        // console.log({ values: values });
         const formData = new FormData();
         // formData.append("admin", "64f86826ea168a20207d0110");
         for (let value in values) {
@@ -162,11 +162,11 @@ export default function Form({ departments }) {
           formData.append("fileUrl", file);
         });
 
-        console.log({ formData: formData });
+        // console.log({ formData: formData });
         postLogin("/hod/create", formData)
           .then(async (res) => {
             if (res.statusText === "Created") {
-              console.log({ res: res });
+              // console.log({ res: res });
               console.log("created");
               setShowTickMark(true);
 

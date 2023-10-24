@@ -21,7 +21,7 @@ export default function Form() {
         initialValues={{ firstName: "", lastName: "", email: "", message: "" }}
         // validationSchema={notificationSchema}
         onSubmit={(values) => {
-          console.log({ values: values });
+          // console.log({ values: values });
           const formData = new FormData();
           // formData.append("admin", "64f86826ea168a20207d0110");
           for (let value in values) {
@@ -32,10 +32,10 @@ export default function Form() {
           //   formData.append("fileUrl", file);
           // });
 
-          console.log({ formData: formData });
+          // console.log({ formData: formData });
           postLogin("", formData)
             .then(async (res) => {
-              console.log({ res: res });
+              // console.log({ res: res });
               if (res?.statusText === "OK") {
                 // console.log(res.data);
                 // handleUploadSuccess();

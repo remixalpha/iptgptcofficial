@@ -68,7 +68,7 @@ export default function Form({ Principals }) {
       }}
       validationSchema={notificationSchema}
       onSubmit={(values) => {
-        console.log({ values: values });
+        // console.log({ values: values });
         const formData = new FormData();
         // formData.append("admin", "64f86826ea168a20207d0110");
         for (let value in values) {
@@ -79,12 +79,12 @@ export default function Form({ Principals }) {
           formData.append("fileUrl", file);
         });
 
-        console.log({ formData: formData });
+        // console.log({ formData: formData });
         postLogin("/principal/put", formData)
           .then(async (res) => {
-            console.log({ MSG: res.statusText });
+            // console.log({ MSG: res.statusText });
             if (res?.statusText === "OK") {
-              console.log(res.data);
+              // console.log(res.data);
               // window.location.reload();
             } else {
               console.log("not get response");

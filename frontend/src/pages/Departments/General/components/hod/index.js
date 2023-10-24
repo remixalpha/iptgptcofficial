@@ -28,9 +28,8 @@ export default function Contents() {
   function fetchHod() {
     FetchRequest("/hod/")
       .then((res) => {
-        // console.log(res.data);
         if (res.statusText === "OK") {
-          console.log(res.data.doc);
+          // console.log(res.data.doc);
           setHods(res.data.doc);
         } else {
           console.error("response not found");
@@ -52,12 +51,12 @@ export default function Contents() {
         <img
           src={General}
           alt="General"
-          className="h-full w-full object-cover object-center"
+          className="object-cover object-center w-full h-full"
         />
       </div> */}
       {Content.map((items) => (
         <div key={items.id}>
-          <p className="mt-4 text-justify  block antialiased font-sans text-xl font-normal leading-relaxed text-gray-800  border rounded-primary p-8  ">
+          <p className="block p-8 mt-4 font-sans text-xl antialiased font-normal leading-relaxed text-justify text-gray-800 border rounded-primary ">
             {expandedSubjects.includes(items.id)
               ? items.Des
               : `${items.Des.substring(0, 1100)} ...`}
@@ -69,11 +68,11 @@ export default function Contents() {
               className="self-end text-navy-900 font-bold  focus:outline-none relative -top-5 -right-[35rem] z-50 hover:-top-7 transition-all ease-in-out duration-300 "
             >
               {expandedSubjects.includes(items.id) ? (
-                <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                <div className="w-10 h-10 p-3 text-white bg-gray-900 rounded-full ">
                   <IoIosArrowUp />
                 </div>
               ) : (
-                <div className="bg-gray-900 text-white rounded-full h-10 w-10 p-3  ">
+                <div className="w-10 h-10 p-3 text-white bg-gray-900 rounded-full ">
                   <IoIosArrowDown />
                 </div>
               )}

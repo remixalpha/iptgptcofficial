@@ -18,10 +18,10 @@ export const createData = async (req, res, next) => {
 
     let requests = await req.body;
     if (!tabs.includes(requests.tabs)) {
-      console.log({ Req: requests.tabs });
+      // console.log({ Req: requests.tabs });
       res.status(400).json({ status: false, doc: "check the tabs" });
     } else {
-      console.log({ req: requests });
+      // console.log({ req: requests });
       req.body.fileUrl = req.file?.path;
       let doc = await new galleryModel(req.body).save();
       res.status(201).json({ status: true, doNotTrack: doc });

@@ -6,7 +6,7 @@ export const createData = async (req, res, next) => {
       res.status(400).json({ status: false, doNotTrack: "file not found" });
     }
     let requests = await req.body;
-    console.log({ req: requests });
+    // console.log({ req: requests });
     req.body.fileUrl = req.file?.path;
     let doc = await new cocurricularModel(req.body).save();
     res.status(201).json({ status: true, doNotTrack: doc });

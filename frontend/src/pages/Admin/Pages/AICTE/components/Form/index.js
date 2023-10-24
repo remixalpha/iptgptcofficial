@@ -35,7 +35,7 @@ export default function Form({ Certificates }) {
   //For file handling
   const imgHandler = (event) => {
     setMyfile(event.target.files);
-    console.log(event.target.files);
+    // console.log(event.target.files);
   };
   //
 
@@ -73,7 +73,7 @@ export default function Form({ Certificates }) {
     postLogin(`/aicte/del/${id}`)
       .then((res) => {
         if (res.statusText === "OK") {
-          console.log(res.data);
+          // console.log(res.data);
           window.location.reload();
         } else {
           console.log("No response found");
@@ -92,7 +92,7 @@ export default function Form({ Certificates }) {
       initialValues={{ name: "", year: "" }}
       validationSchema={notificationSchema}
       onSubmit={(values) => {
-        console.log({ values: values });
+        // console.log({ values: values });
         const formData = new FormData();
         // formData.append("admin", "64f86826ea168a20207d0110");
         for (let value in values) {
@@ -103,7 +103,7 @@ export default function Form({ Certificates }) {
           formData.append("fileUrl", file);
         });
 
-        console.log({ formData: formData });
+        // console.log({ formData: formData });
         postLogin("/aicte/create", formData)
           .then((res) => {
             if (res.statusText === "Created") {

@@ -37,7 +37,7 @@ export default function Departments() {
     postLogin("/admin/getdept")
       .then(async (res) => {
         if (res) {
-          console.log(res.data.doNotTrack);
+          // console.log(res.data.doNotTrack);
           setDepartments(res.data.doNotTrack);
         } else {
           console.error("response not found");
@@ -64,7 +64,7 @@ export default function Departments() {
         )}
         {/* Circles with opacity */}
 
-        <div className="scale-105 min-h-screen ">
+        <div className="min-h-screen scale-105 ">
           <Form departments={departments} />
         </div>
       </div>
