@@ -208,7 +208,7 @@ export default function Form() {
 
             setTimeout(() => {
               window.location.reload();
-            }, 5000);
+            }, 3000);
           });
       }}
     >

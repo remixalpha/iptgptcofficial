@@ -185,7 +185,7 @@ export default function Form({ departments }) {
 
             setTimeout(() => {
               window.location.reload();
-            }, 5000);
+            }, 3000);
           });
       }}
     >

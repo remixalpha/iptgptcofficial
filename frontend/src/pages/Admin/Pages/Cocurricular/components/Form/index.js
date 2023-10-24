@@ -163,7 +163,7 @@ export default function Form({ clubName }) {
 
             setTimeout(() => {
               window.location.reload();
-            }, 5000);
+            }, 2000);
           });
       }}
     >

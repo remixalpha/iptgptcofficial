@@ -141,7 +141,7 @@ export default function Form() {
             setIsContentVisible(false);
             setTimeout(() => {
               window.location.reload();
-            }, 5000);
+            }, 3000);
           });
       }}
     >

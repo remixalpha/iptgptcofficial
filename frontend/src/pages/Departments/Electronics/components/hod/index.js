@@ -48,8 +48,8 @@ export default function Hod() {
 
   return (
     <div className="relative flex flex-col-reverse items-center max-w-2xl px-4 mx-auto mb-20 lg:mb-auto gap-x-2 sm:py-32 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:space-x-20 ">
-      {Content.map((items) => (
-        <div key={items._id}>
+      {Content.map((items, i) => (
+        <div key={i}>
           <p className="block p-8 mt-4 font-sans text-xl antialiased font-normal leading-relaxed text-justify text-gray-800 border rounded-primary ">
             {expandedSubjects.includes(items.id)
               ? items.Des

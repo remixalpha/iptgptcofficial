@@ -100,7 +100,7 @@ export default function Form({ Principals }) {
 
             setTimeout(() => {
               window.location.reload();
-            }, 5000);
+            }, 3000);
           });
       }}
     >
