@@ -200,7 +200,7 @@ export default function Form() {
                         className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                       >
                         <div className="flex flex-col justify-end ">
-                          <LuEdit2
+                          <LuPencil
                             className="w-10 h-10 p-1 text-black"
                             aria-hidden="true"
                           />

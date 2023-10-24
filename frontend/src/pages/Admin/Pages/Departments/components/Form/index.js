@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Menu, Dialog, Transition } from "@headlessui/react";
 
 // Icons
-import { LuEdit2 } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
   PiUploadSimpleThin,
@@ -252,8 +252,8 @@ export default function Form({ departments }) {
                           className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                         >
                           <div className="flex flex-col justify-end ">
-                            <LuEdit2
-                              className="w-10 h-10 p-1 text-blue-700 "
+                            <LuPencil
+                              className="w-10 h-10 p-1 text-black "
                               aria-hidden="true"
                             />
                           </div>
@@ -506,7 +506,7 @@ export default function Form({ departments }) {
                                     className="fixed"
                                     onClick={handleToggleEditDialog}
                                   >
-                                    <LuEdit2
+                                    <LuPencil
                                       type="button"
                                       className="w-6 h-6 p-1 text-gray-900 transition-transform duration-300 ease-in-out transform group-hover:-translate-y-4"
                                       aria-hidden="true"
@@ -632,7 +632,7 @@ export default function Form({ departments }) {
                                     className="absolute p-2 bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
                                   >
                                     <div className="flex flex-col justify-end ">
-                                      <LuEdit2
+                                      <LuPencil
                                         className="w-10 h-10 p-1 text-navy-900 "
                                         aria-hidden="true"
                                       />

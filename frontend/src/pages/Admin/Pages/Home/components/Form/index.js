@@ -9,7 +9,7 @@ import {
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { AiOutlineLink, AiOutlineFileImage } from "react-icons/ai";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { LuEdit2 } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
 import { BiImageAdd } from "react-icons/bi";
 
 // backend

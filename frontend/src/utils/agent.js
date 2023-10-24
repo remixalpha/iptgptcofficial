@@ -4,6 +4,7 @@ import axios from "axios";
 export const image_url = "http://localhost:7001/";
 const base_url = "http://localhost:7001/api";
 
+
 // backend
 export const token = localStorage.getItem("token");
 
