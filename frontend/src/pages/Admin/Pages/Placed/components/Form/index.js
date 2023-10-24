@@ -175,13 +175,10 @@ export default function Form() {
                           setSelectedImage(event.target.files[0]); // Save the selected file
                         }}
                       />
-                      <label
-                        htmlFor="fileInput"
-                        className="relative flex items-center justify-center border-2 border-dashed cursor-pointer lg:w-[55rem] lg:h-[25rem] rounded-xl border-navy-300"
-                      >
+                      <label className="relative flex items-center justify-center border-2 border-dashed cursor-pointer lg:w-[55rem] lg:h-[25rem] rounded-xl border-navy-300">
                         {isImageUploaded ? (
                           <img
-                            className="object-contain object-center w-full h-full  rounded-xl"
+                            className="object-contain object-center w-full h-full rounded-xl"
                             alt="Uploaded"
                             src={image}
                           />
@@ -218,7 +215,7 @@ export default function Form() {
                     <button
                       type="button"
                       onClick={handleToggleDeleteDialog}
-                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer  group rounded-xl"
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                     >
                       <PiTrashSimpleLight
                         className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
@@ -254,7 +251,7 @@ export default function Form() {
                       onClick={() => {
                         setIsFormSubmitted(true);
                       }}
-                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer  group w-25 rounded-xl"
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                     >
                       <PiUploadSimpleThin
                         type="submit"

@@ -227,7 +227,7 @@ export default function Form() {
             <div className=" xl:w-[90rem] p-10 space-y-12 w-[15rem] sm:w-[35rem] shadow-lg rounded-3xl bg-white border border-gray-300 relative -top-[2rem] px-20 py-10  ">
               {isContentVisible ? (
                 <div>
-                  <div className="mt-10 grid grid-cols-1 gap-x-20 gap-y-8 xl:grid-cols-2 ">
+                  <div className="grid grid-cols-1 mt-10 gap-x-20 gap-y-8 xl:grid-cols-2 ">
                     {/* imageUpload */}
                     <div className="flex justify-center cursor-pointer col-2">
                       <div className="relative inline-block ">
@@ -244,7 +244,7 @@ export default function Form() {
                           }}
                         />
                         <label
-                          htmlFor="fileInput"
+                          // htmlFor="fileInput"
                           className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-[40rem] h-96 rounded-xl border-navy-300"
                         >
                           {isImageUploaded ? (
@@ -267,8 +267,8 @@ export default function Form() {
                           )}
                         </label>
                         <label
-                          htmlFor="fileInput"
-                          className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                          // htmlFor="fileInput"
+                          className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                         >
                           <div className="flex flex-col justify-end ">
                             <LuEdit2
@@ -280,7 +280,7 @@ export default function Form() {
                       </div>
                     </div>
                     {!isImageUploaded && isFormSubmitted && (
-                      <div className="fixed text-red-500 font-normal bottom-28 ">
+                      <div className="fixed font-normal text-red-500 bottom-28 ">
                         Please upload an image.
                       </div>
                     )}
@@ -305,7 +305,7 @@ export default function Form() {
                             className="block w-full px-5  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.event && touched.event && (
-                            <div className="error text-red-500 text-sm font-normal mt-1">
+                            <div className="mt-1 text-sm font-normal text-red-500 error">
                               {errors.event}
                             </div>
                           )}
@@ -346,10 +346,10 @@ export default function Form() {
                     <button
                       type="button"
                       onClick={handleToggleDeleteDialog}
-                      className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                     >
                       <PiTrashSimpleLight
-                        className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                        className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                         aria-hidden="true"
                       />
                       <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
@@ -382,7 +382,7 @@ export default function Form() {
                       onClick={() => {
                         setIsFormSubmitted(true);
                       }}
-                      className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                     >
                       <PiUploadSimpleThin
                         type="submit"
@@ -396,7 +396,7 @@ export default function Form() {
                   </div>
                 </div>
               ) : showTickMark ? (
-                <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+                <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                   <lord-icon
                     src="https://cdn.lordicon.com/yqzmiobz.json"
                     trigger="loop"
@@ -430,7 +430,7 @@ export default function Form() {
 
               <div className="fixed inset-0 overflow-hidden">
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                  <div className="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
                     <Transition.Child
                       as={Fragment}
                       enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -440,23 +440,23 @@ export default function Form() {
                       leaveFrom="translate-x-0"
                       leaveTo="translate-x-full"
                     >
-                      <Dialog.Panel className="pointer-events-auto w-screen max-w-5xl">
-                        <div className="flex h-full flex-col overflow-hidden bg-gray-200  rounded-xl mt-2 mr-9 shadow-xl">
-                          <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <Dialog.Panel className="w-screen max-w-5xl pointer-events-auto">
+                        <div className="flex flex-col h-full mt-2 overflow-hidden bg-gray-200 shadow-xl rounded-xl mr-9">
+                          <div className="flex-1 px-4 py-6 overflow-y-auto sm:px-6">
                             <div className="flex items-start justify-between">
                               <Dialog.Title className=" ml-8 mt-2 text-xl text-gray-900 antialiased tracking-normal font-sans font-medium  leading-[1.3]">
                                 Images
                               </Dialog.Title>
-                              <div className="ml-3 flex h-7 items-center">
+                              <div className="flex items-center ml-3 h-7">
                                 <button
                                   type="button"
-                                  className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                                  className="relative p-2 -m-2 text-gray-400 hover:text-gray-500"
                                   onClick={() => setOpen(false)}
                                 >
                                   <span className="absolute -inset-0.5" />
                                   <span className="sr-only">Close panel</span>
                                   <XMarkIcon
-                                    className="h-6 w-6"
+                                    className="w-6 h-6"
                                     aria-hidden="true"
                                   />
                                 </button>
@@ -466,7 +466,7 @@ export default function Form() {
                             <div className="mt-8">
                               <div className="flow-root">
                                 <div className="bg-gray-200 ">
-                                  <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                                  <div className="max-w-2xl px-4 py-16 mx-auto sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                                     <h2 className="sr-only">Images</h2>
 
                                     <div>
@@ -475,15 +475,15 @@ export default function Form() {
                                         className="relative inline-block text-left"
                                       >
                                         <div>
-                                          <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-500">
+                                          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy-500">
                                             {selectedSortOption}
                                             <ChevronDownIcon
-                                              className="-mr-1 ml-2 h-5 w-5"
+                                              className="w-5 h-5 ml-2 -mr-1"
                                               aria-hidden="true"
                                             />
                                           </Menu.Button>
                                         </div>
-                                        <Menu.Items className="absolute left-0 z-10 mt-2 w-80 origin-top-right rounded-xl bg-white shadow-lg border">
+                                        <Menu.Items className="absolute left-0 z-10 mt-2 origin-top-right bg-white border shadow-lg w-80 rounded-xl">
                                           <div className="py-1">
                                             {galleryTabs.map((item) => (
                                               <Menu.Item key={item.id}>
@@ -515,7 +515,7 @@ export default function Form() {
                                       </Menu>
                                     </div>
 
-                                    <div className=" mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                                    <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                                       {filteredImages.map((item, index) => (
                                         <div
                                           key={item.id}
@@ -526,14 +526,14 @@ export default function Form() {
                                           onMouseLeave={handleMouseLeave}
                                         >
                                           <a href={item.href} className="group">
-                                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                                            <div className="w-full overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
                                               <img
                                                 key={item.id}
                                                 src={`${
                                                   image_url + item.fileUrl
                                                 }`}
                                                 alt={`${item.event}_${index}`}
-                                                className="w-full h-full object-cover cursor-pointer rounded-md "
+                                                className="object-cover w-full h-full rounded-md cursor-pointer "
                                               />
                                             </div>
                                           </a>
@@ -543,7 +543,7 @@ export default function Form() {
                                                 DeleteImage(item._id)
                                               }
                                               type="button"
-                                              className="absolute inset-0 flex items-center justify-center rounded-lg cursor-pointer  text-white bg-gray-500 bg-opacity-80 transition-opacity duration-300 opacity-0 group-hover:opacity-100 "
+                                              className="absolute inset-0 flex items-center justify-center text-white transition-opacity duration-300 bg-gray-500 rounded-lg opacity-0 cursor-pointer bg-opacity-80 group-hover:opacity-100 "
                                             >
                                               <PiTrashSimpleLight
                                                 className="w-6 h-6 "

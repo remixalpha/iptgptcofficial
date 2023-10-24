@@ -50,13 +50,13 @@ const Department = [
 export default function Reference() {
   return (
     <div className="relative top-24 xl:-top-10 xl:scale-110 sm:py-32 ">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="px-6 mx-auto max-w-7xl lg:px-8">
         <h1 className="text-center  pb-10  text-gray-900  antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3]  mb-3">
           Departments
         </h1>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 cursor-pointer">
-          <div className="absolute inset-9 -z-10 overflow-hidden">
+        <div className="grid grid-cols-1 mt-6 cursor-pointer gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          <div className="absolute overflow-hidden inset-9 -z-10">
             <svg
               className="absolute left-[max(60%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
               aria-hidden="true"
@@ -87,19 +87,19 @@ export default function Reference() {
               />
             </svg>
           </div>
-          {Department.map((item) => (
-            <Card extra={` border border-gray-800 rounded-primary`}>
-              <div key={Department.id} className="group relative">
+          {Department.map((item, i) => (
+            <Card key={i} extra={` border border-gray-800 rounded-primary`}>
+              <div className="relative group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-primary bg-white lg:aspect-none group-hover:opacity-75 lg:h-[15rem]">
                   <img
                     src={item.imageSrc}
                     alt={item.imageAlt}
-                    className="h-full w-full object-contain lg:h-full lg:w-full rounded-primary mt-4"
+                    className="object-contain w-full h-full mt-4 lg:h-full lg:w-full rounded-primary"
                   />
                 </div>
-                <div className=" bg-gray-50 mx-2 rounded-primary ">
-                  <div className="mt-4 flex justify-between p-8 ">
-                    <h3 className="text-xl  text-gray-800 antialiased tracking-normal font-sans text-md font-semibold">
+                <div className="mx-2 bg-gray-50 rounded-primary">
+                  <div className="flex justify-between p-8 mt-4 ">
+                    <h3 className="font-sans text-xl antialiased font-semibold tracking-normal text-gray-800 text-md">
                       <span aria-hidden="true" className="absolute inset-0" />
                       {item.name}
                     </h3>
@@ -109,14 +109,14 @@ export default function Reference() {
                   </div>
 
                   <a href={item.href}>
-                    <div className=" group  flex flex-row relative -left-4 mb-4 -mt-6 scale-75 pb-6">
+                    <div className="relative flex flex-row pb-6 mb-4 -mt-6 scale-75 group -left-4">
                       <button
                         type="submit"
                         className=" flex w-[10rem] items-center justify-center rounded-md   bg-red-400 px-8 py-3 text-base font-medium text-white hover:bg-gray-800  transition delay-150 duration-300 ease-in-out"
                       >
                         Read More
                       </button>
-                      <div className="relative top-4 right-8 w-5 h-5 text-white cursor-pointer group-hover:right-1 transition-all duration-300 ">
+                      <div className="relative w-5 h-5 text-white transition-all duration-300 cursor-pointer top-4 right-8 group-hover:right-1 ">
                         <FiChevronRight />
                       </div>
                     </div>

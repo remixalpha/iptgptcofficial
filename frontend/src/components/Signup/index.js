@@ -17,14 +17,14 @@ export default function SignUp() {
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center flex-1 min-h-screen px-6 py-12 bg-black lg:px-8 isolate  ">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm relative -top-10 space-y-20 mb-5 ">
+      <div className="flex flex-col items-center justify-center flex-1 min-h-screen px-6 py-12 bg-black lg:px-8 isolate ">
+        <div className="relative mb-5 space-y-20 sm:mx-auto sm:w-full sm:max-w-sm -top-10 ">
           <img
             className="w-auto h-10 mx-auto scale-150 "
             src={Logo}
             alt="IPT & GPTC"
           />
-          {/* <h2 className=" text-white text-4xl font-bold leading-9 text-center ">
+          {/* <h2 className="text-4xl font-bold leading-9 text-center text-white ">
             Login
           </h2> */}
         </div>
@@ -71,7 +71,7 @@ export default function SignUp() {
               /* and other goodies */
             }) => (
               <form
-                className="space-y-6 bg-lightPrimary rounded-primary p-10 scale-125 bg-opacity-25  "
+                className="p-10 space-y-6 scale-125 bg-opacity-25 bg-lightPrimary rounded-primary "
                 onSubmit={handleSubmit}
               >
                 <div>
@@ -123,11 +123,11 @@ export default function SignUp() {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.password}
-                      autoComplete="current-password"
+                      // autoComplete="current-password"
                       required
                       className="block w-full rounded-md border-0 pl-4 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400   sm:text-sm sm:leading-6"
                     />
-                    <div className="absolute inset-y-0 right-0 pt-16 pr-12 flex items-center cursor-pointer ">
+                    <div className="absolute inset-y-0 right-0 flex items-center pt-16 pr-12 cursor-pointer ">
                       {showPassword ? (
                         <AiOutlineEyeInvisible
                           onClick={togglePasswordVisibility}

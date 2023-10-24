@@ -141,7 +141,7 @@ export default function Form({ Certificates }) {
         <form onSubmit={handleSubmit}>
           <div className="mt-10  shadow-lg rounded-3xl bg-white border border-gray-300 relative  mx-[20rem] px-20 py-28   ">
             {isContentVisible ? (
-              <div className="grid xl:grid-cols-2 grid-cols-1  sm:grid-cols-1 gap-x-20">
+              <div className="grid grid-cols-1 xl:grid-cols-2 sm:grid-cols-1 gap-x-20">
                 <label
                   htmlFor="file-upload"
                   className="relative font-semibold text-black bg-white rounded-md cursor-pointer"
@@ -192,7 +192,7 @@ export default function Form({ Certificates }) {
                   </div>
                 </label>
 
-                <div className="mt-10 grid xl:grid-cols-2 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1  ">
+                <div className="grid grid-cols-1 mt-10 xl:grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-1 ">
                   {/* name */}
                   <div className="sm:col-span-2">
                     <label
@@ -209,11 +209,11 @@ export default function Form({ Certificates }) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.name}
-                        autoComplete="given-name"
+                        // autoComplete="given-name"
                         className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       />
                       {errors.name && touched.name && (
-                        <div className="error text-red-500 text-sm font-normal mt-1">
+                        <div className="mt-1 text-sm font-normal text-red-500 error">
                           {errors.name}
                         </div>
                       )}
@@ -235,11 +235,11 @@ export default function Form({ Certificates }) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.year}
-                        autoComplete="given-year"
+                        // autoComplete="given-year"
                         className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       />
                       {errors.year && touched.year && (
-                        <div className="error text-red-500 text-sm font-normal mt-1">
+                        <div className="mt-1 text-sm font-normal text-red-500 error">
                           {errors.year}
                         </div>
                       )}
@@ -252,11 +252,11 @@ export default function Form({ Certificates }) {
                       type="button"
                       // disabled={isSubmitting}
                       onClick={handleToggleDeleteDialog}
-                      className=" group px-3 py-2 shadow-lg flex flex-row items-center justify-center space-x-2   text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group rounded-xl"
                     >
                       <PiTrashSimpleLight
                         type="submit"
-                        className="w-6 h-6 p-1 text-white  transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
+                        className="w-6 h-6 p-1 text-white transition-transform duration-300 ease-in-out transform group-hover:-translate-y-1"
                         aria-hidden="true"
                       />
                       <span className="relative  antialiased tracking-normal font-sans text-sm font-semibold leading-[1.3] ">
@@ -288,7 +288,7 @@ export default function Form({ Certificates }) {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className=" group px-3 py-2 w-25 shadow-lg flex flex-row items-center justify-center space-x-2  text-white bg-black rounded-xl   transition-all duration-300 cursor-pointer  "
+                      className="flex flex-row items-center justify-center px-3 py-2 space-x-2 text-white transition-all duration-300 bg-black shadow-lg cursor-pointer group w-25 rounded-xl"
                     >
                       <PiUploadSimpleThin
                         type="submit"
@@ -303,7 +303,7 @@ export default function Form({ Certificates }) {
                 </div>
               </div>
             ) : showTickMark ? (
-              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+              <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                 <lord-icon
                   src="https://cdn.lordicon.com/yqzmiobz.json"
                   trigger="loop"

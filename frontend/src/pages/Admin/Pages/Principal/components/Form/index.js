@@ -133,7 +133,7 @@ export default function Form({ Principals }) {
                           onChange={imgHandler}
                         />
                         <label
-                          htmlFor="fileInput"
+                          // htmlFor="fileInput"
                           className="relative flex items-center justify-center border-2 border-gray-400 border-dashed cursor-pointer w-96 h-96 rounded-xl"
                         >
                           {isImageUploaded ? (
@@ -263,7 +263,7 @@ export default function Form({ Principals }) {
                     <div className="">
                       <div className="col-span-full">
                         <label
-                          htmlFor="quote"
+                          htmlFor="author"
                           className="block mb-4 text-sm  text-gray-900 antialiased tracking-normal font-sans font-normal leading-[1.3]"
                         >
                           Author

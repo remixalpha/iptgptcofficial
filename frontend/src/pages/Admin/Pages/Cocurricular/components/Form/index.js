@@ -201,7 +201,7 @@ export default function Form({ clubName }) {
                           required
                         />
                         <label
-                          htmlFor="fileInput"
+                          // htmlFor="fileInput"
                           className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-96 h-96 rounded-xl border-navy-300"
                         >
                           {isImageUploaded ? (
@@ -224,8 +224,8 @@ export default function Form({ clubName }) {
                           )}
                         </label>
                         <label
-                          htmlFor="fileInput"
-                          className="absolute p-2 border border-e-white bg-white shadow-lg cursor-pointer top-80 -right-8 rounded-xl"
+                          // htmlFor="fileInput"
+                          className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                         >
                           <div className="flex flex-col justify-end ">
                             <LuEdit2
@@ -237,7 +237,7 @@ export default function Form({ clubName }) {
                       </div>
                     </div>
                     {!isImageUploaded && isFormSubmitted && (
-                      <div className="fixed text-red-500 font-normal bottom-20">
+                      <div className="fixed font-normal text-red-500 bottom-20">
                         Please upload an image.
                       </div>
                     )}
@@ -262,7 +262,7 @@ export default function Form({ clubName }) {
                             className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.name && touched.name && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.name}
                             </div>
                           )}
@@ -309,7 +309,7 @@ export default function Form({ clubName }) {
                             className="block w-full px-5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                           />
                           {errors.position && touched.position && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.position}
                             </div>
                           )}
@@ -340,7 +340,7 @@ export default function Form({ clubName }) {
                             ))}
                           </select>
                           {errors.clubName && touched.clubName && (
-                            <div className="error text-red-500 font-normal mt-1">
+                            <div className="mt-1 font-normal text-red-500 error">
                               {errors.clubName}
                             </div>
                           )}
@@ -487,10 +487,10 @@ export default function Form({ clubName }) {
                                 <p className="text-[20px] font-bold text-gray-900 capitalize ">
                                   {item.name}
                                 </p>
-                                <p className="text-sm font-semibold text-gray-800 truncate capitalize">
+                                <p className="text-sm font-semibold text-gray-800 capitalize truncate">
                                   {item.position}
                                 </p>
-                                <p className="text-sm font-medium text-gray-700 truncate capitalize">
+                                <p className="text-sm font-medium text-gray-700 capitalize truncate">
                                   {item.clubName}
                                 </p>
                               </div>
@@ -536,7 +536,7 @@ export default function Form({ clubName }) {
                 </div>
               </div>
             ) : showTickMark ? (
-              <div className="relative inset-0 flex flex-col items-center justify-center text-green-500 font-semibold text-2xl">
+              <div className="relative inset-0 flex flex-col items-center justify-center text-2xl font-semibold text-green-500">
                 <lord-icon
                   src="https://cdn.lordicon.com/yqzmiobz.json"
                   trigger="loop"

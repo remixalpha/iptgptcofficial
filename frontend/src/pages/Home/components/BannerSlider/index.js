@@ -109,13 +109,13 @@ const BannerSlider = () => {
           />
         </div>
       </div>
-      <div className="absolute inset-0 grid grid-cols-2  ">
+      <div className="absolute inset-0 grid grid-cols-2 ">
         {/* Notification */}
         <div className="relative flex items-center justify-center w-[40rem] min-h-screen -top-24 right-[10rem] lg:-left-10 overflow-y-scroll container scale-50 lg:scale-75 transition-all duration-300 z-40">
           <div className="relative flex flex-col space-y-10 lg:px-2 lg:py-4 ">
             {notifications.slice(0, currentIndex + 1).map((item, index) => (
               <div
-                key={item._id}
+                key={index}
                 className={`group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 hover:scale-110 transition-all duration-300 notifications ${
                   index === currentIndex ? "show" : ""
                 }`}
@@ -169,9 +169,9 @@ const BannerSlider = () => {
           className=" max-w-screen-4xl max-h-[40rem] right-[58rem] top-14 "
         >
           <SwiperSlide>
-            <div className="w-full h-full flex justify-center items-center p-10 transition-all duration-300 z-30">
+            <div className="z-30 flex items-center justify-center w-full h-full p-10 transition-all duration-300">
               <div
-                className="fixed mb-24  transition-all duration-300transition-all duration-300 "
+                className="fixed mb-24 transition-all duration-300 duration-300transition-all "
                 style={{ transform: `translateY(-${animationDistance}px)` }}
               >
                 <Opening />
@@ -184,8 +184,8 @@ const BannerSlider = () => {
           <SwiperSlide>
             {Gallerys.map((item, index) => (
               <div
-                key={item.id}
-                className="w-full h-full flex justify-center items-center p-10 scale-50 md:scale-150 z-50 transition-all duration-300 "
+                key={index * 3}
+                className="z-50 flex items-center justify-center w-full h-full p-10 transition-all duration-300 scale-50 md:scale-150 "
               >
                 <div className="p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
                   <img

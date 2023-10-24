@@ -33,13 +33,13 @@ export default function ContactUs() {
           Contact Us
         </h1>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 grid-rows-2 gap-4 mt-10 sm:gap-6 lg:gap-8">
-          {Contact.map((Contact) => (
-            <Card extra="!flex-row flex-grow items-center xl:w-[30rem] xl:h-[20rem]  xl:ml-20 shadow-md  ">
-              <div
-                key={Contact.id}
-                className="flex flex-col items-center justify-center "
-              >
+        <div className="grid grid-cols-1 grid-rows-2 gap-4 mt-10 xl:grid-cols-2 sm:gap-6 lg:gap-8">
+          {Contact.map((Contact, i) => (
+            <Card
+              key={i}
+              extra="!flex-row flex-grow items-center xl:w-[30rem] xl:h-[20rem]  xl:ml-20 shadow-md  "
+            >
+              <div className="flex flex-col items-center justify-center ">
                 <div className="-mb-4 text-3xl ">
                   <TfiLocationPin />
                 </div>
@@ -58,11 +58,11 @@ export default function ContactUs() {
           ))}
           <div className="flex flex-row md:gap-10 ">
             {Email.map((Email, i) => (
-              <Card extra="!flex-row flex-grow items-center justify-center w-[14rem] xl:w-[17rem] xl:h-[15rem] scale-75 md:scale-100 shadow-md ">
-                <div
-                  key={i * 2}
-                  className="flex flex-col items-center justify-center p-6 "
-                >
+              <Card
+                key={i}
+                extra="!flex-row flex-grow items-center justify-center w-[14rem] xl:w-[17rem] xl:h-[15rem] scale-75 md:scale-100 shadow-md "
+              >
+                <div className="flex flex-col items-center justify-center p-6 ">
                   <div className="-mb-4 text-3xl ">
                     <HiOutlineMail />
                   </div>
@@ -80,11 +80,11 @@ export default function ContactUs() {
               </Card>
             ))}
             {Calls.map((Call, i) => (
-              <Card extra=" !flex-row flex-grow items-center justify-center xl:w-[15rem] xl:h-[15rem] scale-75 md:scale-100 shadow-md">
-                <div
-                  key={i * 2}
-                  className="flex flex-col items-center justify-center p-6 "
-                >
+              <Card
+                key={i * 2}
+                extra=" !flex-row flex-grow items-center justify-center xl:w-[15rem] xl:h-[15rem] scale-75 md:scale-100 shadow-md"
+              >
+                <div className="flex flex-col items-center justify-center p-6 ">
                   <div className="-mb-4 text-3xl ">
                     <PiPhoneCallThin />
                   </div>
@@ -109,19 +109,19 @@ export default function ContactUs() {
               width="1200"
               height="450"
               style={{ border: 0 }}
-              allowfullscreen=""
+              allowFullScreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </Card>
           <Card extra=" !flex-row flex-grow items-center justify-center scale-90 xl:-mt-[12rem] xl:-ml-7 xl:w-[41rem] xl:h-[36rem] shadow-md overflow-hidden hover:scale-100 mb-10 xl:mb-0 ">
             <div className="relative w-full h-full overflow-hidden ">
-              <form id="contact" className="mt-4 p-8 ">
-                <div className="block sm:flex flex-wrap justify-between w-full mb-6">
+              <form id="contact" className="p-8 mt-4 ">
+                <div className="flex-wrap justify-between block w-full mb-6 sm:flex">
                   <div className="w-2/4 max-w-xs mb-6 xl:mb-0">
                     <div className="flex flex-col">
                       <label
-                        htmlFor="full_name"
+                        htmlFor="first_name"
                         className="block mb-2 text-sm font-medium leading-6 text-gray-900 "
                       >
                         Full Name
@@ -131,15 +131,15 @@ export default function ContactUs() {
                         id="first_name"
                         name="first_name"
                         type="text"
-                        className="flex items-center w-72 sm:w-56 lg:w-64 h-10 pl-3 text-sm font-normal border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700"
-                        placeholder
+                        className="flex items-center h-10 pl-3 text-sm font-normal border border-gray-300 rounded w-72 sm:w-56 lg:w-64 focus:outline-none focus:border focus:border-indigo-700"
+                        // placeholder
                       />
                     </div>
                   </div>
                   <div className="w-2/4 max-w-xs xl:flex xl:justify-end">
                     <div className="flex flex-col">
                       <label
-                        htmlFor="Last Name"
+                        htmlFor="last_name"
                         className="block mb-2 text-sm font-medium leading-6 text-gray-900"
                       >
                         Last Name
@@ -149,8 +149,8 @@ export default function ContactUs() {
                         id="last_name"
                         name="last_name"
                         type="text"
-                        className="flex items-center w-72 sm:w-56 lg:w-64 h-10 pl-3 text-sm font-normal border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700"
-                        placeholder
+                        className="flex items-center h-10 pl-3 text-sm font-normal border border-gray-300 rounded w-72 sm:w-56 lg:w-64 focus:outline-none focus:border focus:border-indigo-700"
+                        // placeholder
                       />
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export default function ContactUs() {
                   <div className="w-2/4 max-w-xs">
                     <div className="flex flex-col">
                       <label
-                        htmlFor="Email"
+                        htmlFor="email"
                         className="block mb-2 text-sm font-medium leading-6 text-gray-900"
                       >
                         Email
@@ -169,8 +169,8 @@ export default function ContactUs() {
                         id="email"
                         name="email"
                         type="email"
-                        className="flex items-center  w-72 h-10 pl-3 text-sm font-normal border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700"
-                        placeholder
+                        className="flex items-center h-10 pl-3 text-sm font-normal border border-gray-300 rounded w-72 focus:outline-none focus:border focus:border-indigo-700"
+                        // placeholder
                       />
                     </div>
                   </div>
@@ -184,7 +184,7 @@ export default function ContactUs() {
                       Message
                     </label>
                     <textarea
-                      placeholder
+                      // placeholder
                       name="message"
                       className="px-3 py-2 mb-4 text-sm border border-gray-300 rounded outline-none resize-none focus:border focus:border-indigo-700"
                       rows={8}

@@ -9,7 +9,7 @@ import { getRequest } from "../../../../utils/agent";
 
 export default function Form() {
   return (
-    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-20 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-5">
+    <div className="grid max-w-2xl grid-cols-1 mx-auto gap-x-8 gap-y-16 lg:mx-20 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-5">
       <div className="-mx-[10rem] -mt-12 p-12 lg:sticky lg:top-4 lg:mx-0  lg:overflow-hidden">
         <img
           className="w-[40rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[50rem]"
@@ -63,9 +63,9 @@ export default function Form() {
           resetForm,
         }) => (
           <form onSubmit={handleSubmit}>
-            <div className="space-y-12 mx-20">
-              <div className="border-b border-gray-900/10 pb-12">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="mx-20 space-y-12">
+              <div className="pb-12 border-b border-gray-900/10">
+                <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
                     <label
                       htmlFor="firstName"
@@ -81,7 +81,7 @@ export default function Form() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.firstName}
-                        autoComplete="given-name"
+                        // autoComplete="given-name"
                         className="block w-full rounded-md border-0 pl-4 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -102,7 +102,7 @@ export default function Form() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.lastName}
-                        autoComplete="family-name"
+                        // autoComplete="family-name"
                         className="block w-full rounded-md border-0 pl-4 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -123,7 +123,7 @@ export default function Form() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}
-                        autoComplete="email"
+                        // autoComplete="email"
                         className="block w-full rounded-md border-0 pl-4 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -154,7 +154,7 @@ export default function Form() {
               </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-end gap-x-6">
+            <div className="flex items-center justify-end mt-6 gap-x-6">
               <button
                 type="button"
                 className="text-sm font-semibold leading-6 text-gray-900"
@@ -167,7 +167,7 @@ export default function Form() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md bg-red-400  px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="px-3 py-2 text-sm font-semibold text-white bg-red-400 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Submit
               </button>

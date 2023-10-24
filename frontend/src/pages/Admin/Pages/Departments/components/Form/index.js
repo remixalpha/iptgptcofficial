@@ -224,7 +224,7 @@ export default function Form({ departments }) {
                           }}
                         />
                         <label
-                          htmlFor="fileInput"
+                          htmlFor="do"
                           className="relative flex items-center justify-center border-2 border-dashed cursor-pointer w-96 h-96 rounded-xl border-navy-300"
                         >
                           {isImageUploaded ? (
@@ -236,6 +236,7 @@ export default function Form({ departments }) {
                           ) : (
                             <div className="flex flex-col items-center">
                               <BiImageAdd
+                                name="do"
                                 className="w-1/2 mb-2 text-gray-800 h-1/2 "
                                 src=""
                                 alt="Placeholder"
@@ -247,7 +248,7 @@ export default function Form({ departments }) {
                           )}
                         </label>
                         <label
-                          htmlFor="fileInput"
+                          // htmlFor="fileInput"
                           className="absolute p-2 bg-white border shadow-lg cursor-pointer border-e-white top-80 -right-8 rounded-xl"
                         >
                           <div className="flex flex-col justify-end ">
@@ -688,7 +689,7 @@ export default function Form({ departments }) {
                                     <select
                                       id="departments"
                                       name="departments"
-                                      autoComplete="country-name"
+                                      // autoComplete="country-name"
                                       value={selectedDepartment}
                                       onChange={handleDepartmentChange}
                                       className="block w-full px-5 bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"

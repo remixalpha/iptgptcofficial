@@ -58,9 +58,9 @@ export default function Principal() {
       >
         Principal's Message
       </motion.h1>
-      {principals.map((principal) => (
+      {principals.map((principal, i) => (
         <motion.div
-          key={principal.id}
+          key={i * 2}
           className="grid items-center max-w-2xl grid-cols-1 px-4 mx-auto gap-x-20 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8 "
         >
           <div>
