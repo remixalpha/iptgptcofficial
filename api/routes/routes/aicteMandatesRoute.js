@@ -9,6 +9,7 @@ import verify from "../controller/verifyToken";
 
 router.get("/", aictemandatesController.getData);
 router.post("/sort", aictemandatesController.getDataOne);
+router.get("/one", aictemandatesController.getLastData);
 router.post("/create", singleImageUploader, aictemandatesController.createData);
 router.post("/put", verify, aictemandatesController.updateData);
 router.post("/del/:id", aictemandatesController.deleteData);

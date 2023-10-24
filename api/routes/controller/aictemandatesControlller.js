@@ -37,6 +37,15 @@ export const getData = async (req, res, next) => {
     // res.status(200).json({ status: false, err: err });
   }
 };
+export const getLastData = async (req, res, next) => {
+  try {
+    let doc = await aictemandatesModel.findOne(req.body).sort({ addedAt: -1 });
+    res.status(200).json({ status: true, doc: doc });
+  } catch (err) {
+    next(err);
+    // res.status(200).json({ status: false, err: err });
+  }
+};
 
 export const deleteData = async (req, res, next) => {
   try {

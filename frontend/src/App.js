@@ -37,7 +37,7 @@ import AdminCocurricular from "./pages/Admin/Pages/Cocurricular";
 import AdminAICTE from "./pages/Admin/Pages/AICTE";
 import AdminGallery from "./pages/Admin/Pages/Gallery";
 import AdminPlaced from "./pages/Admin/Pages/Placed";
-
+import NotFound from "./pages/NotFound";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   useEffect(() => {
@@ -70,6 +70,7 @@ function App() {
             <Route path="/adminaicte" element={<AdminAICTE />} />
             <Route path="/admingalery" element={<AdminGallery />} />
             <Route path="/adminplaced" element={<AdminPlaced />} />
+            <Route path="*" element={<NotFound />} />
           </>
         ) : (
           <>
@@ -92,6 +93,7 @@ function App() {
             <Route path="/approvel" element={<Approvel />} />
             <Route path="/bog" element={<BOG />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="*" element={<NotFound />} />
           </>
         )}
       </Routes>
