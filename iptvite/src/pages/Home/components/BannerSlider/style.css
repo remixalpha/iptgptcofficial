@@ -1,0 +1,35 @@
+@keyframes moveText {
+  50% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(50%);
+  }
+}
+
+.moving-text {
+  animation: moveText 30s linear infinite;
+}
+
+.container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.notifications {
+  animation: slide-in 1s ease-in-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%); /* Start off-screen to the left */
+  }
+  to {
+    transform: translateX(0); /* Slide in to the actual position */
+  }
+}

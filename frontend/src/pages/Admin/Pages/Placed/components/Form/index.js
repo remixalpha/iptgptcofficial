@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Menu, Dialog, Transition } from "@headlessui/react";
 //icons
-import { LuEdit2 } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
 import { BiImageAdd } from "react-icons/bi";
 import {
   PiUploadSimpleThin,

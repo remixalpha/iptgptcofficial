@@ -4,7 +4,7 @@ import "./App.css";
 
 import { BounceLoader } from "react-spinners";
 
-import Home from "./pages/Home/home";
+import Home from "./pages/Home/Home";
 import Login from "./components/Signup";
 
 import AboutUs from "./pages/About/AboutUs/aboutus";

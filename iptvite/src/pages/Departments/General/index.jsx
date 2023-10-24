@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
-import "./css/home.css";
+
 import { IoIosArrowUp } from "react-icons/io";
 
-import Snowfall from "react-snowfall";
-import Navbar from "../../components/Navbar/navbar";
-import BannerSlider from "./components/BannerSlider";
-import AboutUS from "./components/AboutUs/about";
-import VisionMission from "./components/MissionVision/Visionmission";
-import PrincipalM from "./components/PrincipalM/index";
-import Reference from "./components/Reference";
-import Departments from "./components/Departments/index";
-import ContactUS from "./components/ContactUs/index";
+import Navbar from "../../../components/Navbar/Navbar";
+import Banners from "./components/Banner";
+import Hod from "./components/hod/index";
+import Subjects from "./components/Subjects/index";
+import Lab from "./components/Lab/index";
+import Staff from "./components/Staff-card";
+import Footer from "../../../components/Footer/index";
 
-import Footer from "../../components/Footer/index";
-
-export default function Home() {
+const Computer = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const animationDistance = Math.min(0.2 * scrollY, 100);
 
   useEffect(() => {
     const handleScroll = () => {
       const position = window.pageYOffset;
       setScrollPosition(position);
       setShowScrollToTop(position > 300);
+      setScrollY(position);
     };
+
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -40,17 +40,10 @@ export default function Home() {
       <div className="mx-auto">
         <Navbar />
       </div>
-      <div className="relative z-0">
-        <div>
-          <BannerSlider />
-        </div>
+      <div>
+        <Banners />
       </div>
-
-      <div
-        className={`flex flex-col gap-0 bg-white z-50 ${
-          scrollPosition > 0 ? "sticky top-0" : ""
-        }`}
-      >
+      <div className="">
         {showScrollToTop && (
           <div
             className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-red-400 p-2 rounded-full text-white z-50 "
@@ -59,31 +52,24 @@ export default function Home() {
             <IoIosArrowUp />
           </div>
         )}
-
-        <div className=" flex items-center justify-center ">
-          <AboutUS />
+        <div className="relative -top-[10rem]">
+          <Hod />
         </div>
         <div>
-          <VisionMission />
-        </div>
-        <div className="">
-          <PrincipalM />
+          <Subjects />
         </div>
         <div>
-          <Reference />
-        </div>
-        <div className="">
-          <Departments />
+          <Lab />
         </div>
         <div>
-          <ContactUS />
+          <Staff />
         </div>
-
-        <div>
-          <Footer />
-        </div>
-        <Snowfall snowflakeCount={50} />
+      </div>
+      <div className=" ">
+        <Footer />
       </div>
     </div>
   );
-}
+};
+
+export default Computer;

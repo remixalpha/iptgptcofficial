@@ -253,7 +253,7 @@ export default function Form({ departments }) {
                         >
                           <div className="flex flex-col justify-end ">
                             <LuEdit2
-                              className="w-10 h-10 p-1 text-black "
+                              className="w-10 h-10 p-1 text-blue-700 "
                               aria-hidden="true"
                             />
                           </div>

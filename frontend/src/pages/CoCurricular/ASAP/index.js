@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { IoIosArrowUp } from "react-icons/io";
 
+// import Logo from "../../../assets/images/logos/asap.png";
 import Logo from "../../../assets/images/logos/asap.png";
-
 import Navbar from "../../../components/Navbar/navbar";
 import Banners from "./components/Banner";
 import Introduction from "./components/Introduction/index";
@@ -41,14 +41,14 @@ export default function NSS() {
         <Banners />
       </div>{" "}
       <div className="flex flex-col justify-center items-center relative bottom-[10rem] mb-8   sm:grid sm:grid-cols-2  sm:p-[0rem] sm:scale-125  sm:relative  sm:bottom-[5rem] sm:mx-4       md:grid md:grid-cols-2  md:pr-[8rem] md:scale-110  md:relative  md:bottom-[5rem] md:mx-8   lg:flex lg:flex-col lg:scale-110  lg:relative lg:bottom-[10rem] lg:pl-[10rem]        xl:flex xl:flex-col xl:scale-150 xl:relative  xl:bottom-[10rem] xl:pl-[8rem]    ">
-        <div className="flex justify-center items-center h-25 w-25 mb-2  sm:scale-50 md:scale-50  lg:scale-75 xl:scale-75  ">
+        <div className="flex items-center justify-center mb-2 h-25 w-25 sm:scale-50 md:scale-50 lg:scale-75 xl:scale-75 ">
           <img
             src={Logo}
             alt="Profile"
-            className="h-full w-full rounded-full object-contain"
+            className="object-contain w-full h-full rounded-full"
           />
         </div>
-        <div className="flex flex-col justify-center items-center   sm:items-start  sm:scale-100    md:scale-150  md:items-center   lg:scale-150  lg:items-center   xl:scale-150  xl:items-cenetr  ">
+        <div className="flex flex-col items-center justify-center sm:items-start sm:scale-100 md:scale-150 md:items-center lg:scale-150 lg:items-center xl:scale-150 xl:items-cenetr ">
           <h1 className="text-4xl font-black tracking-tight text-orange-200 ">
             Welcome
           </h1>
@@ -60,7 +60,7 @@ export default function NSS() {
       <div className="flex flex-col justify-center items-center -space-y-[24rem] relative top-[10rem] mb-[10rem] transition-all duration-300  ">
         {showScrollToTop && (
           <div
-            className="fixed scale-150 bottom-10 right-10 cursor-pointer bg-blue-500 p-2 rounded-full text-white z-50 "
+            className="fixed z-50 p-2 text-white scale-150 bg-blue-500 rounded-full cursor-pointer bottom-10 right-10 "
             onClick={handleScrollToTop}
           >
             <IoIosArrowUp />
@@ -74,7 +74,7 @@ export default function NSS() {
           <MotoAim />
         </div>
       </div>
-      <div className=" ">
+      <div className="">
         <Footer />
       </div>
     </div>
