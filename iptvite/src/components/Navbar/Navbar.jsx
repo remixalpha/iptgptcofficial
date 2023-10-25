@@ -15,7 +15,7 @@ import { FetchRequest, image_url } from "../../utils/agent";
 import { useEffect } from "react";
 
 //data
-const home = [{ name: "Home", href: "#", current: true }];
+const home = [{ name: "Home", href: "/", current: true }];
 const feedback = [
   {
     name: "AICTE Feedback",
@@ -236,9 +236,9 @@ export default function Navbar() {
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {home.map((item) => (
-                  <Disclosure.Button
+                  <Link
                     key={item.name}
-                    as="a"
+                    to="/"
                     href={item.href}
                     className={classNames(
                       item.current
@@ -249,7 +249,7 @@ export default function Navbar() {
                     aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}
-                  </Disclosure.Button>
+                  </Link>
                 ))}
               </div>
 

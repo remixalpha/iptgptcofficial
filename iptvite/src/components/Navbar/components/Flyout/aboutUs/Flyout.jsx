@@ -7,7 +7,7 @@ import {
   PhotoIcon,
 } from "@heroicons/react/24/outline";
 
-const solutions = [
+const Items = [
   {
     name: "About Us",
     href: "/about",
@@ -27,7 +27,7 @@ const solutions = [
 
 export default function Flyout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(solutions[0].name);
+  const [selectedItem, setSelectedItem] = useState(Items[0].name);
 
   const handleMouseEnter = () => {
     setIsPanelOpen(true);
@@ -68,9 +68,10 @@ export default function Flyout() {
         <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-[20rem] max-w-max -translate-x-1/2 px-4">
           <div className="flex-auto w-screen max-w-md overflow-hidden text-sm leading-6 bg-white shadow-lg rounded-3xl opacity-90 ring-gray-900/5">
             <div className="p-4">
-              {solutions.map((item) => (
-                <div
+              {Items.map((item) => (
+                <a
                   key={item.name}
+                  href={item.href}
                   className="relative flex p-4 group gap-x-5 rounded-xl hover:bg-orange-100 "
                 >
                   <div className="flex items-center justify-center flex-none bg-white rounded-full h-11 w-11">
@@ -80,14 +81,9 @@ export default function Flyout() {
                     />
                   </div>
                   <div className="pt-2">
-                    <a
-                      href={item.href}
-                      className="font-semibold text-gray-900 "
-                    >
-                      {item.name}
-                    </a>
+                    <a className="font-semibold text-gray-900 ">{item.name}</a>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>

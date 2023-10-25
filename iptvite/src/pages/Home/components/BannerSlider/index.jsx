@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 //Home page images
 import Banner1 from "../../../../assets/images/Banner/ipt banner 2.jpeg";
@@ -7,6 +7,8 @@ import Banner3 from "../../../../assets/images/Banner/iptimage1.jpg";
 import Logo from "../../../../assets/images/logos/iptlogomin.png";
 
 import Opening from "../Open-Close";
+
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 // Slider
 import { Navigation, Pagination, A11y, Autoplay } from "swiper/modules";
@@ -24,6 +26,7 @@ const banners = [Banner1, Banner2, Banner3];
 const BannerSlider = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [scrollY, setScrollY] = useState(0);
+  const [isContentVisible, setIsContentVisible] = useState(true);
 
   const [notifications, setNotifications] = useState([]);
   const [Gallerys, setGallerys] = useState([]);
@@ -109,50 +112,60 @@ const BannerSlider = () => {
           />
         </div>
       </div>
-      <div className="absolute inset-0 grid grid-cols-2 ">
+      <div className="absolute inset-0 grid grid-cols-2 z-20 ">
         {/* Notification */}
-        <div className="relative flex items-center justify-center w-[40rem] min-h-screen -top-24 right-[10rem] lg:-left-10 overflow-y-scroll container scale-50 lg:scale-75 transition-all duration-300 z-40">
-          <div className="relative flex flex-col space-y-10 lg:px-2 lg:py-4 ">
-            {notifications.slice(0, currentIndex + 1).map((item, index) => (
-              <div
-                key={index}
-                className={`group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 hover:scale-110 transition-all duration-300 notifications ${
-                  index === currentIndex ? "show" : ""
-                }`}
-              >
-                <div className="flex-shrink-0 ">
-                  <img
-                    className="object-cover w-16 h-16 rounded-full"
-                    src={Logo}
-                    alt=""
-                  />
-                </div>
+        <div className="relative flex items-center justify-center w-[40rem] min-h-screen -top-[18rem] lg:-top-24 right-[10rem] lg:-left-20 overflow-y-scroll container scale-50 lg:scale-75 transition-all duration-300 z-40">
+          <button
+            onClick={() => setIsContentVisible(!isContentVisible)}
+            className="flex items-center justify-center h-20 w-20 absolute top-40 left-20 lg:mt-10 lg:top-0 lg:left-4 backdrop-blur-lg opacity-70 bg-white rounded-full shadow-xl cursor-pointer z-40 "
+          >
+            <div className="text-3xl">
+              <IoMdNotificationsOutline />
+            </div>
+          </button>
 
-                <span className="text-md text-balck antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize  cursor-pointer text-justify ">
-                  {item.fileUrl ? (
-                    <a
-                      href={`${image_url + item.fileUrl}`}
-                      target="_blank"
-                      className="text-xl font-base "
-                    >
-                      {item.message}
-                    </a>
-                  ) : (
-                    <a
-                      className="text-xl cursor-pointer font-base "
-                      onClick={() => {
-                        // Check if it's a link before opening
-                        if (item.link) {
-                          window.open(item.link, "_blank");
-                        }
-                      }}
-                    >
-                      {item.message}
-                    </a>
-                  )}
-                </span>
-              </div>
-            ))}
+          <div className="relative flex flex-col space-y-10 lg:px-2 lg:py-4 max-h-screen ">
+            {isContentVisible &&
+              notifications.slice(0, currentIndex + 1).map((item, index) => (
+                <div
+                  key={index}
+                  className={`group backdrop-blur-lg bg-white opacity-70 shadow-lg rounded-full max-w-lg px-8 py-4 flex flex-row items-center justify-start space-x-6 hover:scale-110 transition-all duration-300 notifications ${
+                    index === currentIndex ? "show" : ""
+                  }`}
+                >
+                  <div className="flex-shrink-0 ">
+                    <img
+                      className="object-cover w-16 h-16 rounded-full"
+                      src={Logo}
+                      alt=""
+                    />
+                  </div>
+
+                  <span className="text-md text-balck antialiased tracking-normal font-sans font-bold leading-[1.3] text-transform: capitalize  cursor-pointer text-justify ">
+                    {item.fileUrl ? (
+                      <a
+                        href={`${image_url + item.fileUrl}`}
+                        target=""
+                        className="text-xl font-base "
+                      >
+                        {item.message}
+                      </a>
+                    ) : (
+                      <a
+                        className="text-xl cursor-pointer font-base "
+                        onClick={() => {
+                          // Check if it's a link before opening
+                          if (item.link) {
+                            window.open(item.link, "_blank");
+                          }
+                        }}
+                      >
+                        {item.message}
+                      </a>
+                    )}
+                  </span>
+                </div>
+              ))}
           </div>
         </div>
 

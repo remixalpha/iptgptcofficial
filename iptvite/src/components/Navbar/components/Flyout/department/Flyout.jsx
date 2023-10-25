@@ -10,7 +10,7 @@ import {
   SwatchIcon,
 } from "@heroicons/react/24/outline";
 
-const solutions = [
+const Items = [
   {
     name: "Electronics Engineering",
     href: "/electronics",
@@ -69,7 +69,7 @@ export default function Flyout() {
           <ChevronUpIcon className="w-5 h-5 " aria-hidden="true" />
         ) : (
           <ChevronDownIcon className="w-5 h-5" aria-hidden="true" />
-        )}{" "}
+        )}
       </Popover.Button>
 
       <Transition
@@ -84,11 +84,12 @@ export default function Flyout() {
       >
         <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-[25rem] max-w-max -translate-x-1/2 px-4">
           <div className="flex-auto w-screen max-w-md overflow-hidden text-sm leading-6 bg-white shadow-lg rounded-3xl opacity-90 ring-gray-900/5">
-            <div className="p-4">
-              {solutions.map((item) => (
-                <div
+            <a className="p-4">
+              {Items.map((item) => (
+                <a
                   key={item.name}
-                  className="relative flex p-4 group gap-x-5 rounded-xl hover:bg-orange-100 "
+                  href={item.href}
+                  className="group relative flex p-4 mx-3 gap-x-5 rounded-xl hover:bg-orange-100 "
                 >
                   <div className="flex items-center justify-center flex-none bg-white rounded-full h-11 w-11">
                     <item.icon
@@ -97,16 +98,11 @@ export default function Flyout() {
                     />
                   </div>
                   <div className="pt-2">
-                    <a
-                      href={item.href}
-                      className="font-semibold text-gray-900 "
-                    >
-                      {item.name}
-                    </a>
+                    <a className="font-semibold text-gray-900 ">{item.name}</a>
                   </div>
-                </div>
+                </a>
               ))}
-            </div>
+            </a>
           </div>
         </Popover.Panel>
       </Transition>

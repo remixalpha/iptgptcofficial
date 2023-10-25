@@ -4,7 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { DocumentMinusIcon } from "@heroicons/react/24/outline";
 import Anti from "../../../../../assets/images/logos/antiragging.png";
 
-const solutions = [
+const Items = [
   {
     name: "Anti Ragging",
     href: "https://antiragging.in/",
@@ -55,9 +55,10 @@ export default function Flyout() {
         <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-[16rem] max-w-max -translate-x-1/2 px-4">
           <div className="flex-auto w-screen max-w-md overflow-hidden text-sm leading-6 bg-white shadow-lg rounded-3xl opacity-90 ring-gray-900/5">
             <div className="p-4">
-              {solutions.map((item) => (
-                <div
+              {Items.map((item) => (
+                <a
                   key={item.name}
+                  href={item.href}
                   className="relative flex p-4 group gap-x-5 rounded-xl hover:bg-orange-100 "
                 >
                   <div className="flex items-center justify-center flex-none rounded-lg h-11 w-11 bg-gray-50 group-hover:bg-white">
@@ -68,14 +69,9 @@ export default function Flyout() {
                     />
                   </div>
                   <div className="pt-2">
-                    <a
-                      href={item.href}
-                      className="font-semibold text-gray-900 "
-                    >
-                      {item.name}
-                    </a>
+                    <a className="font-semibold text-gray-900 ">{item.name}</a>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>

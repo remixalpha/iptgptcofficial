@@ -97,7 +97,7 @@ export default function Reference() {
                     className="object-contain w-full h-full mt-4 lg:h-full lg:w-full rounded-primary"
                   />
                 </div>
-                <div className="mx-2 bg-gray-50 rounded-primary">
+                <div className="mx-2 bg-gray-200 rounded-primary">
                   <div className="flex justify-between p-8 mt-4 ">
                     <h3 className="font-sans text-xl antialiased font-semibold tracking-normal text-gray-800 text-md">
                       <span aria-hidden="true" className="absolute inset-0" />

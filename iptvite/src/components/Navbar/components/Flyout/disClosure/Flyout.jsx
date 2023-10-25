@@ -3,7 +3,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { UserGroupIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 
-const solutions = [
+const Items = [
   {
     name: "SC/ST Committee",
     href: "/scst",
@@ -54,9 +54,10 @@ export default function Flyout() {
         <Popover.Panel className=" absolute left-1/2 z-10 mt-5 flex w-[19rem] max-w-max -translate-x-1/2 px-4">
           <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white opacity-90 text-sm leading-6 shadow-lg  ring-gray-900/5">
             <div className="p-4">
-              {solutions.map((item) => (
-                <div
+              {Items.map((item) => (
+                <a
                   key={item.name}
+                  href={item.href}
                   className="group relative flex gap-x-5 rounded-xl p-4 hover:bg-orange-100  "
                 >
                   <div className=" flex h-11 w-11 flex-none items-center justify-center  rounded-full bg-white">
@@ -66,14 +67,9 @@ export default function Flyout() {
                     />
                   </div>
                   <div className="pt-2">
-                    <a
-                      href={item.href}
-                      className="font-semibold text-gray-900 "
-                    >
-                      {item.name}
-                    </a>
+                    <a className="font-semibold text-gray-900 ">{item.name}</a>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>
