@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import "./style.css";
 //Home page images
-import Banner1 from "../../../../assets/images/Banner/ipt banner 2.jpeg";
-import Banner2 from "../../../../assets/images/Banner/ipt banner 3.jpeg";
-import Banner3 from "../../../../assets/images/Banner/iptimage1.jpg";
+import Banner1 from "../../../../assets/images/Banner/college-image(1).jpg";
+import Banner2 from "../../../../assets/images/Banner/college-image(2).jpg";
+import Banner3 from "../../../../assets/images/Banner/college-image(3).jpg";
 import Logo from "../../../../assets/images/logos/iptlogomin.png";
 
 import Opening from "../Open-Close";
